@@ -127,14 +127,13 @@ class Queries(object):
   viewer {{
     login,
     name,
-        repositories(
+    repositories(
         first: 100,
         orderBy: {{
             field: UPDATED_AT,
             direction: DESC
         }},
-        # Include forks and organization/collaboration repositories so all repos count
-        ownerAffiliations: [OWNER, ORGANIZATION_MEMBER, COLLABORATOR],
+        isFork: false,
         after: {"null" if owned_cursor is None else '"'+ owned_cursor +'"'}
     ) {{
       pageInfo {{
