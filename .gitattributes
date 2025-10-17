@@ -5,5 +5,7 @@
 *.md linguist-documentation=false
 
 *.svg linguist-language=SVG
+*.svg linguist-detectable=true
+*.svg linguist-documentation=false
 
 *.yml linguist-language=yml
