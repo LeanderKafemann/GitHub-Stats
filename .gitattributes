@@ -1,2 +1,9 @@
-data export-ignore
-generated export-ignore
+*.txt linguist-language=Text
+
+*.md linguist-language=Markdown
+*.md linguist-detectable=true
+*.md linguist-documentation=false
+
+*.svg linguist-language=SVG
+
+*.yml linguist-language=yml
