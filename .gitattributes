@@ -1,4 +1,5 @@
 *.txt linguist-language=Text
+*.txt linguist-detectable=true
 
 *.md linguist-language=Markdown
 *.md linguist-detectable=true
@@ -7,5 +8,7 @@
 *.svg linguist-language=SVG
 *.svg linguist-detectable=true
 *.svg linguist-documentation=false
+*.svg linguist-generated=false
 
 *.yml linguist-language=yml
+*.yml linguist-detectable=true
