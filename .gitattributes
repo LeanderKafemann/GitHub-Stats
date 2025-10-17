@@ -10,5 +10,7 @@
 *.svg linguist-documentation=false
 *.svg linguist-generated=false
 
-*.yml linguist-language=yml
+*.yml linguist-language=YAML
 *.yml linguist-detectable=true
+*.yaml linguist-language=YAML
+*.yaml linguist-detectable=true
