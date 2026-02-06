@@ -79,18 +79,29 @@ def backfill_from_api_data(
     # Aggregate weekly data into monthly buckets
     monthly_adds: Dict[str, int] = {}
     monthly_dels: Dict[str, int] = {}
-    for date_str, (adds, dels) in weekly.items():
+    for date_str, changes in weekly.items():
+        # Handle both list [a, d] and tuple (a, d) formats
+        if isinstance(changes, (list, tuple)) and len(changes) >= 2:
+            adds, dels = int(changes[0]), int(changes[1])
+        else:
+            continue
         month_key = date_str[:7]  # YYYY-MM
         monthly_adds[month_key] = monthly_adds.get(month_key, 0) + adds
         monthly_dels[month_key] = monthly_dels.get(month_key, 0) + dels
 
     all_months = sorted(set(monthly_adds.keys()) | set(monthly_dels.keys()))
 
+    # Count repos by tracking the earliest week per repo from the weekly data.
+    # Since we don't have per-repo info here, we approximate repo_count as
+    # growing linearly from 1 to the current count over the observed months.
+    total_repo_count = snapshot.get("repo_count", 0)
+    num_months = len(all_months)
+
     # Compute cumulative lines for running totals
     cumulative_adds = 0
     cumulative_dels = 0
 
-    for month in all_months:
+    for month_idx, month in enumerate(all_months):
         # Use last day of month as the snapshot date
         synth_date = f"{month}-28"
         if synth_date in existing_dates:
@@ -104,13 +115,18 @@ def backfill_from_api_data(
         year_str = month[:4]
         year_contribs = contribs_by_year.get(year_str, 0)
 
+        # Approximate repo count growing over time
+        approx_repos = max(
+            1, int(total_repo_count * (month_idx + 1) / num_months)
+        ) if num_months > 0 else total_repo_count
+
         backfilled.append({
             "date": synth_date,
             "synthetic": True,
             "stargazers": snapshot.get("stargazers", 0),
             "forks": snapshot.get("forks", 0),
             "total_contributions": year_contribs,
-            "repo_count": snapshot.get("repo_count", 0),
+            "repo_count": approx_repos,
             "lines_added": cumulative_adds,
             "lines_deleted": cumulative_dels,
             "lines_added_month": monthly_adds.get(month, 0),
@@ -218,6 +234,20 @@ async def generate_history(s: Stats) -> None:
 
     save_history(history)
 
+    # ── Guard: need at least 2 data points for a chart ───────────────────
+    if len(history) < 2:
+        print("Not enough data points for history chart yet.")
+        # Write a minimal placeholder SVG
+        with open("generated/history.svg", "w") as f:
+            f.write(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="100">'
+                '<text x="20" y="50" fill="#c9d1d9" '
+                'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="14">'
+                "Not enough data yet – chart will appear after the next run."
+                "</text></svg>"
+            )
+        return
+
     # ── Determine top 5 languages across all snapshots ───────────────────
     lang_totals: Dict[str, int] = {}
     lang_color_map: Dict[str, str] = {}
@@ -226,9 +256,9 @@ async def generate_history(s: Stats) -> None:
             lang_totals[name] = lang_totals.get(name, 0) + data.get("size", 0)
             if data.get("color"):
                 lang_color_map[name] = data["color"]
-    top_langs = sorted(lang_totals.keys(), key=lambda n: lang_totals[n], reverse=True)[
-        :5
-    ]
+    top_langs = sorted(
+        lang_totals.keys(), key=lambda n: lang_totals[n], reverse=True
+    )[:5]
 
     # ── Prepare time series ──────────────────────────────────────────────
     dates = [snap.get("date", "") for snap in history]
@@ -253,13 +283,6 @@ async def generate_history(s: Stats) -> None:
             else:
                 monthly_lines.append(total_now)
 
-    # Cumulative lines changed
-    cumulative_lines: List[int] = []
-    running = 0
-    for val in monthly_lines:
-        running += val
-        cumulative_lines.append(running)
-
     # Language proportions per snapshot
     lang_series: Dict[str, List[float]] = {lang: [] for lang in top_langs}
     for snap in history:
@@ -270,6 +293,9 @@ async def generate_history(s: Stats) -> None:
     # Stars over time
     stars_series = [snap.get("stargazers", 0) for snap in history]
 
+    # Repo count over time
+    repo_series = [snap.get("repo_count", 0) for snap in history]
+
     # ── Chart dimensions ─────────────────────────────────────────────────
     svg_width = 900
     svg_height = 620
@@ -278,8 +304,8 @@ async def generate_history(s: Stats) -> None:
     margin_left = 65
     margin_right = 180
     chart_w = svg_width - margin_left - margin_right
-    chart_h_top = 180  # Lines changed chart
-    chart_h_bottom = 180  # Language proportions chart
+    chart_h_top = 180
+    chart_h_bottom = 180
     gap = 60
     chart1_top = margin_top
     chart2_top = margin_top + chart_h_top + gap
@@ -290,7 +316,6 @@ async def generate_history(s: Stats) -> None:
     grid_color = "#21262d"
     line_color = "#58a6ff"
     area_color = "#58a6ff"
-    bar_color = "#3fb950"
     star_color = "#e3b341"
 
     # ── SVG construction ─────────────────────────────────────────────────
@@ -360,7 +385,7 @@ async def generate_history(s: Stats) -> None:
     if max_monthly == 0:
         max_monthly = 1
 
-    draw_grid(chart1_top, chart_h_top, max_monthly)
+    draw_grid(chart1_top, chart_h_top, float(max_monthly))
 
     points: List[str] = []
     for i, val in enumerate(monthly_lines):
@@ -449,7 +474,6 @@ async def generate_history(s: Stats) -> None:
     for i in range(0, n, label_step):
         x = margin_left + i * step_x
         label_y = chart2_top + chart_h_bottom + 18
-        # Show YYYY-MM
         label_text = dates[i][:7] if len(dates[i]) >= 7 else dates[i]
         svg.append(
             f'<text x="{x:.1f}" y="{label_y}" '
@@ -554,7 +578,6 @@ async def main() -> None:
     """
     access_token = os.getenv("ACCESS_TOKEN")
     if not access_token:
-        # access_token = os.getenv("GITHUB_TOKEN")
         raise Exception("A personal access token is required to proceed!")
     user = os.getenv("GITHUB_ACTOR")
     if user is None:

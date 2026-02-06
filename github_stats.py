@@ -66,12 +66,12 @@ class Queries(object):
                     return result
         return dict()
 
-    async def query_rest(self, path: str, params: Optional[Dict] = None) -> Dict:
+    async def query_rest(self, path: str, params: Optional[Dict] = None) -> Any:
         """
         Make a request to the REST API
         :param path: API path to query
         :param params: Query parameters to be passed to the API
-        :return: deserialized REST JSON output
+        :return: deserialized REST JSON output (may be a dict or a list)
         """
 
         for _ in range(60):
@@ -90,7 +90,6 @@ class Queries(object):
                         params=tuple(params.items()),
                     )
                 if r_async.status == 202:
-                    # print(f"{path} returned 202. Retrying...")
                     print(f"A path returned 202. Retrying...")
                     await asyncio.sleep(2)
                     continue
@@ -113,7 +112,6 @@ class Queries(object):
                         continue
                     elif r_requests.status_code == 200:
                         return r_requests.json()
-        # print(f"There were too many 202s. Data for {path} will be incomplete.")
         print("There were too many 202s. Data for this repository will be incomplete.")
         return dict()
 
@@ -276,7 +274,6 @@ class Stats(object):
         self._views: Optional[int] = None
         self._lines_changed_by_week: Optional[Dict[str, Tuple[int, int]]] = None
         self._contributions_by_year: Optional[Dict[int, int]] = None
-        self._languages_by_repo: Optional[Dict[str, Dict[str, Any]]] = None
 
     async def to_str(self) -> str:
         """
@@ -320,11 +317,16 @@ Languages:
         weekly = await self.lines_changed_by_week
         weekly_serializable = {k: list(v) for k, v in weekly.items()}
 
+        # Derive total_contributions from contributions_by_year to stay
+        # consistent (avoids a separate API call that could yield different
+        # numbers).
+        total_contribs = sum(contribs_by_year.values())
+
         return {
             "date": datetime.utcnow().strftime("%Y-%m-%d"),
             "stargazers": await self.stargazers,
             "forks": await self.forks,
-            "total_contributions": await self.total_contributions,
+            "total_contributions": total_contribs,
             "repo_count": len(await self.repos),
             "lines_added": lines[0],
             "lines_deleted": lines[1],
@@ -419,6 +421,55 @@ Languages:
         langs_total = sum([v.get("size", 0) for v in self._languages.values()])
         for k, v in self._languages.items():
             v["prop"] = 100 * (v.get("size", 0) / langs_total)
+
+    async def _fetch_contributor_stats(self) -> None:
+        """
+        Fetch weekly contributor stats for all repos once and populate both
+        _lines_changed and _lines_changed_by_week from the same data.
+        This avoids duplicate API calls and ensures consistent numbers.
+        """
+        additions = 0
+        deletions = 0
+        weekly: Dict[str, List[int]] = {}
+
+        for repo in await self.repos:
+            r = await self.queries.query_rest(f"/repos/{repo}/stats/contributors")
+            # The API returns a list of contributor objects, but query_rest
+            # falls back to an empty dict on failure.  Ensure we only iterate
+            # over a proper list.
+            if not isinstance(r, list):
+                continue
+
+            for author_obj in r:
+                if not isinstance(author_obj, dict):
+                    continue
+                author_info = author_obj.get("author")
+                if not isinstance(author_info, dict):
+                    continue
+                if author_info.get("login", "") != self.username:
+                    continue
+
+                for week in author_obj.get("weeks", []):
+                    adds = week.get("a", 0)
+                    dels = week.get("d", 0)
+                    additions += adds
+                    deletions += dels
+
+                    if adds == 0 and dels == 0:
+                        continue
+                    timestamp = week.get("w", 0)
+                    date_str = datetime.utcfromtimestamp(timestamp).strftime(
+                        "%Y-%m-%d"
+                    )
+                    if date_str not in weekly:
+                        weekly[date_str] = [0, 0]
+                    weekly[date_str][0] += adds
+                    weekly[date_str][1] += dels
+
+        self._lines_changed = (additions, deletions)
+        self._lines_changed_by_week = {
+            k: (v[0], v[1]) for k, v in sorted(weekly.items())
+        }
 
     @property
     async def name(self) -> str:
@@ -552,25 +603,8 @@ Languages:
         """
         if self._lines_changed is not None:
             return self._lines_changed
-        additions = 0
-        deletions = 0
-        for repo in await self.repos:
-            r = await self.queries.query_rest(f"/repos/{repo}/stats/contributors")
-            for author_obj in r:
-                # Handle malformed response from the API by skipping this repo
-                if not isinstance(author_obj, dict) or not isinstance(
-                    author_obj.get("author", {}), dict
-                ):
-                    continue
-                author = author_obj.get("author", {}).get("login", "")
-                if author != self.username:
-                    continue
-
-                for week in author_obj.get("weeks", []):
-                    additions += week.get("a", 0)
-                    deletions += week.get("d", 0)
-
-        self._lines_changed = (additions, deletions)
+        await self._fetch_contributor_stats()
+        assert self._lines_changed is not None
         return self._lines_changed
 
     @property
@@ -581,34 +615,8 @@ Languages:
         """
         if self._lines_changed_by_week is not None:
             return self._lines_changed_by_week
-
-        weekly: Dict[str, List[int]] = {}
-        for repo in await self.repos:
-            r = await self.queries.query_rest(f"/repos/{repo}/stats/contributors")
-            for author_obj in r:
-                if not isinstance(author_obj, dict) or not isinstance(
-                    author_obj.get("author", {}), dict
-                ):
-                    continue
-                author = author_obj.get("author", {}).get("login", "")
-                if author != self.username:
-                    continue
-
-                for week in author_obj.get("weeks", []):
-                    timestamp = week.get("w", 0)
-                    adds = week.get("a", 0)
-                    dels = week.get("d", 0)
-                    if adds == 0 and dels == 0:
-                        continue
-                    date_str = datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
-                    if date_str not in weekly:
-                        weekly[date_str] = [0, 0]
-                    weekly[date_str][0] += adds
-                    weekly[date_str][1] += dels
-
-        self._lines_changed_by_week = {
-            k: (v[0], v[1]) for k, v in sorted(weekly.items())
-        }
+        await self._fetch_contributor_stats()
+        assert self._lines_changed_by_week is not None
         return self._lines_changed_by_week
 
     @property
@@ -623,8 +631,9 @@ Languages:
         total = 0
         for repo in await self.repos:
             r = await self.queries.query_rest(f"/repos/{repo}/traffic/views")
-            for view in r.get("views", []):
-                total += view.get("count", 0)
+            if isinstance(r, dict):
+                for view in r.get("views", []):
+                    total += view.get("count", 0)
 
         self._views = total
         return total
