@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="840" height="480" viewBox="0 0 840 480">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620">
 
 <defs>
   <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.4"/>
-    <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.0"/>
+    <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.02"/>
   </linearGradient>
 </defs>
 <style>
@@ -13,40 +13,47 @@
   .legend-text { font: 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
   .value-text { font: bold 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .chart-element { animation: fadeIn 0.8s ease-in-out forwards; opacity: 0; }
+  .anim { animation: fadeIn 0.6s ease-in-out forwards; opacity: 0; }
 </style>
 
-<rect x="0.5" y="0.5" rx="4.5" width="839" height="479" fill="#161b22" stroke="#21262d"/>
-<text x="70" y="30" class="title">Activity History</text>
-<text x="70" y="48" class="subtitle">Lines changed per month &amp; contributions per year</text>
-<line x1="70" y1="400.0" x2="640" y2="400.0" stroke="#21262d" stroke-width="1"/>
-<text x="62" y="404.0" text-anchor="end" class="axis-label">0</text>
-<line x1="70" y1="332.0" x2="640" y2="332.0" stroke="#21262d" stroke-width="1"/>
-<text x="62" y="336.0" text-anchor="end" class="axis-label">0</text>
-<line x1="70" y1="264.0" x2="640" y2="264.0" stroke="#21262d" stroke-width="1"/>
-<text x="62" y="268.0" text-anchor="end" class="axis-label">0</text>
-<line x1="70" y1="196.0" x2="640" y2="196.0" stroke="#21262d" stroke-width="1"/>
-<text x="62" y="200.0" text-anchor="end" class="axis-label">0</text>
-<line x1="70" y1="128.0" x2="640" y2="128.0" stroke="#21262d" stroke-width="1"/>
-<text x="62" y="132.0" text-anchor="end" class="axis-label">0</text>
-<line x1="70" y1="60.0" x2="640" y2="60.0" stroke="#21262d" stroke-width="1"/>
-<text x="62" y="64.0" text-anchor="end" class="axis-label">1</text>
-<polygon points="70.0,400.0 70.0,400.0 70.0,400.0" fill="url(#areaGrad)" class="chart-element" style="animation-delay: 200ms;"/>
-<polyline points="70.0,400.0" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" class="chart-element" style="animation-delay: 400ms;"/>
-<text x="70.0" y="418" text-anchor="middle" class="axis-label" transform="rotate(-30 70.0 418)">2025-01</text>
-<text x="660" y="68" class="subtitle">Contributions / Year</text>
-<rect x="682.0" y="168.2" width="20" height="1.8" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 600ms;"/>
-<text x="692.0" y="184" text-anchor="middle" class="axis-label">2023</text>
-<text x="692.0" y="164.2" text-anchor="middle" class="value-text">39</text>
-<rect x="706.0" y="140.0" width="20" height="30.0" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 700ms;"/>
-<text x="716.0" y="184" text-anchor="middle" class="axis-label">2024</text>
-<text x="716.0" y="136.0" text-anchor="middle" class="value-text">646</text>
-<rect x="730.0" y="90.0" width="20" height="80.0" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 800ms;"/>
-<text x="740.0" y="184" text-anchor="middle" class="axis-label">2025</text>
-<text x="740.0" y="86.0" text-anchor="middle" class="value-text">1,723</text>
-<rect x="754.0" y="165.3" width="20" height="4.7" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 900ms;"/>
-<text x="764.0" y="184" text-anchor="middle" class="axis-label">2026</text>
-<text x="764.0" y="161.3" text-anchor="middle" class="value-text">102</text>
-<text x="660" y="220" class="subtitle">Top Languages</text>
-<text x="70" y="464" class="axis-label">Total: 0 lines changed · 2,510 contributions · 0 repos</text>
+<rect x="0.5" y="0.5" rx="4.5" width="899" height="619" fill="#161b22" stroke="#21262d"/>
+<text x="65" y="30" class="title">Activity History</text>
+<text x="65" y="48" class="subtitle">Lines changed per month &amp; language trends over time</text>
+<line x1="65" y1="240.0" x2="720" y2="240.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="244.0" text-anchor="end" class="axis-label">0</text>
+<line x1="65" y1="195.0" x2="720" y2="195.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="199.0" text-anchor="end" class="axis-label">0</text>
+<line x1="65" y1="150.0" x2="720" y2="150.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="154.0" text-anchor="end" class="axis-label">0</text>
+<line x1="65" y1="105.0" x2="720" y2="105.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="109.0" text-anchor="end" class="axis-label">1</text>
+<line x1="65" y1="60.0" x2="720" y2="60.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="64.0" text-anchor="end" class="axis-label">1</text>
+<polygon points="65.0,240.0 65.0,240.0 65.0,240.0" fill="url(#areaGrad)" class="anim" style="animation-delay:200ms;"/>
+<polyline points="65.0,240.0" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:300ms;"/>
+<polyline points="65.0,240.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
+<text x="65" y="54" class="subtitle">Lines Changed / Month</text>
+<text x="65" y="294" class="subtitle">Top Language Proportions (%)</text>
+<line x1="65" y1="480.0" x2="720" y2="480.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="484.0" text-anchor="end" class="axis-label">0%</text>
+<line x1="65" y1="435.0" x2="720" y2="435.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="439.0" text-anchor="end" class="axis-label">25%</text>
+<line x1="65" y1="390.0" x2="720" y2="390.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="394.0" text-anchor="end" class="axis-label">50%</text>
+<line x1="65" y1="345.0" x2="720" y2="345.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="349.0" text-anchor="end" class="axis-label">75%</text>
+<line x1="65" y1="300.0" x2="720" y2="300.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="304.0" text-anchor="end" class="axis-label">100%</text>
+<text x="65.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 65.0 498)">2026-02</text>
+<line x1="736" y1="70" x2="756" y2="70" stroke="#58a6ff" stroke-width="2"/>
+<text x="762" y="74" class="legend-text">Lines Changed</text>
+<line x1="736" y1="92" x2="756" y2="92" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="762" y="96" class="legend-text">Stars</text>
+<text x="736" y="130" class="subtitle">Languages</text>
+<text x="736" y="170" class="subtitle">Contributions</text>
+<text x="736" y="188" class="axis-label">2023: 39</text>
+<text x="736" y="204" class="axis-label">2024: 646</text>
+<text x="736" y="220" class="axis-label">2025: 1,723</text>
+<text x="736" y="236" class="axis-label">2026: 103</text>
+<text x="65" y="606" class="axis-label">Total: 0 lines changed · 2,511 contributions · 0 repos · ★ 0</text>
 </svg>
