@@ -299,6 +299,42 @@ Project page views: {await self.views:,}
 Languages:
   - {formatted_languages}"""
 
+    async def build_snapshot(self) -> Dict[str, Any]:
+        """
+        Build a snapshot of current statistics for persistence in history.json.
+        Includes language proportions, lines changed, contributions by year,
+        stars, forks, and repo count.
+        :return: dict with all current stats keyed by date
+        """
+        languages = await self.languages
+        lang_snapshot = {}
+        for name, data in languages.items():
+            lang_snapshot[name] = {
+                "size": data.get("size", 0),
+                "prop": data.get("prop", 0.0),
+                "color": data.get("color"),
+            }
+
+        lines = await self.lines_changed
+        contribs_by_year = await self.contributions_by_year
+        weekly = await self.lines_changed_by_week
+        weekly_serializable = {k: list(v) for k, v in weekly.items()}
+
+        return {
+            "date": datetime.utcnow().strftime("%Y-%m-%d"),
+            "stargazers": await self.stargazers,
+            "forks": await self.forks,
+            "total_contributions": await self.total_contributions,
+            "repo_count": len(await self.repos),
+            "lines_added": lines[0],
+            "lines_deleted": lines[1],
+            "languages": lang_snapshot,
+            "contributions_by_year": {
+                str(k): v for k, v in contribs_by_year.items()
+            },
+            "lines_changed_by_week": weekly_serializable,
+        }
+
     async def get_stats(self) -> None:
         """
         Get lots of summary statistics using one big query. Sets many attributes
