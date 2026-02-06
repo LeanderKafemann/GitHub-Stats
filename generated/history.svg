@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="480" viewBox="0 0 840 480">
+
+<defs>
+  <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.0"/>
+  </linearGradient>
+</defs>
+<style>
+  .title { font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+  .subtitle { font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.8; }
+  .axis-label { font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.7; }
+  .legend-text { font: 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+  .value-text { font: bold 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .chart-element { animation: fadeIn 0.8s ease-in-out forwards; opacity: 0; }
+</style>
+
+<rect x="0.5" y="0.5" rx="4.5" width="839" height="479" fill="#161b22" stroke="#21262d"/>
+<text x="70" y="30" class="title">Activity History</text>
+<text x="70" y="48" class="subtitle">Lines changed per month &amp; contributions per year</text>
+<line x1="70" y1="400.0" x2="640" y2="400.0" stroke="#21262d" stroke-width="1"/>
+<text x="62" y="404.0" text-anchor="end" class="axis-label">0</text>
+<line x1="70" y1="332.0" x2="640" y2="332.0" stroke="#21262d" stroke-width="1"/>
+<text x="62" y="336.0" text-anchor="end" class="axis-label">0</text>
+<line x1="70" y1="264.0" x2="640" y2="264.0" stroke="#21262d" stroke-width="1"/>
+<text x="62" y="268.0" text-anchor="end" class="axis-label">0</text>
+<line x1="70" y1="196.0" x2="640" y2="196.0" stroke="#21262d" stroke-width="1"/>
+<text x="62" y="200.0" text-anchor="end" class="axis-label">0</text>
+<line x1="70" y1="128.0" x2="640" y2="128.0" stroke="#21262d" stroke-width="1"/>
+<text x="62" y="132.0" text-anchor="end" class="axis-label">0</text>
+<line x1="70" y1="60.0" x2="640" y2="60.0" stroke="#21262d" stroke-width="1"/>
+<text x="62" y="64.0" text-anchor="end" class="axis-label">1</text>
+<polygon points="70.0,400.0 70.0,400.0 70.0,400.0" fill="url(#areaGrad)" class="chart-element" style="animation-delay: 200ms;"/>
+<polyline points="70.0,400.0" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" class="chart-element" style="animation-delay: 400ms;"/>
+<text x="70.0" y="418" text-anchor="middle" class="axis-label" transform="rotate(-30 70.0 418)">2025-01</text>
+<text x="660" y="68" class="subtitle">Contributions / Year</text>
+<rect x="682.0" y="168.2" width="20" height="1.8" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 600ms;"/>
+<text x="692.0" y="184" text-anchor="middle" class="axis-label">2023</text>
+<text x="692.0" y="164.2" text-anchor="middle" class="value-text">39</text>
+<rect x="706.0" y="140.0" width="20" height="30.0" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 700ms;"/>
+<text x="716.0" y="184" text-anchor="middle" class="axis-label">2024</text>
+<text x="716.0" y="136.0" text-anchor="middle" class="value-text">646</text>
+<rect x="730.0" y="90.0" width="20" height="80.0" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 800ms;"/>
+<text x="740.0" y="184" text-anchor="middle" class="axis-label">2025</text>
+<text x="740.0" y="86.0" text-anchor="middle" class="value-text">1,723</text>
+<rect x="754.0" y="165.3" width="20" height="4.7" rx="2" fill="#3fb950" opacity="0.85" class="chart-element" style="animation-delay: 900ms;"/>
+<text x="764.0" y="184" text-anchor="middle" class="axis-label">2026</text>
+<text x="764.0" y="161.3" text-anchor="middle" class="value-text">102</text>
+<text x="660" y="220" class="subtitle">Top Languages</text>
+<text x="70" y="464" class="axis-label">Total: 0 lines changed · 2,510 contributions · 0 repos</text>
+</svg>
