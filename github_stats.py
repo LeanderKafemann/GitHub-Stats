@@ -66,59 +66,82 @@ class Queries(object):
                     return result
         return dict()
 
-    async def query_rest(self, path: str, params: Optional[Dict] = None) -> Any:
+    async def query_rest(
+        self,
+        path: str,
+        params: Optional[Dict] = None,
+        max_retries: int = 10,
+    ) -> Any:
         """
         Make a request to the REST API
         :param path: API path to query
         :param params: Query parameters to be passed to the API
+        :param max_retries: Maximum number of 202 retries before giving up
         :return: deserialized REST JSON output (may be a dict or a list)
         """
+        # Normalize path once, not inside the loop
+        if path.startswith("/"):
+            path = path[1:]
+        if params is None:
+            params = dict()
 
-        for _ in range(60):
-            headers = {
-                "Authorization": f"token {self.access_token}",
-            }
-            if params is None:
-                params = dict()
-            if path.startswith("/"):
-                path = path[1:]
+        headers = {
+            "Authorization": f"token {self.access_token}",
+        }
+        url = f"https://api.github.com/{path}"
+        params_tuple = tuple(params.items())
+
+        for attempt in range(max_retries):
             try:
                 async with self.semaphore:
                     r_async = await self.session.get(
-                        f"https://api.github.com/{path}",
+                        url,
                         headers=headers,
-                        params=tuple(params.items()),
+                        params=params_tuple,
                     )
                 if r_async.status == 202:
-                    print(f"A path returned 202. Retrying...")
-                    await asyncio.sleep(2)
-                    continue
+                    # GitHub is computing stats – back off and retry
+                    if attempt < max_retries - 1:
+                        await asyncio.sleep(2)
+                        continue
+                    else:
+                        print(f"  [REST] Gave up after {max_retries} retries "
+                              f"(202) for {path}")
+                        return dict()
+                if r_async.status == 204:
+                    return dict()
                 if r_async.status == 403:
-                    # No permission for this endpoint (e.g. traffic on
-                    # repos the user doesn't own) – skip silently
+                    return dict()
+                if r_async.status != 200:
+                    print(f"  [REST] {path} returned {r_async.status}")
                     return dict()
 
                 result = await r_async.json()
                 if result is not None:
                     return result
-            except:
-                print("aiohttp failed for rest query")
+            except Exception as e:
+                print(f"aiohttp failed for {path}: {e}")
                 # Fall back on non-async requests
-                async with self.semaphore:
-                    r_requests = requests.get(
-                        f"https://api.github.com/{path}",
-                        headers=headers,
-                        params=tuple(params.items()),
-                    )
+                try:
+                    async with self.semaphore:
+                        r_requests = requests.get(
+                            url,
+                            headers=headers,
+                            params=params_tuple,
+                        )
                     if r_requests.status_code == 202:
-                        print(f"A path returned 202. Retrying...")
-                        await asyncio.sleep(2)
-                        continue
+                        if attempt < max_retries - 1:
+                            await asyncio.sleep(2)
+                            continue
+                        else:
+                            return dict()
                     elif r_requests.status_code == 403:
                         return dict()
                     elif r_requests.status_code == 200:
                         return r_requests.json()
-        print("There were too many 202s. Data for this repository will be incomplete.")
+                except Exception as e2:
+                    print(f"requests also failed for {path}: {e2}")
+
         return dict()
 
     @staticmethod
@@ -306,9 +329,6 @@ Languages:
     async def build_snapshot(self) -> Dict[str, Any]:
         """
         Build a snapshot of current statistics for persistence in history.json.
-        Includes language proportions, lines changed, contributions by year,
-        stars, forks, and repo count.
-        :return: dict with all current stats keyed by date
         """
         languages = await self.languages
         lang_snapshot = {}
@@ -364,8 +384,6 @@ Languages:
 
             viewer = raw_results.get("data", {}).get("viewer", {})
 
-            # Capture the actual login name from the API for case-accurate
-            # comparisons in contributor stats later.
             if self._login is None:
                 self._login = viewer.get("login")
 
@@ -423,36 +441,33 @@ Languages:
 
     async def _get_login(self) -> str:
         """
-        Return the exact GitHub login (case-sensitive) for use in REST API
-        comparisons. Falls back to self.username if the API hasn't been
-        queried yet.
+        Return the exact GitHub login for use in REST API comparisons.
         """
         if self._login is not None:
             return self._login
-        # Trigger get_stats which populates _login from the GraphQL response
         await self.get_stats()
         return self._login if self._login is not None else self.username
 
     async def _fetch_contributor_stats(self) -> None:
         """
-        Fetch weekly contributor stats for all repos once and populate both
-        _lines_changed and _lines_changed_by_week from the same data.
-        This avoids duplicate API calls and ensures consistent numbers.
+        Fetch weekly contributor stats for all repos in parallel and populate
+        both _lines_changed and _lines_changed_by_week from the same data.
         """
-        additions = 0
-        deletions = 0
-        weekly: Dict[str, List[int]] = {}
-
-        # Use the exact login from the GraphQL API for case-insensitive
-        # matching against the REST API contributor data.
         login = (await self._get_login()).lower()
+        repos = list(await self.repos)
+        print(f"Fetching contributor stats for {len(repos)} repos...")
 
-        for repo in await self.repos:
-            r = await self.queries.query_rest(f"/repos/{repo}/stats/contributors")
+        async def fetch_one(repo: str) -> Tuple[int, int, Dict[str, List[int]]]:
+            """Fetch stats for a single repo, return (adds, dels, weekly)."""
+            adds = 0
+            dels = 0
+            weekly: Dict[str, List[int]] = {}
+
+            r = await self.queries.query_rest(
+                f"/repos/{repo}/stats/contributors", max_retries=10
+            )
             if not isinstance(r, list):
-                print(f"  [lines] Skipping {repo}: "
-                      f"unexpected response type {type(r).__name__}")
-                continue
+                return adds, dels, weekly
 
             for author_obj in r:
                 if not isinstance(author_obj, dict):
@@ -460,18 +475,16 @@ Languages:
                 author_info = author_obj.get("author")
                 if not isinstance(author_info, dict):
                     continue
-                # Case-insensitive comparison to avoid mismatches between
-                # GITHUB_ACTOR and the actual API login.
                 if author_info.get("login", "").lower() != login:
                     continue
 
                 for week in author_obj.get("weeks", []):
-                    adds = week.get("a", 0)
-                    dels = week.get("d", 0)
-                    additions += adds
-                    deletions += dels
+                    a = week.get("a", 0)
+                    d = week.get("d", 0)
+                    adds += a
+                    dels += d
 
-                    if adds == 0 and dels == 0:
+                    if a == 0 and d == 0:
                         continue
                     timestamp = week.get("w", 0)
                     date_str = datetime.utcfromtimestamp(timestamp).strftime(
@@ -479,13 +492,31 @@ Languages:
                     )
                     if date_str not in weekly:
                         weekly[date_str] = [0, 0]
-                    weekly[date_str][0] += adds
-                    weekly[date_str][1] += dels
+                    weekly[date_str][0] += a
+                    weekly[date_str][1] += d
 
-        self._lines_changed = (additions, deletions)
+            return adds, dels, weekly
+
+        # Run all repo fetches concurrently (bounded by the semaphore)
+        results = await asyncio.gather(*[fetch_one(repo) for repo in repos])
+
+        total_adds = 0
+        total_dels = 0
+        merged_weekly: Dict[str, List[int]] = {}
+        for adds, dels, weekly in results:
+            total_adds += adds
+            total_dels += dels
+            for date_str, vals in weekly.items():
+                if date_str not in merged_weekly:
+                    merged_weekly[date_str] = [0, 0]
+                merged_weekly[date_str][0] += vals[0]
+                merged_weekly[date_str][1] += vals[1]
+
+        self._lines_changed = (total_adds, total_dels)
         self._lines_changed_by_week = {
-            k: (v[0], v[1]) for k, v in sorted(weekly.items())
+            k: (v[0], v[1]) for k, v in sorted(merged_weekly.items())
         }
+        print(f"  Lines changed: +{total_adds:,} -{total_dels:,}")
 
     @property
     async def name(self) -> str:
@@ -612,18 +643,19 @@ Languages:
         if self._views is not None:
             return self._views
 
-        total = 0
-        for repo in await self.repos:
-            r = await self.queries.query_rest(f"/repos/{repo}/traffic/views")
-            if not isinstance(r, dict):
-                continue
-            # Use the top-level "count" field which is the total for the last
-            # 14 days.  This is more reliable than summing the per-day entries
-            # which may be truncated or missing days.
-            total += r.get("count", 0)
+        repos = list(await self.repos)
 
-        self._views = total
-        return total
+        async def fetch_views(repo: str) -> int:
+            r = await self.queries.query_rest(
+                f"/repos/{repo}/traffic/views", max_retries=5
+            )
+            if isinstance(r, dict):
+                return r.get("count", 0)
+            return 0
+
+        results = await asyncio.gather(*[fetch_views(repo) for repo in repos])
+        self._views = sum(results)
+        return self._views
 
 
 ###############################################################################
