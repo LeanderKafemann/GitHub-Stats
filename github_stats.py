@@ -2,6 +2,7 @@
 
 import asyncio
 import os
+from datetime import datetime
 from typing import Dict, List, Optional, Set, Tuple, Any, cast
 
 import aiohttp
@@ -273,6 +274,9 @@ class Stats(object):
         self._repos: Optional[Set[str]] = None
         self._lines_changed: Optional[Tuple[int, int]] = None
         self._views: Optional[int] = None
+        self._lines_changed_by_week: Optional[Dict[str, Tuple[int, int]]] = None
+        self._contributions_by_year: Optional[Dict[int, int]] = None
+        self._languages_by_repo: Optional[Dict[str, Dict[str, Any]]] = None
 
     async def to_str(self) -> str:
         """
@@ -475,6 +479,37 @@ Languages:
         return cast(int, self._total_contributions)
 
     @property
+    async def contributions_by_year(self) -> Dict[int, int]:
+        """
+        :return: dict mapping year (int) to total contributions for that year
+        """
+        if self._contributions_by_year is not None:
+            return self._contributions_by_year
+
+        self._contributions_by_year = {}
+        years = (
+            (await self.queries.query(Queries.contrib_years()))
+            .get("data", {})
+            .get("viewer", {})
+            .get("contributionsCollection", {})
+            .get("contributionYears", [])
+        )
+        raw = (
+            (await self.queries.query(Queries.all_contribs(years)))
+            .get("data", {})
+            .get("viewer", {})
+        )
+        for key, value in raw.items():
+            if key.startswith("year"):
+                year_int = int(key[4:])
+                total = value.get("contributionCalendar", {}).get(
+                    "totalContributions", 0
+                )
+                self._contributions_by_year[year_int] = total
+
+        return self._contributions_by_year
+
+    @property
     async def lines_changed(self) -> Tuple[int, int]:
         """
         :return: count of total lines added, removed, or modified by the user
@@ -501,6 +536,44 @@ Languages:
 
         self._lines_changed = (additions, deletions)
         return self._lines_changed
+
+    @property
+    async def lines_changed_by_week(self) -> Dict[str, Tuple[int, int]]:
+        """
+        :return: dict mapping ISO week string (YYYY-MM-DD) to (additions, deletions)
+                 aggregated across all repos for weeks with activity
+        """
+        if self._lines_changed_by_week is not None:
+            return self._lines_changed_by_week
+
+        weekly: Dict[str, List[int]] = {}
+        for repo in await self.repos:
+            r = await self.queries.query_rest(f"/repos/{repo}/stats/contributors")
+            for author_obj in r:
+                if not isinstance(author_obj, dict) or not isinstance(
+                    author_obj.get("author", {}), dict
+                ):
+                    continue
+                author = author_obj.get("author", {}).get("login", "")
+                if author != self.username:
+                    continue
+
+                for week in author_obj.get("weeks", []):
+                    timestamp = week.get("w", 0)
+                    adds = week.get("a", 0)
+                    dels = week.get("d", 0)
+                    if adds == 0 and dels == 0:
+                        continue
+                    date_str = datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
+                    if date_str not in weekly:
+                        weekly[date_str] = [0, 0]
+                    weekly[date_str][0] += adds
+                    weekly[date_str][1] += dels
+
+        self._lines_changed_by_week = {
+            k: (v[0], v[1]) for k, v in sorted(weekly.items())
+        }
+        return self._lines_changed_by_week
 
     @property
     async def views(self) -> int:
