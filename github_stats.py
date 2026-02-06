@@ -93,6 +93,10 @@ class Queries(object):
                     print(f"A path returned 202. Retrying...")
                     await asyncio.sleep(2)
                     continue
+                if r_async.status == 403:
+                    # No permission for this endpoint (e.g. traffic on
+                    # repos the user doesn't own) – skip silently
+                    return dict()
 
                 result = await r_async.json()
                 if result is not None:
@@ -110,6 +114,8 @@ class Queries(object):
                         print(f"A path returned 202. Retrying...")
                         await asyncio.sleep(2)
                         continue
+                    elif r_requests.status_code == 403:
+                        return dict()
                     elif r_requests.status_code == 200:
                         return r_requests.json()
         print("There were too many 202s. Data for this repository will be incomplete.")
@@ -274,6 +280,7 @@ class Stats(object):
         self._views: Optional[int] = None
         self._lines_changed_by_week: Optional[Dict[str, Tuple[int, int]]] = None
         self._contributions_by_year: Optional[Dict[int, int]] = None
+        self._login: Optional[str] = None
 
     async def to_str(self) -> str:
         """
@@ -317,9 +324,6 @@ Languages:
         weekly = await self.lines_changed_by_week
         weekly_serializable = {k: list(v) for k, v in weekly.items()}
 
-        # Derive total_contributions from contributions_by_year to stay
-        # consistent (avoids a separate API call that could yield different
-        # numbers).
         total_contribs = sum(contribs_by_year.values())
 
         return {
@@ -358,22 +362,19 @@ Languages:
             )
             raw_results = raw_results if raw_results is not None else {}
 
-            self._name = raw_results.get("data", {}).get("viewer", {}).get("name", None)
-            if self._name is None:
-                self._name = (
-                    raw_results.get("data", {})
-                    .get("viewer", {})
-                    .get("login", "No Name")
-                )
+            viewer = raw_results.get("data", {}).get("viewer", {})
 
-            contrib_repos = (
-                raw_results.get("data", {})
-                .get("viewer", {})
-                .get("repositoriesContributedTo", {})
-            )
-            owned_repos = (
-                raw_results.get("data", {}).get("viewer", {}).get("repositories", {})
-            )
+            # Capture the actual login name from the API for case-accurate
+            # comparisons in contributor stats later.
+            if self._login is None:
+                self._login = viewer.get("login")
+
+            self._name = viewer.get("name", None)
+            if self._name is None:
+                self._name = viewer.get("login", "No Name")
+
+            contrib_repos = viewer.get("repositoriesContributedTo", {})
+            owned_repos = viewer.get("repositories", {})
 
             repos = owned_repos.get("nodes", [])
             if not self._ignore_forked_repos:
@@ -416,11 +417,21 @@ Languages:
             else:
                 break
 
-        # TODO: Improve languages to scale by number of contributions to
-        #       specific filetypes
         langs_total = sum([v.get("size", 0) for v in self._languages.values()])
         for k, v in self._languages.items():
             v["prop"] = 100 * (v.get("size", 0) / langs_total)
+
+    async def _get_login(self) -> str:
+        """
+        Return the exact GitHub login (case-sensitive) for use in REST API
+        comparisons. Falls back to self.username if the API hasn't been
+        queried yet.
+        """
+        if self._login is not None:
+            return self._login
+        # Trigger get_stats which populates _login from the GraphQL response
+        await self.get_stats()
+        return self._login if self._login is not None else self.username
 
     async def _fetch_contributor_stats(self) -> None:
         """
@@ -432,12 +443,15 @@ Languages:
         deletions = 0
         weekly: Dict[str, List[int]] = {}
 
+        # Use the exact login from the GraphQL API for case-insensitive
+        # matching against the REST API contributor data.
+        login = (await self._get_login()).lower()
+
         for repo in await self.repos:
             r = await self.queries.query_rest(f"/repos/{repo}/stats/contributors")
-            # The API returns a list of contributor objects, but query_rest
-            # falls back to an empty dict on failure.  Ensure we only iterate
-            # over a proper list.
             if not isinstance(r, list):
+                print(f"  [lines] Skipping {repo}: "
+                      f"unexpected response type {type(r).__name__}")
                 continue
 
             for author_obj in r:
@@ -446,7 +460,9 @@ Languages:
                 author_info = author_obj.get("author")
                 if not isinstance(author_info, dict):
                     continue
-                if author_info.get("login", "") != self.username:
+                # Case-insensitive comparison to avoid mismatches between
+                # GITHUB_ACTOR and the actual API login.
+                if author_info.get("login", "").lower() != login:
                     continue
 
                 for week in author_obj.get("weeks", []):
@@ -473,9 +489,6 @@ Languages:
 
     @property
     async def name(self) -> str:
-        """
-        :return: GitHub user's name (e.g., Jacob Strieb)
-        """
         if self._name is not None:
             return self._name
         await self.get_stats()
@@ -484,9 +497,6 @@ Languages:
 
     @property
     async def stargazers(self) -> int:
-        """
-        :return: total number of stargazers on user's repos
-        """
         if self._stargazers is not None:
             return self._stargazers
         await self.get_stats()
@@ -495,9 +505,6 @@ Languages:
 
     @property
     async def forks(self) -> int:
-        """
-        :return: total number of forks on user's repos
-        """
         if self._forks is not None:
             return self._forks
         await self.get_stats()
@@ -506,9 +513,6 @@ Languages:
 
     @property
     async def languages(self) -> Dict:
-        """
-        :return: summary of languages used by the user
-        """
         if self._languages is not None:
             return self._languages
         await self.get_stats()
@@ -517,20 +521,13 @@ Languages:
 
     @property
     async def languages_proportional(self) -> Dict:
-        """
-        :return: summary of languages used by the user, with proportional usage
-        """
         if self._languages is None:
             await self.get_stats()
             assert self._languages is not None
-
         return {k: v.get("prop", 0) for (k, v) in self._languages.items()}
 
     @property
     async def repos(self) -> Set[str]:
-        """
-        :return: list of names of user's repos
-        """
         if self._repos is not None:
             return self._repos
         await self.get_stats()
@@ -539,9 +536,6 @@ Languages:
 
     @property
     async def total_contributions(self) -> int:
-        """
-        :return: count of user's total contributions as defined by GitHub
-        """
         if self._total_contributions is not None:
             return self._total_contributions
 
@@ -567,9 +561,6 @@ Languages:
 
     @property
     async def contributions_by_year(self) -> Dict[int, int]:
-        """
-        :return: dict mapping year (int) to total contributions for that year
-        """
         if self._contributions_by_year is not None:
             return self._contributions_by_year
 
@@ -598,9 +589,6 @@ Languages:
 
     @property
     async def lines_changed(self) -> Tuple[int, int]:
-        """
-        :return: count of total lines added, removed, or modified by the user
-        """
         if self._lines_changed is not None:
             return self._lines_changed
         await self._fetch_contributor_stats()
@@ -609,10 +597,6 @@ Languages:
 
     @property
     async def lines_changed_by_week(self) -> Dict[str, Tuple[int, int]]:
-        """
-        :return: dict mapping ISO week string (YYYY-MM-DD) to (additions, deletions)
-                 aggregated across all repos for weeks with activity
-        """
         if self._lines_changed_by_week is not None:
             return self._lines_changed_by_week
         await self._fetch_contributor_stats()
@@ -631,9 +615,12 @@ Languages:
         total = 0
         for repo in await self.repos:
             r = await self.queries.query_rest(f"/repos/{repo}/traffic/views")
-            if isinstance(r, dict):
-                for view in r.get("views", []):
-                    total += view.get("count", 0)
+            if not isinstance(r, dict):
+                continue
+            # Use the top-level "count" field which is the total for the last
+            # 14 days.  This is more reliable than summing the per-day entries
+            # which may be truncated or missing days.
+            total += r.get("count", 0)
 
         self._views = total
         return total
