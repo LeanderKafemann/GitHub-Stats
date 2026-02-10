@@ -264,24 +264,29 @@ async def generate_history(s: Stats) -> None:
     dates = [snap.get("date", "") for snap in history]
     n = len(dates)
 
-    # Monthly lines changed (from per-snapshot monthly fields or delta)
+    # Monthly lines changed – compute from the weekly data embedded in each
+    # snapshot so that every data-point reflects actual activity instead of
+    # a (possibly negative / zero) cumulative delta.
+    monthly_adds_series: List[int] = []
+    monthly_dels_series: List[int] = []
     monthly_lines: List[int] = []
-    for i, snap in enumerate(history):
-        m_add = snap.get("lines_added_month", 0)
-        m_del = snap.get("lines_deleted_month", 0)
-        if m_add or m_del:
-            monthly_lines.append(m_add + m_del)
+    for snap in history:
+        weekly = snap.get("lines_changed_by_week", {})
+        if weekly:
+            total_a = sum(
+                int(v[0]) for v in weekly.values()
+                if isinstance(v, (list, tuple)) and len(v) >= 2
+            )
+            total_d = sum(
+                int(v[1]) for v in weekly.values()
+                if isinstance(v, (list, tuple)) and len(v) >= 2
+            )
         else:
-            # For real snapshots: compute delta from previous
-            total_now = snap.get("lines_added", 0) + snap.get("lines_deleted", 0)
-            if i > 0:
-                prev = history[i - 1]
-                total_prev = prev.get("lines_added", 0) + prev.get(
-                    "lines_deleted", 0
-                )
-                monthly_lines.append(max(0, total_now - total_prev))
-            else:
-                monthly_lines.append(total_now)
+            total_a = snap.get("lines_added", 0)
+            total_d = snap.get("lines_deleted", 0)
+        monthly_adds_series.append(total_a)
+        monthly_dels_series.append(total_d)
+        monthly_lines.append(total_a + total_d)
 
     # Language proportions per snapshot
     lang_series: Dict[str, List[float]] = {lang: [] for lang in top_langs}
@@ -290,11 +295,18 @@ async def generate_history(s: Stats) -> None:
         for lang in top_langs:
             lang_series[lang].append(langs.get(lang, {}).get("prop", 0.0))
 
+    has_lang_data = any(
+        any(vals) for vals in lang_series.values()
+    ) if top_langs else False
+
     # Stars over time
     stars_series = [snap.get("stargazers", 0) for snap in history]
 
     # Repo count over time
     repo_series = [snap.get("repo_count", 0) for snap in history]
+
+    # Total contributions over time
+    contribs_series = [snap.get("total_contributions", 0) for snap in history]
 
     # ── Chart dimensions ─────────────────────────────────────────────────
     svg_width = 900
@@ -317,6 +329,9 @@ async def generate_history(s: Stats) -> None:
     line_color = "#58a6ff"
     area_color = "#58a6ff"
     star_color = "#e3b341"
+    add_color = "#3fb950"
+    del_color = "#f85149"
+    contrib_color = "#bc8cff"
 
     # ── SVG construction ─────────────────────────────────────────────────
     svg: List[str] = []
@@ -332,6 +347,14 @@ async def generate_history(s: Stats) -> None:
     <stop offset="0%" stop-color="{area_color}" stop-opacity="0.35"/>
     <stop offset="100%" stop-color="{area_color}" stop-opacity="0.02"/>
   </linearGradient>
+  <linearGradient id="addGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="{add_color}" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="{add_color}" stop-opacity="0.02"/>
+  </linearGradient>
+  <linearGradient id="delGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="{del_color}" stop-opacity="0.25"/>
+    <stop offset="100%" stop-color="{del_color}" stop-opacity="0.02"/>
+  </linearGradient>
 </defs>
 <style>
   .title {{ font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
@@ -339,6 +362,8 @@ async def generate_history(s: Stats) -> None:
   .axis-label {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
   .legend-text {{ font: 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
   .value-text {{ font: bold 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .stat-value {{ font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .stat-label {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
   @keyframes fadeIn {{ from {{ opacity: 0; }} to {{ opacity: 1; }} }}
   .anim {{ animation: fadeIn 0.6s ease-in-out forwards; opacity: 0; }}
 </style>
@@ -356,7 +381,7 @@ async def generate_history(s: Stats) -> None:
     )
     svg.append(
         f'<text x="{margin_left}" y="48" class="subtitle">'
-        f'Lines changed per month &amp; language trends over time</text>'
+        f'Lines added vs deleted &amp; activity trends over time</text>'
     )
 
     step_x = chart_w / max(n - 1, 1)
@@ -380,44 +405,71 @@ async def generate_history(s: Stats) -> None:
                 f'{label_fmt.format(val)}</text>'
             )
 
-    # ── Chart 1: Monthly lines changed (area) ───────────────────────────
+    # ── Chart 1: Lines added vs deleted (area) ─────────────────────────
     max_monthly = max(monthly_lines) if monthly_lines else 1
     if max_monthly == 0:
         max_monthly = 1
 
     draw_grid(chart1_top, chart_h_top, float(max_monthly))
 
-    points: List[str] = []
-    for i, val in enumerate(monthly_lines):
+    # Lines-added area (green)
+    add_pts: List[str] = []
+    for i, val in enumerate(monthly_adds_series):
         x = margin_left + i * step_x
         y = chart1_top + chart_h_top - (val / max_monthly) * chart_h_top
-        points.append(f"{x:.1f},{y:.1f}")
+        add_pts.append(f"{x:.1f},{y:.1f}")
 
-    # Area fill
     bottom1 = chart1_top + chart_h_top
-    area_poly = (
+    add_area = (
         f"{margin_left:.1f},{bottom1:.1f} "
-        + " ".join(points)
+        + " ".join(add_pts)
         + f" {margin_left + (n - 1) * step_x:.1f},{bottom1:.1f}"
     )
     svg.append(
-        f'<polygon points="{area_poly}" fill="url(#areaGrad)" '
+        f'<polygon points="{add_area}" fill="url(#addGrad)" '
         f'class="anim" style="animation-delay:200ms;"/>'
     )
     svg.append(
-        f'<polyline points="{" ".join(points)}" fill="none" '
-        f'stroke="{line_color}" stroke-width="2" stroke-linejoin="round" '
+        f'<polyline points="{" ".join(add_pts)}" fill="none" '
+        f'stroke="{add_color}" stroke-width="2" stroke-linejoin="round" '
+        f'class="anim" style="animation-delay:250ms;"/>'
+    )
+
+    # Lines-deleted area (red)
+    del_pts: List[str] = []
+    for i, val in enumerate(monthly_dels_series):
+        x = margin_left + i * step_x
+        y = chart1_top + chart_h_top - (val / max_monthly) * chart_h_top
+        del_pts.append(f"{x:.1f},{y:.1f}")
+
+    del_area = (
+        f"{margin_left:.1f},{bottom1:.1f} "
+        + " ".join(del_pts)
+        + f" {margin_left + (n - 1) * step_x:.1f},{bottom1:.1f}"
+    )
+    svg.append(
+        f'<polygon points="{del_area}" fill="url(#delGrad)" '
         f'class="anim" style="animation-delay:300ms;"/>'
+    )
+    svg.append(
+        f'<polyline points="{" ".join(del_pts)}" fill="none" '
+        f'stroke="{del_color}" stroke-width="1.5" stroke-linejoin="round" '
+        f'class="anim" style="animation-delay:350ms;"/>'
     )
 
     # Stars overlay (secondary axis, right side)
     max_stars = max(stars_series) if stars_series else 1
-    if max_stars == 0:
-        max_stars = 1
+    min_stars = min(stars_series) if stars_series else 0
+    star_range = max_stars - min_stars
+    if star_range == 0:
+        star_range = max(max_stars, 1)
+        star_base = min_stars - star_range * 0.5
+    else:
+        star_base = min_stars
     star_pts: List[str] = []
     for i, val in enumerate(stars_series):
         x = margin_left + i * step_x
-        y = chart1_top + chart_h_top - (val / max_stars) * chart_h_top
+        y = chart1_top + chart_h_top - ((val - star_base) / star_range) * chart_h_top * 0.8
         star_pts.append(f"{x:.1f},{y:.1f}")
     svg.append(
         f'<polyline points="{" ".join(star_pts)}" fill="none" '
@@ -428,53 +480,108 @@ async def generate_history(s: Stats) -> None:
     # Chart 1 label
     svg.append(
         f'<text x="{margin_left}" y="{chart1_top - 6}" '
-        f'class="subtitle">Lines Changed / Month</text>'
+        f'class="subtitle">Lines Added vs Deleted (per snapshot)</text>'
     )
 
-    # ── Chart 2: Language proportions (stacked area) ─────────────────────
-    svg.append(
-        f'<text x="{margin_left}" y="{chart2_top - 6}" '
-        f'class="subtitle">Top Language Proportions (%)</text>'
-    )
-    draw_grid(chart2_top, chart_h_bottom, 100.0, "{:.0f}%")
-
-    # Build stacked values
-    stacked_bottoms = [0.0] * n
-    for lang_idx, lang in enumerate(top_langs):
-        color = lang_color_map.get(lang, "#888888")
-        area_pts_top: List[str] = []
-        area_pts_bottom: List[str] = []
-
-        for i in range(n):
-            x = margin_left + i * step_x
-            val = lang_series[lang][i]
-            y_bottom = (
-                chart2_top
-                + chart_h_bottom
-                - (stacked_bottoms[i] / 100.0) * chart_h_bottom
-            )
-            y_top = (
-                chart2_top
-                + chart_h_bottom
-                - ((stacked_bottoms[i] + val) / 100.0) * chart_h_bottom
-            )
-            area_pts_top.append(f"{x:.1f},{y_top:.1f}")
-            area_pts_bottom.append(f"{x:.1f},{y_bottom:.1f}")
-            stacked_bottoms[i] += val
-
-        # Polygon: top line forward, bottom line backward
-        poly = " ".join(area_pts_top) + " " + " ".join(reversed(area_pts_bottom))
+    # ── Chart 2: Language proportions OR contributions over time ────────
+    if has_lang_data:
         svg.append(
-            f'<polygon points="{poly}" fill="{color}" opacity="0.6" '
-            f'class="anim" style="animation-delay:{500 + lang_idx * 100}ms;"/>'
+            f'<text x="{margin_left}" y="{chart2_top - 6}" '
+            f'class="subtitle">Top Language Proportions (%)</text>'
+        )
+        draw_grid(chart2_top, chart_h_bottom, 100.0, "{:.0f}%")
+
+        # Build stacked values
+        stacked_bottoms = [0.0] * n
+        for lang_idx, lang in enumerate(top_langs):
+            color = lang_color_map.get(lang, "#888888")
+            area_pts_top: List[str] = []
+            area_pts_bottom: List[str] = []
+
+            for i in range(n):
+                x = margin_left + i * step_x
+                val = lang_series[lang][i]
+                y_bottom = (
+                    chart2_top
+                    + chart_h_bottom
+                    - (stacked_bottoms[i] / 100.0) * chart_h_bottom
+                )
+                y_top = (
+                    chart2_top
+                    + chart_h_bottom
+                    - ((stacked_bottoms[i] + val) / 100.0) * chart_h_bottom
+                )
+                area_pts_top.append(f"{x:.1f},{y_top:.1f}")
+                area_pts_bottom.append(f"{x:.1f},{y_bottom:.1f}")
+                stacked_bottoms[i] += val
+
+            poly = " ".join(area_pts_top) + " " + " ".join(reversed(area_pts_bottom))
+            svg.append(
+                f'<polygon points="{poly}" fill="{color}" opacity="0.6" '
+                f'class="anim" style="animation-delay:{500 + lang_idx * 100}ms;"/>'
+            )
+    else:
+        # Fallback: show total contributions over time when no language data
+        svg.append(
+            f'<text x="{margin_left}" y="{chart2_top - 6}" '
+            f'class="subtitle">Total Contributions &amp; Repos Over Time</text>'
+        )
+        max_contribs = max(contribs_series) if contribs_series else 1
+        if max_contribs == 0:
+            max_contribs = 1
+        draw_grid(chart2_top, chart_h_bottom, float(max_contribs))
+
+        # Contributions line
+        contrib_pts: List[str] = []
+        for i, val in enumerate(contribs_series):
+            x = margin_left + i * step_x
+            y = chart2_top + chart_h_bottom - (val / max_contribs) * chart_h_bottom
+            contrib_pts.append(f"{x:.1f},{y:.1f}")
+
+        bottom2 = chart2_top + chart_h_bottom
+        contrib_area = (
+            f"{margin_left:.1f},{bottom2:.1f} "
+            + " ".join(contrib_pts)
+            + f" {margin_left + (n - 1) * step_x:.1f},{bottom2:.1f}"
+        )
+        svg.append(
+            f'<polygon points="{contrib_area}" fill="url(#areaGrad)" '
+            f'class="anim" style="animation-delay:500ms;"/>'
+        )
+        svg.append(
+            f'<polyline points="{" ".join(contrib_pts)}" fill="none" '
+            f'stroke="{contrib_color}" stroke-width="2" stroke-linejoin="round" '
+            f'class="anim" style="animation-delay:550ms;"/>'
+        )
+
+        # Repos overlay (secondary axis)
+        max_repos = max(repo_series) if repo_series else 1
+        if max_repos == 0:
+            max_repos = 1
+        repo_pts: List[str] = []
+        for i, val in enumerate(repo_series):
+            x = margin_left + i * step_x
+            y = chart2_top + chart_h_bottom - (val / max_repos) * chart_h_bottom
+            repo_pts.append(f"{x:.1f},{y:.1f}")
+        svg.append(
+            f'<polyline points="{" ".join(repo_pts)}" fill="none" '
+            f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3" '
+            f'stroke-linejoin="round" class="anim" style="animation-delay:600ms;"/>'
         )
 
     # ── X-axis labels (shared) ───────────────────────────────────────────
+    # Determine label format: use full date if month prefix is identical
+    date_prefixes = {d[:7] for d in dates if len(d) >= 7}
+    use_full_date = len(date_prefixes) <= 1
+
     label_step = max(1, n // 10)
     for i in range(0, n, label_step):
         x = margin_left + i * step_x
         label_y = chart2_top + chart_h_bottom + 18
-        label_text = dates[i][:7] if len(dates[i]) >= 7 else dates[i]
+        if use_full_date:
+            label_text = dates[i]
+        else:
+            label_text = dates[i][:7] if len(dates[i]) >= 7 else dates[i]
         svg.append(
             f'<text x="{x:.1f}" y="{label_y}" '
             f'text-anchor="middle" class="axis-label" '
@@ -486,53 +593,87 @@ async def generate_history(s: Stats) -> None:
     legend_x = margin_left + chart_w + 16
     legend_y = chart1_top + 10
 
-    # Lines changed legend
+    # Lines added legend
     svg.append(
         f'<line x1="{legend_x}" y1="{legend_y}" '
         f'x2="{legend_x + 20}" y2="{legend_y}" '
-        f'stroke="{line_color}" stroke-width="2"/>'
+        f'stroke="{add_color}" stroke-width="2"/>'
     )
     svg.append(
         f'<text x="{legend_x + 26}" y="{legend_y + 4}" '
-        f'class="legend-text">Lines Changed</text>'
+        f'class="legend-text">Lines Added</text>'
+    )
+
+    # Lines deleted legend
+    svg.append(
+        f'<line x1="{legend_x}" y1="{legend_y + 18}" '
+        f'x2="{legend_x + 20}" y2="{legend_y + 18}" '
+        f'stroke="{del_color}" stroke-width="1.5"/>'
+    )
+    svg.append(
+        f'<text x="{legend_x + 26}" y="{legend_y + 22}" '
+        f'class="legend-text">Lines Deleted</text>'
     )
 
     # Stars legend
     svg.append(
-        f'<line x1="{legend_x}" y1="{legend_y + 22}" '
-        f'x2="{legend_x + 20}" y2="{legend_y + 22}" '
+        f'<line x1="{legend_x}" y1="{legend_y + 38}" '
+        f'x2="{legend_x + 20}" y2="{legend_y + 38}" '
         f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3"/>'
     )
     svg.append(
-        f'<text x="{legend_x + 26}" y="{legend_y + 26}" '
-        f'class="legend-text">Stars</text>'
+        f'<text x="{legend_x + 26}" y="{legend_y + 42}" '
+        f'class="legend-text">&#x2605; Stars</text>'
     )
 
-    # Language legend
-    lang_legend_y = legend_y + 60
-    svg.append(
-        f'<text x="{legend_x}" y="{lang_legend_y}" '
-        f'class="subtitle">Languages</text>'
-    )
-    for i, lang in enumerate(top_langs):
-        ly = lang_legend_y + 20 + i * 22
-        color = lang_color_map.get(lang, "#888888")
-        prop = lang_series[lang][-1] if lang_series[lang] else 0
+    # Language or contributions legend for chart 2
+    if has_lang_data:
+        lang_legend_y = legend_y + 72
         svg.append(
-            f'<rect x="{legend_x}" y="{ly - 9}" width="12" height="12" '
-            f'rx="2" fill="{color}" opacity="0.8" '
-            f'class="anim" style="animation-delay:{800 + i * 80}ms;"/>'
+            f'<text x="{legend_x}" y="{lang_legend_y}" '
+            f'class="subtitle">Languages</text>'
+        )
+        for i, lang in enumerate(top_langs):
+            ly = lang_legend_y + 20 + i * 22
+            color = lang_color_map.get(lang, "#888888")
+            prop = lang_series[lang][-1] if lang_series[lang] else 0
+            svg.append(
+                f'<rect x="{legend_x}" y="{ly - 9}" width="12" height="12" '
+                f'rx="2" fill="{color}" opacity="0.8" '
+                f'class="anim" style="animation-delay:{800 + i * 80}ms;"/>'
+            )
+            svg.append(
+                f'<text x="{legend_x + 18}" y="{ly + 1}" '
+                f'class="legend-text">{lang} ({prop:.1f}%)</text>'
+            )
+        next_section_y = lang_legend_y + 20 + len(top_langs) * 22 + 20
+    else:
+        chart2_legend_y = legend_y + 72
+        svg.append(
+            f'<line x1="{legend_x}" y1="{chart2_legend_y}" '
+            f'x2="{legend_x + 20}" y2="{chart2_legend_y}" '
+            f'stroke="{contrib_color}" stroke-width="2"/>'
         )
         svg.append(
-            f'<text x="{legend_x + 18}" y="{ly + 1}" '
-            f'class="legend-text">{lang} ({prop:.1f}%)</text>'
+            f'<text x="{legend_x + 26}" y="{chart2_legend_y + 4}" '
+            f'class="legend-text">Contributions</text>'
         )
+        svg.append(
+            f'<line x1="{legend_x}" y1="{chart2_legend_y + 20}" '
+            f'x2="{legend_x + 20}" y2="{chart2_legend_y + 20}" '
+            f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3"/>'
+        )
+        svg.append(
+            f'<text x="{legend_x + 26}" y="{chart2_legend_y + 24}" '
+            f'class="legend-text">Repos</text>'
+        )
+        next_section_y = chart2_legend_y + 54
 
     # Contributions-by-year mini summary
     contribs_by_year = current_snapshot.get("contributions_by_year", {})
     sorted_years = sorted(contribs_by_year.keys())
     if sorted_years:
-        cy_y = lang_legend_y + 20 + len(top_langs) * 22 + 20
+        cy_y = next_section_y
         svg.append(
             f'<text x="{legend_x}" y="{cy_y}" '
             f'class="subtitle">Contributions</text>'
@@ -543,11 +684,59 @@ async def generate_history(s: Stats) -> None:
                 f'<text x="{legend_x}" y="{cy_y + 18 + i * 16}" '
                 f'class="axis-label">{year}: {val:,}</text>'
             )
+        next_section_y = cy_y + 18 + len(sorted_years) * 16 + 10
+
+    # ── Additional statistics (right side) ───────────────────────────────
+    # Contribution streak (consecutive days with contributions from weekly data)
+    weekly_data = current_snapshot.get("lines_changed_by_week", {})
+    if weekly_data:
+        sorted_weeks = sorted(weekly_data.keys())
+        # Most active week
+        most_active_week = max(
+            sorted_weeks,
+            key=lambda w: sum(
+                int(x) for x in weekly_data[w]
+            ) if isinstance(weekly_data[w], (list, tuple)) else 0
+        )
+        most_active_val = sum(int(x) for x in weekly_data[most_active_week])
+        active_weeks = len(sorted_weeks)
+
+        # Add/delete ratio
+        total_a = sum(
+            int(v[0]) for v in weekly_data.values()
+            if isinstance(v, (list, tuple)) and len(v) >= 2
+        )
+        total_d = sum(
+            int(v[1]) for v in weekly_data.values()
+            if isinstance(v, (list, tuple)) and len(v) >= 2
+        )
+        ratio_str = f"{total_a / total_d:.1f}x" if total_d > 0 else "N/A"
+
+        # Average lines per week
+        avg_lines = (total_a + total_d) / active_weeks if active_weeks > 0 else 0
+
+        stat_y = next_section_y
+        svg.append(
+            f'<text x="{legend_x}" y="{stat_y}" '
+            f'class="subtitle">Statistics</text>'
+        )
+        stats_items = [
+            (f"Active weeks: {active_weeks}",),
+            (f"Add/Del ratio: {ratio_str}",),
+            (f"Avg lines/week: {avg_lines:,.0f}",),
+            (f"Peak: {most_active_week}",),
+            (f"  ({most_active_val:,} lines)",),
+        ]
+        for i, (text,) in enumerate(stats_items):
+            svg.append(
+                f'<text x="{legend_x}" y="{stat_y + 18 + i * 15}" '
+                f'class="axis-label">{text}</text>'
+            )
 
     # ── Summary footer ───────────────────────────────────────────────────
-    total_lines = current_snapshot.get("lines_added", 0) + current_snapshot.get(
-        "lines_deleted", 0
-    )
+    total_adds = current_snapshot.get("lines_added", 0)
+    total_dels = current_snapshot.get("lines_deleted", 0)
+    total_lines = total_adds + total_dels
     total_contribs = current_snapshot.get("total_contributions", 0)
     total_repos = current_snapshot.get("repo_count", 0)
     total_stars = current_snapshot.get("stargazers", 0)
@@ -555,10 +744,10 @@ async def generate_history(s: Stats) -> None:
     summary_y = svg_height - 14
     svg.append(
         f'<text x="{margin_left}" y="{summary_y}" class="axis-label">'
-        f"Total: {total_lines:,} lines changed \u00b7 "
-        f"{total_contribs:,} contributions \u00b7 "
-        f"{total_repos} repos \u00b7 "
-        f"\u2605 {total_stars:,}</text>"
+        f"Total: +{total_adds:,} / -{total_dels:,} lines &#xb7; "
+        f"{total_contribs:,} contributions &#xb7; "
+        f"{total_repos} repos &#xb7; "
+        f"&#x2605; {total_stars:,}</text>"
     )
 
     svg.append("</svg>")
