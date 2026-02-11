@@ -32,38 +32,39 @@
 <line x1="65" y1="240.0" x2="720" y2="240.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="244.0" text-anchor="end" class="axis-label">0</text>
 <line x1="65" y1="195.0" x2="720" y2="195.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="199.0" text-anchor="end" class="axis-label">116,918</text>
+<text x="57" y="199.0" text-anchor="end" class="axis-label">137,499</text>
 <line x1="65" y1="150.0" x2="720" y2="150.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="154.0" text-anchor="end" class="axis-label">233,837</text>
+<text x="57" y="154.0" text-anchor="end" class="axis-label">274,998</text>
 <line x1="65" y1="105.0" x2="720" y2="105.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="109.0" text-anchor="end" class="axis-label">350,756</text>
+<text x="57" y="109.0" text-anchor="end" class="axis-label">412,497</text>
 <line x1="65" y1="60.0" x2="720" y2="60.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="64.0" text-anchor="end" class="axis-label">467,674</text>
-<polygon points="65.0,240.0 65.0,99.5 228.8,104.6 392.5,99.6 556.2,104.6 720.0,137.0 720.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
-<polyline points="65.0,99.5 228.8,104.6 392.5,99.6 556.2,104.6 720.0,137.0" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
-<polygon points="65.0,240.0 65.0,200.5 228.8,204.6 392.5,200.5 556.2,204.5 720.0,221.4 720.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
-<polyline points="65.0,200.5 228.8,204.6 392.5,200.5 556.2,204.5 720.0,221.4" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
-<polyline points="65.0,168.0 228.8,168.0 392.5,168.0 556.2,168.0 720.0,168.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
+<text x="57" y="64.0" text-anchor="end" class="axis-label">549,996</text>
+<polygon points="65.0,240.0 65.0,120.5 196.0,124.9 327.0,120.6 458.0,124.9 589.0,152.4 720.0,97.7 720.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
+<polyline points="65.0,120.5 196.0,124.9 327.0,120.6 458.0,124.9 589.0,152.4 720.0,97.7" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
+<polygon points="65.0,240.0 65.0,206.4 196.0,209.9 327.0,206.4 458.0,209.8 589.0,224.2 720.0,202.3 720.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
+<polyline points="65.0,206.4 196.0,209.9 327.0,206.4 458.0,209.8 589.0,224.2 720.0,202.3" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
+<polyline points="65.0,168.0 196.0,168.0 327.0,168.0 458.0,168.0 589.0,168.0 720.0,168.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
 <text x="65" y="54" class="subtitle">Lines Added vs Deleted (per snapshot)</text>
 <text x="65" y="294" class="subtitle">Total Contributions &amp; Repos Over Time</text>
 <line x1="65" y1="480.0" x2="720" y2="480.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="484.0" text-anchor="end" class="axis-label">0</text>
 <line x1="65" y1="435.0" x2="720" y2="435.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="439.0" text-anchor="end" class="axis-label">632</text>
+<text x="57" y="439.0" text-anchor="end" class="axis-label">634</text>
 <line x1="65" y1="390.0" x2="720" y2="390.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="394.0" text-anchor="end" class="axis-label">1,265</text>
+<text x="57" y="394.0" text-anchor="end" class="axis-label">1,269</text>
 <line x1="65" y1="345.0" x2="720" y2="345.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="349.0" text-anchor="end" class="axis-label">1,898</text>
+<text x="57" y="349.0" text-anchor="end" class="axis-label">1,904</text>
 <line x1="65" y1="300.0" x2="720" y2="300.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="304.0" text-anchor="end" class="axis-label">2,530</text>
-<polygon points="65.0,480.0 65.0,301.0 228.8,300.9 392.5,300.9 556.2,300.2 720.0,300.0 720.0,480.0" fill="url(#areaGrad)" class="anim" style="animation-delay:500ms;"/>
-<polyline points="65.0,301.0 228.8,300.9 392.5,300.9 556.2,300.2 720.0,300.0" fill="none" stroke="#bc8cff" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:550ms;"/>
-<polyline points="65.0,302.6 228.8,302.6 392.5,302.6 556.2,300.0 720.0,300.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:600ms;"/>
+<text x="57" y="304.0" text-anchor="end" class="axis-label">2,538</text>
+<polygon points="65.0,480.0 65.0,301.6 196.0,301.5 327.0,301.5 458.0,300.8 589.0,300.6 720.0,300.0 720.0,480.0" fill="url(#areaGrad)" class="anim" style="animation-delay:500ms;"/>
+<polyline points="65.0,301.6 196.0,301.5 327.0,301.5 458.0,300.8 589.0,300.6 720.0,300.0" fill="none" stroke="#bc8cff" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:550ms;"/>
+<polyline points="65.0,302.6 196.0,302.6 327.0,302.6 458.0,300.0 589.0,300.0 720.0,300.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:600ms;"/>
 <text x="65.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 65.0 498)">2026-02-06</text>
-<text x="228.8" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 228.8 498)">2026-02-07</text>
-<text x="392.5" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 392.5 498)">2026-02-08</text>
-<text x="556.2" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 556.2 498)">2026-02-09</text>
-<text x="720.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 720.0 498)">2026-02-10</text>
+<text x="196.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 196.0 498)">2026-02-07</text>
+<text x="327.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 327.0 498)">2026-02-08</text>
+<text x="458.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 458.0 498)">2026-02-09</text>
+<text x="589.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 589.0 498)">2026-02-10</text>
+<text x="720.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 720.0 498)">2026-02-11</text>
 <line x1="736" y1="70" x2="756" y2="70" stroke="#3fb950" stroke-width="2"/>
 <text x="762" y="74" class="legend-text">Lines Added</text>
 <line x1="736" y1="88" x2="756" y2="88" stroke="#f85149" stroke-width="1.5"/>
@@ -78,12 +79,12 @@
 <text x="736" y="214" class="axis-label">2023: 39</text>
 <text x="736" y="230" class="axis-label">2024: 646</text>
 <text x="736" y="246" class="axis-label">2025: 1,723</text>
-<text x="736" y="262" class="axis-label">2026: 122</text>
+<text x="736" y="262" class="axis-label">2026: 130</text>
 <text x="736" y="288" class="subtitle">Statistics</text>
-<text x="736" y="306" class="axis-label">Active weeks: 73</text>
-<text x="736" y="321" class="axis-label">Add/Del ratio: 5.5x</text>
-<text x="736" y="336" class="axis-label">Avg lines/week: 4,328</text>
+<text x="736" y="306" class="axis-label">Active weeks: 74</text>
+<text x="736" y="321" class="axis-label">Add/Del ratio: 3.8x</text>
+<text x="736" y="336" class="axis-label">Avg lines/week: 7,432</text>
 <text x="736" y="351" class="axis-label">Peak: 2025-10-26</text>
-<text x="736" y="366" class="axis-label">  (134,878 lines)</text>
-<text x="65" y="606" class="axis-label">Total: +267,640 / -48,292 lines &#xb7; 2,530 contributions &#xb7; 68 repos &#xb7; &#x2605; 32</text>
+<text x="736" y="366" class="axis-label">  (143,546 lines)</text>
+<text x="65" y="606" class="axis-label">Total: +434,898 / -115,098 lines &#xb7; 2,538 contributions &#xb7; 68 repos &#xb7; &#x2605; 32</text>
 </svg>
