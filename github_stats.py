@@ -100,9 +100,10 @@ class Queries(object):
                         params=params_tuple,
                     )
                 if r_async.status == 202:
-                    # GitHub is computing stats – back off and retry
+                    # GitHub is computing stats â€“ back off and retry with exponential backoff
                     if attempt < max_retries - 1:
-                        await asyncio.sleep(2)
+                        wait_time = 5 * (2 ** attempt)  # Exponential backoff: 5s, 10s, 20s, 40s...
+                        await asyncio.sleep(wait_time)
                         continue
                     else:
                         print(f"  [REST] Gave up after {max_retries} retries "
@@ -131,7 +132,8 @@ class Queries(object):
                         )
                     if r_requests.status_code == 202:
                         if attempt < max_retries - 1:
-                            await asyncio.sleep(2)
+                            wait_time = 5 * (2 ** attempt)  # Exponential backoff
+                            await asyncio.sleep(wait_time)
                             continue
                         else:
                             return dict()

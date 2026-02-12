@@ -17,6 +17,10 @@ from github_stats import Stats
 
 HISTORY_FILE = "generated/history.json"
 
+# Validation thresholds for detecting incomplete GitHub API data
+SUSPICIOUS_DROP_THRESHOLD = 50000  # Absolute line count drop threshold
+SUSPICIOUS_DROP_PERCENTAGE = 0.10  # Relative drop threshold (10%)
+
 
 ################################################################################
 # Helper Functions
@@ -54,6 +58,39 @@ def save_history(snapshots: List[Dict[str, Any]]) -> None:
     generate_output_folder()
     with open(HISTORY_FILE, "w") as f:
         json.dump(snapshots, f, indent=2, ensure_ascii=False)
+
+
+def validate_snapshot(
+    current: Dict[str, Any], previous: Dict[str, Any]
+) -> Tuple[bool, str]:
+    """
+    Validate that the current snapshot has complete data by comparing to previous.
+    Returns (is_valid, reason).
+    
+    A snapshot is considered suspicious if:
+    - Lines added/deleted dropped by more than 50,000 (likely incomplete API data)
+    - The drop is more than 10% of the previous value
+    """
+    if not previous:
+        # No previous data to compare against
+        return True, "No previous snapshot to compare"
+    
+    curr_lines = current.get("lines_added", 0) + current.get("lines_deleted", 0)
+    prev_lines = previous.get("lines_added", 0) + previous.get("lines_deleted", 0)
+    
+    # Allow for small variations due to deletions/force pushes
+    if curr_lines < prev_lines:
+        diff = prev_lines - curr_lines
+        # If the drop is significant, it's suspicious
+        if diff > SUSPICIOUS_DROP_THRESHOLD or (
+            prev_lines > 0 and diff / prev_lines > SUSPICIOUS_DROP_PERCENTAGE
+        ):
+            return False, (
+                f"Suspicious drop in line count: {prev_lines:,} -> {curr_lines:,} "
+                f"(diff: {diff:,}). This likely indicates incomplete GitHub API data."
+            )
+    
+    return True, "Validation passed"
 
 
 def backfill_from_api_data(
@@ -228,10 +265,30 @@ async def generate_history(s: Stats) -> None:
 
     # ── Append today's snapshot (replace if same date) ───────────────────
     today = current_snapshot["date"]
-    history = [snap for snap in history if snap.get("date") != today]
-    history.append(current_snapshot)
+    
+    # Find the most recent previous snapshot (not today)
+    previous_snapshots = [snap for snap in history if snap.get("date") != today]
+    previous_snapshot = previous_snapshots[-1] if previous_snapshots else None
+    
+    # Validate the current snapshot
+    is_valid, reason = validate_snapshot(current_snapshot, previous_snapshot)
+    
+    if not is_valid:
+        # Validation failed - skip update to prevent polluting history with bad data
+        print(f"⚠️  WARNING: {reason}")
+        print("   Keeping previous snapshot instead of updating with potentially incomplete data.")
+        if previous_snapshot:
+            print(f"   Previous valid snapshot: {previous_snapshot.get('date')}")
+        # Note: We intentionally do NOT append current_snapshot here
+    else:
+        # Validation passed - safe to update history
+        print(f"✓ Snapshot validation passed: {reason}")
+        # Remove any existing snapshot for today and add the new one
+        history = [snap for snap in history if snap.get("date") != today]
+        history.append(current_snapshot)
+    
     history.sort(key=lambda snap: snap.get("date", ""))
-
+    
     save_history(history)
 
     # ── Guard: need at least 2 data points for a chart ───────────────────
@@ -483,15 +540,17 @@ async def generate_history(s: Stats) -> None:
         f'class="subtitle">Lines Added vs Deleted (per snapshot)</text>'
     )
 
-    # ── Chart 2: Language proportions OR contributions over time ────────
-    if has_lang_data:
-        svg.append(
-            f'<text x="{margin_left}" y="{chart2_top - 6}" '
-            f'class="subtitle">Top Language Proportions (%)</text>'
-        )
+    # ── Chart 2: Language proportions over time ────────────────────────
+    # Always show language chart (with fallback message if no data)
+    svg.append(
+        f'<text x="{margin_left}" y="{chart2_top - 6}" '
+        f'class="subtitle">Programming Language Development (%)</text>'
+    )
+    
+    if has_lang_data and top_langs:
         draw_grid(chart2_top, chart_h_bottom, 100.0, "{:.0f}%")
 
-        # Build stacked values
+        # Build stacked area chart showing language proportion changes over time
         stacked_bottoms = [0.0] * n
         for lang_idx, lang in enumerate(top_langs):
             color = lang_color_map.get(lang, "#888888")
@@ -521,52 +580,13 @@ async def generate_history(s: Stats) -> None:
                 f'class="anim" style="animation-delay:{500 + lang_idx * 100}ms;"/>'
             )
     else:
-        # Fallback: show total contributions over time when no language data
+        # Show a message when no language data is available yet
+        center_x = margin_left + chart_w / 2
+        center_y = chart2_top + chart_h_bottom / 2
         svg.append(
-            f'<text x="{margin_left}" y="{chart2_top - 6}" '
-            f'class="subtitle">Total Contributions &amp; Repos Over Time</text>'
-        )
-        max_contribs = max(contribs_series) if contribs_series else 1
-        if max_contribs == 0:
-            max_contribs = 1
-        draw_grid(chart2_top, chart_h_bottom, float(max_contribs))
-
-        # Contributions line
-        contrib_pts: List[str] = []
-        for i, val in enumerate(contribs_series):
-            x = margin_left + i * step_x
-            y = chart2_top + chart_h_bottom - (val / max_contribs) * chart_h_bottom
-            contrib_pts.append(f"{x:.1f},{y:.1f}")
-
-        bottom2 = chart2_top + chart_h_bottom
-        contrib_area = (
-            f"{margin_left:.1f},{bottom2:.1f} "
-            + " ".join(contrib_pts)
-            + f" {margin_left + (n - 1) * step_x:.1f},{bottom2:.1f}"
-        )
-        svg.append(
-            f'<polygon points="{contrib_area}" fill="url(#areaGrad)" '
-            f'class="anim" style="animation-delay:500ms;"/>'
-        )
-        svg.append(
-            f'<polyline points="{" ".join(contrib_pts)}" fill="none" '
-            f'stroke="{contrib_color}" stroke-width="2" stroke-linejoin="round" '
-            f'class="anim" style="animation-delay:550ms;"/>'
-        )
-
-        # Repos overlay (secondary axis)
-        max_repos = max(repo_series) if repo_series else 1
-        if max_repos == 0:
-            max_repos = 1
-        repo_pts: List[str] = []
-        for i, val in enumerate(repo_series):
-            x = margin_left + i * step_x
-            y = chart2_top + chart_h_bottom - (val / max_repos) * chart_h_bottom
-            repo_pts.append(f"{x:.1f},{y:.1f}")
-        svg.append(
-            f'<polyline points="{" ".join(repo_pts)}" fill="none" '
-            f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3" '
-            f'stroke-linejoin="round" class="anim" style="animation-delay:600ms;"/>'
+            f'<text x="{center_x}" y="{center_y}" '
+            f'text-anchor="middle" class="subtitle" opacity="0.5">'
+            f'Language data will appear after repositories are analyzed</text>'
         )
 
     # ── X-axis labels (shared) ───────────────────────────────────────────
@@ -626,8 +646,8 @@ async def generate_history(s: Stats) -> None:
         f'class="legend-text">&#x2605; Stars</text>'
     )
 
-    # Language or contributions legend for chart 2
-    if has_lang_data:
+    # Language legend for chart 2
+    if has_lang_data and top_langs:
         lang_legend_y = legend_y + 72
         svg.append(
             f'<text x="{legend_x}" y="{lang_legend_y}" '
@@ -648,26 +668,7 @@ async def generate_history(s: Stats) -> None:
             )
         next_section_y = lang_legend_y + 20 + len(top_langs) * 22 + 20
     else:
-        chart2_legend_y = legend_y + 72
-        svg.append(
-            f'<line x1="{legend_x}" y1="{chart2_legend_y}" '
-            f'x2="{legend_x + 20}" y2="{chart2_legend_y}" '
-            f'stroke="{contrib_color}" stroke-width="2"/>'
-        )
-        svg.append(
-            f'<text x="{legend_x + 26}" y="{chart2_legend_y + 4}" '
-            f'class="legend-text">Contributions</text>'
-        )
-        svg.append(
-            f'<line x1="{legend_x}" y1="{chart2_legend_y + 20}" '
-            f'x2="{legend_x + 20}" y2="{chart2_legend_y + 20}" '
-            f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3"/>'
-        )
-        svg.append(
-            f'<text x="{legend_x + 26}" y="{chart2_legend_y + 24}" '
-            f'class="legend-text">Repos</text>'
-        )
-        next_section_y = chart2_legend_y + 54
+        next_section_y = legend_y + 72
 
     # Contributions-by-year mini summary
     contribs_by_year = current_snapshot.get("contributions_by_year", {})
