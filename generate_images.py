@@ -17,6 +17,10 @@ from github_stats import Stats
 
 HISTORY_FILE = "generated/history.json"
 
+# Validation thresholds for detecting incomplete GitHub API data
+SUSPICIOUS_DROP_THRESHOLD = 50000  # Absolute line count drop threshold
+SUSPICIOUS_DROP_PERCENTAGE = 0.10  # Relative drop threshold (10%)
+
 
 ################################################################################
 # Helper Functions
@@ -77,8 +81,10 @@ def validate_snapshot(
     # Allow for small variations due to deletions/force pushes
     if curr_lines < prev_lines:
         diff = prev_lines - curr_lines
-        # If the drop is significant (>50k lines or >10%), it's suspicious
-        if diff > 50000 or (prev_lines > 0 and diff / prev_lines > 0.10):
+        # If the drop is significant, it's suspicious
+        if diff > SUSPICIOUS_DROP_THRESHOLD or (
+            prev_lines > 0 and diff / prev_lines > SUSPICIOUS_DROP_PERCENTAGE
+        ):
             return False, (
                 f"Suspicious drop in line count: {prev_lines:,} -> {curr_lines:,} "
                 f"(diff: {diff:,}). This likely indicates incomplete GitHub API data."
@@ -268,14 +274,14 @@ async def generate_history(s: Stats) -> None:
     is_valid, reason = validate_snapshot(current_snapshot, previous_snapshot)
     
     if not is_valid:
+        # Validation failed - skip update to prevent polluting history with bad data
         print(f"⚠️  WARNING: {reason}")
         print("   Keeping previous snapshot instead of updating with potentially incomplete data.")
-        # Don't update - keep the existing snapshot for today if it exists
-        # This prevents bad data from polluting the history
         if previous_snapshot:
-            # Add a note that we skipped this update
             print(f"   Previous valid snapshot: {previous_snapshot.get('date')}")
+        # Note: We intentionally do NOT append current_snapshot here
     else:
+        # Validation passed - safe to update history
         print(f"✓ Snapshot validation passed: {reason}")
         # Remove any existing snapshot for today and add the new one
         history = [snap for snap in history if snap.get("date") != today]
