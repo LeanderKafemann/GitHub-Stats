@@ -798,8 +798,8 @@ async def main() -> None:
         await asyncio.gather(
             generate_languages(s),
             generate_overview(s),
-            generate_history(s),
         )
+        await generate_history(s)
 
 
 if __name__ == "__main__":
