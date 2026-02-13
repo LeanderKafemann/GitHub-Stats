@@ -412,7 +412,7 @@ Languages:
 
                 for lang in repo.get("languages", {}).get("edges", []):
                     name = lang.get("node", {}).get("name", "Other")
-                    languages = await self.languages
+                    languages = self._languages
                     if name.lower() in exclude_langs_lower:
                         continue
                     if name in languages:
