@@ -32,28 +32,29 @@
 <line x1="65" y1="240.0" x2="720" y2="240.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="244.0" text-anchor="end" class="axis-label">0</text>
 <line x1="65" y1="195.0" x2="720" y2="195.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="199.0" text-anchor="end" class="axis-label">137,542</text>
+<text x="57" y="199.0" text-anchor="end" class="axis-label">155,148</text>
 <line x1="65" y1="150.0" x2="720" y2="150.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="154.0" text-anchor="end" class="axis-label">275,084</text>
+<text x="57" y="154.0" text-anchor="end" class="axis-label">310,295</text>
 <line x1="65" y1="105.0" x2="720" y2="105.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="109.0" text-anchor="end" class="axis-label">412,627</text>
+<text x="57" y="109.0" text-anchor="end" class="axis-label">465,442</text>
 <line x1="65" y1="60.0" x2="720" y2="60.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="64.0" text-anchor="end" class="axis-label">550,169</text>
-<polygon points="65.0,240.0 65.0,120.6 174.2,124.9 283.3,120.6 392.5,124.9 501.7,152.4 610.8,97.7 720.0,97.7 720.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
-<polyline points="65.0,120.6 174.2,124.9 283.3,120.6 392.5,124.9 501.7,152.4 610.8,97.7 720.0,97.7" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
-<polygon points="65.0,240.0 65.0,206.4 174.2,209.9 283.3,206.5 392.5,209.8 501.7,224.2 610.8,202.3 720.0,202.3 720.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
-<polyline points="65.0,206.4 174.2,209.9 283.3,206.5 392.5,209.8 501.7,224.2 610.8,202.3 720.0,202.3" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
-<polyline points="65.0,168.0 174.2,168.0 283.3,168.0 392.5,168.0 501.7,168.0 610.8,168.0 720.0,168.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
+<text x="57" y="64.0" text-anchor="end" class="axis-label">620,590</text>
+<polygon points="65.0,240.0 65.0,134.1 158.6,138.0 252.1,134.2 345.7,138.0 439.3,162.4 532.9,113.9 626.4,113.8 720.0,95.5 720.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
+<polyline points="65.0,134.1 158.6,138.0 252.1,134.2 345.7,138.0 439.3,162.4 532.9,113.9 626.4,113.8 720.0,95.5" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
+<polygon points="65.0,240.0 65.0,210.2 158.6,213.3 252.1,210.3 345.7,213.3 439.3,226.0 532.9,206.6 626.4,206.6 720.0,204.5 720.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
+<polyline points="65.0,210.2 158.6,213.3 252.1,210.3 345.7,213.3 439.3,226.0 532.9,206.6 626.4,206.6 720.0,204.5" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
+<polyline points="65.0,168.0 158.6,168.0 252.1,168.0 345.7,168.0 439.3,168.0 532.9,168.0 626.4,168.0 720.0,168.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
 <text x="65" y="54" class="subtitle">Lines Added vs Deleted (per snapshot)</text>
 <text x="65" y="294" class="subtitle">Programming Language Development (%)</text>
 <text x="392.5" y="390.0" text-anchor="middle" class="subtitle" opacity="0.5">Language data will appear after repositories are analyzed</text>
 <text x="65.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 65.0 498)">2026-02-06</text>
-<text x="174.2" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 174.2 498)">2026-02-07</text>
-<text x="283.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 283.3 498)">2026-02-08</text>
-<text x="392.5" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 392.5 498)">2026-02-09</text>
-<text x="501.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 501.7 498)">2026-02-10</text>
-<text x="610.8" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 610.8 498)">2026-02-11</text>
-<text x="720.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 720.0 498)">2026-02-12</text>
+<text x="158.6" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 158.6 498)">2026-02-07</text>
+<text x="252.1" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 252.1 498)">2026-02-08</text>
+<text x="345.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 345.7 498)">2026-02-09</text>
+<text x="439.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 439.3 498)">2026-02-10</text>
+<text x="532.9" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 532.9 498)">2026-02-11</text>
+<text x="626.4" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 626.4 498)">2026-02-12</text>
+<text x="720.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 720.0 498)">2026-02-13</text>
 <line x1="736" y1="70" x2="756" y2="70" stroke="#3fb950" stroke-width="2"/>
 <text x="762" y="74" class="legend-text">Lines Added</text>
 <line x1="736" y1="88" x2="756" y2="88" stroke="#f85149" stroke-width="1.5"/>
@@ -64,12 +65,12 @@
 <text x="736" y="160" class="axis-label">2023: 39</text>
 <text x="736" y="176" class="axis-label">2024: 646</text>
 <text x="736" y="192" class="axis-label">2025: 1,723</text>
-<text x="736" y="208" class="axis-label">2026: 134</text>
+<text x="736" y="208" class="axis-label">2026: 155</text>
 <text x="736" y="234" class="subtitle">Statistics</text>
 <text x="736" y="252" class="axis-label">Active weeks: 74</text>
-<text x="736" y="267" class="axis-label">Add/Del ratio: 3.8x</text>
-<text x="736" y="282" class="axis-label">Avg lines/week: 7,435</text>
-<text x="736" y="297" class="axis-label">Peak: 2025-10-26</text>
-<text x="736" y="312" class="axis-label">  (143,546 lines)</text>
-<text x="65" y="606" class="axis-label">Total: +434,986 / -115,183 lines &#xb7; 2,542 contributions &#xb7; 68 repos &#xb7; &#x2605; 32</text>
+<text x="736" y="267" class="axis-label">Add/Del ratio: 4.1x</text>
+<text x="736" y="282" class="axis-label">Avg lines/week: 8,386</text>
+<text x="736" y="297" class="axis-label">Peak: 2026-02-08</text>
+<text x="736" y="312" class="axis-label">  (151,537 lines)</text>
+<text x="65" y="606" class="axis-label">Total: +498,034 / -122,556 lines &#xb7; 2,563 contributions &#xb7; 68 repos &#xb7; &#x2605; 32</text>
 </svg>
