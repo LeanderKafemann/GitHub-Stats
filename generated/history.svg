@@ -65,12 +65,12 @@
 <text x="736" y="160" class="axis-label">2023: 39</text>
 <text x="736" y="176" class="axis-label">2024: 646</text>
 <text x="736" y="192" class="axis-label">2025: 1,723</text>
-<text x="736" y="208" class="axis-label">2026: 155</text>
+<text x="736" y="208" class="axis-label">2026: 159</text>
 <text x="736" y="234" class="subtitle">Statistics</text>
 <text x="736" y="252" class="axis-label">Active weeks: 74</text>
-<text x="736" y="267" class="axis-label">Add/Del ratio: 4.1x</text>
-<text x="736" y="282" class="axis-label">Avg lines/week: 8,386</text>
+<text x="736" y="267" class="axis-label">Add/Del ratio: 5.4x</text>
+<text x="736" y="282" class="axis-label">Avg lines/week: 6,484</text>
 <text x="736" y="297" class="axis-label">Peak: 2026-02-08</text>
-<text x="736" y="312" class="axis-label">  (151,537 lines)</text>
-<text x="65" y="606" class="axis-label">Total: +498,034 / -122,556 lines &#xb7; 2,563 contributions &#xb7; 68 repos &#xb7; &#x2605; 32</text>
+<text x="736" y="312" class="axis-label">  (156,403 lines)</text>
+<text x="65" y="606" class="axis-label">Total: +405,069 / -74,711 lines &#xb7; 2,567 contributions &#xb7; 68 repos &#xb7; &#x2605; 32</text>
 </svg>
