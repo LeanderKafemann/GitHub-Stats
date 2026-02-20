@@ -305,7 +305,11 @@ async def generate_history(s: Stats) -> None:
             )
         return
 
-    # ── Determine top 5 languages across all snapshots ───────────────────
+    # ── Determine top languages across all snapshots ─────────────────────
+    # Include up to 8 languages: global top-8 by cumulative size, plus any
+    # language that was ever in the top 5 for an individual snapshot (so that
+    # language shifts over time are fully captured in the chart).
+    MAX_CHART_LANGS = 8
     lang_totals: Dict[str, int] = {}
     lang_color_map: Dict[str, str] = {}
     for snap in history:
@@ -313,9 +317,29 @@ async def generate_history(s: Stats) -> None:
             lang_totals[name] = lang_totals.get(name, 0) + data.get("size", 0)
             if data.get("color"):
                 lang_color_map[name] = data["color"]
+
+    # Collect languages that were ever in the per-snapshot top 5
+    ever_top5_langs: set = set()
+    for snap in history:
+        snap_langs = snap.get("languages", {})
+        if snap_langs:
+            snap_sorted = sorted(
+                snap_langs.keys(),
+                key=lambda n: snap_langs[n].get("size", 0),
+                reverse=True,
+            )
+            ever_top5_langs.update(snap_sorted[:5])
+
+    # Union of global top-8 and ever-top-5 languages, sorted by global total
+    global_top8 = set(
+        sorted(lang_totals.keys(), key=lambda n: lang_totals[n], reverse=True)[
+            :MAX_CHART_LANGS
+        ]
+    )
+    candidate_langs = global_top8 | ever_top5_langs
     top_langs = sorted(
-        lang_totals.keys(), key=lambda n: lang_totals[n], reverse=True
-    )[:5]
+        candidate_langs, key=lambda n: lang_totals.get(n, 0), reverse=True
+    )[:MAX_CHART_LANGS]
 
     # ── Prepare time series ──────────────────────────────────────────────
     dates = [snap.get("date", "") for snap in history]
@@ -367,7 +391,7 @@ async def generate_history(s: Stats) -> None:
 
     # ── Chart dimensions ─────────────────────────────────────────────────
     svg_width = 900
-    svg_height = 620
+    svg_height = 680
     margin_top = 60
     margin_bottom = 90
     margin_left = 65
