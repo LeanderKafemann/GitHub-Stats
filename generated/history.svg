@@ -29,90 +29,90 @@
 <rect x="0.5" y="0.5" rx="4.5" width="999" height="759" fill="#161b22" stroke="#21262d"/>
 <text x="65" y="30" class="title">Activity History</text>
 <text x="65" y="48" class="subtitle">Lines added vs deleted &amp; activity trends over time</text>
-<line x1="65" y1="240.0" x2="720" y2="240.0" stroke="#21262d" stroke-width="1"/>
+<line x1="65" y1="240.0" x2="820" y2="240.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="244.0" text-anchor="end" class="axis-label">0</text>
-<line x1="65" y1="195.0" x2="720" y2="195.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="199.0" text-anchor="end" class="axis-label">293,018</text>
-<line x1="65" y1="150.0" x2="720" y2="150.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="154.0" text-anchor="end" class="axis-label">586,036</text>
-<line x1="65" y1="105.0" x2="720" y2="105.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="109.0" text-anchor="end" class="axis-label">879,053</text>
-<line x1="65" y1="60.0" x2="720" y2="60.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="64.0" text-anchor="end" class="axis-label">1,172,071</text>
-<polygon points="65.0,240.0 65.0,183.9 108.7,186.0 152.3,184.0 196.0,186.0 239.7,198.9 283.3,173.2 327.0,173.2 370.7,163.5 414.3,163.1 458.0,162.5 501.7,162.5 545.3,145.2 589.0,145.2 632.7,145.1 676.3,119.6 720.0,119.4 720.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
-<polyline points="65.0,183.9 108.7,186.0 152.3,184.0 196.0,186.0 239.7,198.9 283.3,173.2 327.0,173.2 370.7,163.5 414.3,163.1 458.0,162.5 501.7,162.5 545.3,145.2 589.0,145.2 632.7,145.1 676.3,119.6 720.0,119.4" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
-<polygon points="65.0,240.0 65.0,224.2 108.7,225.9 152.3,224.3 196.0,225.8 239.7,232.6 283.3,222.3 327.0,222.3 370.7,221.2 414.3,220.8 458.0,220.5 501.7,220.5 545.3,201.9 589.0,201.9 632.7,201.8 676.3,180.8 720.0,180.6 720.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
-<polyline points="65.0,224.2 108.7,225.9 152.3,224.3 196.0,225.8 239.7,232.6 283.3,222.3 327.0,222.3 370.7,221.2 414.3,220.8 458.0,220.5 501.7,220.5 545.3,201.9 589.0,201.9 632.7,201.8 676.3,180.8 720.0,180.6" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
-<polyline points="65.0,240.0 108.7,240.0 152.3,240.0 196.0,240.0 239.7,240.0 283.3,240.0 327.0,240.0 370.7,240.0 414.3,96.0 458.0,96.0 501.7,96.0 545.3,96.0 589.0,96.0 632.7,96.0 676.3,96.0 720.0,96.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
+<line x1="65" y1="195.0" x2="820" y2="195.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="199.0" text-anchor="end" class="axis-label">293,207</text>
+<line x1="65" y1="150.0" x2="820" y2="150.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="154.0" text-anchor="end" class="axis-label">586,414</text>
+<line x1="65" y1="105.0" x2="820" y2="105.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="109.0" text-anchor="end" class="axis-label">879,621</text>
+<line x1="65" y1="60.0" x2="820" y2="60.0" stroke="#21262d" stroke-width="1"/>
+<text x="57" y="64.0" text-anchor="end" class="axis-label">1,172,828</text>
+<polygon points="65.0,240.0 65.0,184.0 115.3,186.0 165.7,184.0 216.0,186.0 266.3,198.9 316.7,173.3 367.0,173.2 417.3,163.6 467.7,163.2 518.0,162.6 568.3,162.5 618.7,145.3 669.0,145.3 719.3,145.2 769.7,119.7 820.0,119.3 820.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
+<polyline points="65.0,184.0 115.3,186.0 165.7,184.0 216.0,186.0 266.3,198.9 316.7,173.3 367.0,173.2 417.3,163.6 467.7,163.2 518.0,162.6 568.3,162.5 618.7,145.3 669.0,145.3 719.3,145.2 769.7,119.7 820.0,119.3" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
+<polygon points="65.0,240.0 65.0,224.2 115.3,225.9 165.7,224.3 216.0,225.9 266.3,232.6 316.7,222.3 367.0,222.3 417.3,221.2 467.7,220.8 518.0,220.5 568.3,220.5 618.7,201.9 669.0,201.9 719.3,201.8 769.7,180.8 820.0,180.7 820.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
+<polyline points="65.0,224.2 115.3,225.9 165.7,224.3 216.0,225.9 266.3,232.6 316.7,222.3 367.0,222.3 417.3,221.2 467.7,220.8 518.0,220.5 568.3,220.5 618.7,201.9 669.0,201.9 719.3,201.8 769.7,180.8 820.0,180.7" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
+<polyline points="65.0,240.0 115.3,240.0 165.7,240.0 216.0,240.0 266.3,240.0 316.7,240.0 367.0,240.0 417.3,240.0 467.7,96.0 518.0,96.0 568.3,96.0 618.7,96.0 669.0,96.0 719.3,96.0 769.7,96.0 820.0,96.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
 <text x="65" y="54" class="subtitle">Lines Added vs Deleted (per snapshot)</text>
 <text x="65" y="294" class="subtitle">Programming Language Development (%)</text>
-<line x1="65" y1="480.0" x2="720" y2="480.0" stroke="#21262d" stroke-width="1"/>
+<line x1="65" y1="480.0" x2="820" y2="480.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="484.0" text-anchor="end" class="axis-label">0%</text>
-<line x1="65" y1="435.0" x2="720" y2="435.0" stroke="#21262d" stroke-width="1"/>
+<line x1="65" y1="435.0" x2="820" y2="435.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="439.0" text-anchor="end" class="axis-label">25%</text>
-<line x1="65" y1="390.0" x2="720" y2="390.0" stroke="#21262d" stroke-width="1"/>
+<line x1="65" y1="390.0" x2="820" y2="390.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="394.0" text-anchor="end" class="axis-label">50%</text>
-<line x1="65" y1="345.0" x2="720" y2="345.0" stroke="#21262d" stroke-width="1"/>
+<line x1="65" y1="345.0" x2="820" y2="345.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="349.0" text-anchor="end" class="axis-label">75%</text>
-<line x1="65" y1="300.0" x2="720" y2="300.0" stroke="#21262d" stroke-width="1"/>
+<line x1="65" y1="300.0" x2="820" y2="300.0" stroke="#21262d" stroke-width="1"/>
 <text x="57" y="304.0" text-anchor="end" class="axis-label">100%</text>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,388.6 458.0,388.8 501.7,389.8 545.3,366.9 589.0,366.9 632.7,369.6 676.3,356.3 720.0,356.4 720.0,480.0 676.3,480.0 632.7,480.0 589.0,480.0 545.3,480.0 501.7,480.0 458.0,480.0 414.3,480.0 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#e34c26" opacity="0.6" class="anim" style="animation-delay:500ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,358.8 458.0,358.5 501.7,359.2 545.3,349.5 589.0,349.5 632.7,350.4 676.3,337.6 720.0,337.7 720.0,356.4 676.3,356.3 632.7,369.6 589.0,366.9 545.3,366.9 501.7,389.8 458.0,388.8 414.3,388.6 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#f1e05a" opacity="0.6" class="anim" style="animation-delay:600ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,334.2 458.0,334.0 501.7,333.9 545.3,327.7 589.0,327.7 632.7,328.6 676.3,321.7 720.0,321.7 720.0,337.7 676.3,337.6 632.7,350.4 589.0,349.5 545.3,349.5 501.7,359.2 458.0,358.5 414.3,358.8 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#3572A5" opacity="0.6" class="anim" style="animation-delay:700ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,324.2 458.0,324.0 501.7,323.7 545.3,322.1 589.0,322.1 632.7,322.1 676.3,316.7 720.0,316.7 720.0,321.7 676.3,321.7 632.7,328.6 589.0,327.7 545.3,327.7 501.7,333.9 458.0,334.0 414.3,334.2 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#663399" opacity="0.6" class="anim" style="animation-delay:800ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,317.0 458.0,316.9 501.7,316.7 545.3,316.1 589.0,316.1 632.7,316.1 676.3,312.3 720.0,312.3 720.0,316.7 676.3,316.7 632.7,322.1 589.0,322.1 545.3,322.1 501.7,323.7 458.0,324.0 414.3,324.2 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#6E4C13" opacity="0.6" class="anim" style="animation-delay:900ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,310.8 458.0,310.7 501.7,310.6 545.3,310.9 589.0,310.9 632.7,310.9 676.3,308.5 720.0,308.5 720.0,312.3 676.3,312.3 632.7,316.1 589.0,316.1 545.3,316.1 501.7,316.7 458.0,316.9 414.3,317.0 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#F05138" opacity="0.6" class="anim" style="animation-delay:1000ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,306.5 458.0,306.5 501.7,306.4 545.3,305.4 589.0,305.4 632.7,305.4 676.3,304.0 720.0,304.0 720.0,308.5 676.3,308.5 632.7,310.9 589.0,310.9 545.3,310.9 501.7,310.6 458.0,310.7 414.3,310.8 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#083fa1" opacity="0.6" class="anim" style="animation-delay:1100ms;"/>
-<polygon points="65.0,480.0 108.7,480.0 152.3,480.0 196.0,480.0 239.7,480.0 283.3,480.0 327.0,480.0 370.7,480.0 414.3,303.3 458.0,303.3 501.7,303.2 545.3,302.8 589.0,302.8 632.7,302.8 676.3,302.0 720.0,302.0 720.0,304.0 676.3,304.0 632.7,305.4 589.0,305.4 545.3,305.4 501.7,306.4 458.0,306.5 414.3,306.5 370.7,480.0 327.0,480.0 283.3,480.0 239.7,480.0 196.0,480.0 152.3,480.0 108.7,480.0 65.0,480.0" fill="#b07219" opacity="0.6" class="anim" style="animation-delay:1200ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,388.6 518.0,388.8 568.3,389.8 618.7,366.9 669.0,366.9 719.3,369.6 769.7,356.3 820.0,356.3 820.0,480.0 769.7,480.0 719.3,480.0 669.0,480.0 618.7,480.0 568.3,480.0 518.0,480.0 467.7,480.0 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#e34c26" opacity="0.6" class="anim" style="animation-delay:500ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,358.8 518.0,358.5 568.3,359.2 618.7,349.5 669.0,349.5 719.3,350.4 769.7,337.6 820.0,337.6 820.0,356.3 769.7,356.3 719.3,369.6 669.0,366.9 618.7,366.9 568.3,389.8 518.0,388.8 467.7,388.6 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#f1e05a" opacity="0.6" class="anim" style="animation-delay:600ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,334.2 518.0,334.0 568.3,333.9 618.7,327.7 669.0,327.7 719.3,328.6 769.7,321.7 820.0,321.7 820.0,337.6 769.7,337.6 719.3,350.4 669.0,349.5 618.7,349.5 568.3,359.2 518.0,358.5 467.7,358.8 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#3572A5" opacity="0.6" class="anim" style="animation-delay:700ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,324.2 518.0,324.0 568.3,323.7 618.7,322.1 669.0,322.1 719.3,322.1 769.7,316.7 820.0,316.6 820.0,321.7 769.7,321.7 719.3,328.6 669.0,327.7 618.7,327.7 568.3,333.9 518.0,334.0 467.7,334.2 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#663399" opacity="0.6" class="anim" style="animation-delay:800ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,317.0 518.0,316.9 568.3,316.7 618.7,316.1 669.0,316.1 719.3,316.1 769.7,312.3 820.0,312.3 820.0,316.6 769.7,316.7 719.3,322.1 669.0,322.1 618.7,322.1 568.3,323.7 518.0,324.0 467.7,324.2 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#6E4C13" opacity="0.6" class="anim" style="animation-delay:900ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,310.8 518.0,310.7 568.3,310.6 618.7,310.9 669.0,310.9 719.3,310.9 769.7,308.5 820.0,308.5 820.0,312.3 769.7,312.3 719.3,316.1 669.0,316.1 618.7,316.1 568.3,316.7 518.0,316.9 467.7,317.0 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#F05138" opacity="0.6" class="anim" style="animation-delay:1000ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,306.5 518.0,306.5 568.3,306.4 618.7,305.4 669.0,305.4 719.3,305.4 769.7,304.0 820.0,304.0 820.0,308.5 769.7,308.5 719.3,310.9 669.0,310.9 618.7,310.9 568.3,310.6 518.0,310.7 467.7,310.8 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#083fa1" opacity="0.6" class="anim" style="animation-delay:1100ms;"/>
+<polygon points="65.0,480.0 115.3,480.0 165.7,480.0 216.0,480.0 266.3,480.0 316.7,480.0 367.0,480.0 417.3,480.0 467.7,303.3 518.0,303.3 568.3,303.2 618.7,302.8 669.0,302.8 719.3,302.8 769.7,302.0 820.0,302.0 820.0,304.0 769.7,304.0 719.3,305.4 669.0,305.4 618.7,305.4 568.3,306.4 518.0,306.5 467.7,306.5 417.3,480.0 367.0,480.0 316.7,480.0 266.3,480.0 216.0,480.0 165.7,480.0 115.3,480.0 65.0,480.0" fill="#b07219" opacity="0.6" class="anim" style="animation-delay:1200ms;"/>
 <text x="65.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 65.0 498)">2026-02-06</text>
-<text x="108.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 108.7 498)">2026-02-07</text>
-<text x="152.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 152.3 498)">2026-02-08</text>
-<text x="196.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 196.0 498)">2026-02-09</text>
-<text x="239.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 239.7 498)">2026-02-10</text>
-<text x="283.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 283.3 498)">2026-02-11</text>
-<text x="327.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 327.0 498)">2026-02-12</text>
-<text x="370.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 370.7 498)">2026-02-13</text>
-<text x="414.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 414.3 498)">2026-02-14</text>
-<text x="458.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 458.0 498)">2026-02-15</text>
-<text x="501.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 501.7 498)">2026-02-16</text>
-<text x="545.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 545.3 498)">2026-02-17</text>
-<text x="589.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 589.0 498)">2026-02-18</text>
-<text x="632.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 632.7 498)">2026-02-19</text>
-<text x="676.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 676.3 498)">2026-02-20</text>
-<text x="720.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 720.0 498)">2026-02-21</text>
-<line x1="736" y1="70" x2="756" y2="70" stroke="#3fb950" stroke-width="2"/>
-<text x="762" y="74" class="legend-text">Lines Added</text>
-<line x1="736" y1="88" x2="756" y2="88" stroke="#f85149" stroke-width="1.5"/>
-<text x="762" y="92" class="legend-text">Lines Deleted</text>
-<line x1="736" y1="108" x2="756" y2="108" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="762" y="112" class="legend-text">&#x2605; Stars</text>
-<text x="736" y="142" class="subtitle">Languages</text>
-<rect x="736" y="153" width="12" height="12" rx="2" fill="#e34c26" opacity="0.8" class="anim" style="animation-delay:800ms;"/>
-<text x="754" y="163" class="legend-text">HTML (68.7%)</text>
-<rect x="736" y="175" width="12" height="12" rx="2" fill="#f1e05a" opacity="0.8" class="anim" style="animation-delay:880ms;"/>
-<text x="754" y="185" class="legend-text">JavaScript (10.4%)</text>
-<rect x="736" y="197" width="12" height="12" rx="2" fill="#3572A5" opacity="0.8" class="anim" style="animation-delay:960ms;"/>
-<text x="754" y="207" class="legend-text">Python (8.9%)</text>
-<rect x="736" y="219" width="12" height="12" rx="2" fill="#663399" opacity="0.8" class="anim" style="animation-delay:1040ms;"/>
-<text x="754" y="229" class="legend-text">CSS (2.8%)</text>
-<rect x="736" y="241" width="12" height="12" rx="2" fill="#6E4C13" opacity="0.8" class="anim" style="animation-delay:1120ms;"/>
-<text x="754" y="251" class="legend-text">Assembly (2.4%)</text>
-<rect x="736" y="263" width="12" height="12" rx="2" fill="#F05138" opacity="0.8" class="anim" style="animation-delay:1200ms;"/>
-<text x="754" y="273" class="legend-text">Swift (2.1%)</text>
-<rect x="736" y="285" width="12" height="12" rx="2" fill="#083fa1" opacity="0.8" class="anim" style="animation-delay:1280ms;"/>
-<text x="754" y="295" class="legend-text">Markdown (2.5%)</text>
-<rect x="736" y="307" width="12" height="12" rx="2" fill="#b07219" opacity="0.8" class="anim" style="animation-delay:1360ms;"/>
-<text x="754" y="317" class="legend-text">Java (1.1%)</text>
-<text x="736" y="358" class="subtitle">Contributions</text>
-<text x="736" y="376" class="axis-label">2023: 39</text>
-<text x="736" y="392" class="axis-label">2024: 646</text>
-<text x="736" y="408" class="axis-label">2025: 1,780</text>
-<text x="736" y="424" class="axis-label">2026: 279</text>
-<text x="736" y="450" class="subtitle">Statistics</text>
-<text x="736" y="468" class="axis-label">Active weeks: 75</text>
-<text x="736" y="483" class="axis-label">Add/Del ratio: 2.0x</text>
-<text x="736" y="498" class="axis-label">Avg lines/week: 15,628</text>
-<text x="736" y="513" class="axis-label">Peak: 2026-02-15</text>
-<text x="736" y="528" class="axis-label">  (539,956 lines)</text>
-<text x="65" y="666" class="axis-label">Total: +785,470 / -386,601 lines &#xb7; 2,744 contributions &#xb7; 71 repos &#xb7; &#x2605; 33</text>
+<text x="115.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 115.3 498)">2026-02-07</text>
+<text x="165.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 165.7 498)">2026-02-08</text>
+<text x="216.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 216.0 498)">2026-02-09</text>
+<text x="266.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 266.3 498)">2026-02-10</text>
+<text x="316.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 316.7 498)">2026-02-11</text>
+<text x="367.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 367.0 498)">2026-02-12</text>
+<text x="417.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 417.3 498)">2026-02-13</text>
+<text x="467.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 467.7 498)">2026-02-14</text>
+<text x="518.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 518.0 498)">2026-02-15</text>
+<text x="568.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 568.3 498)">2026-02-16</text>
+<text x="618.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 618.7 498)">2026-02-17</text>
+<text x="669.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 669.0 498)">2026-02-18</text>
+<text x="719.3" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 719.3 498)">2026-02-19</text>
+<text x="769.7" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 769.7 498)">2026-02-20</text>
+<text x="820.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 820.0 498)">2026-02-21</text>
+<line x1="836" y1="70" x2="856" y2="70" stroke="#3fb950" stroke-width="2"/>
+<text x="862" y="74" class="legend-text">Lines Added</text>
+<line x1="836" y1="88" x2="856" y2="88" stroke="#f85149" stroke-width="1.5"/>
+<text x="862" y="92" class="legend-text">Lines Deleted</text>
+<line x1="836" y1="108" x2="856" y2="108" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="862" y="112" class="legend-text">&#x2605; Stars</text>
+<text x="836" y="142" class="subtitle">Languages</text>
+<rect x="836" y="153" width="12" height="12" rx="2" fill="#e34c26" opacity="0.8" class="anim" style="animation-delay:800ms;"/>
+<text x="854" y="163" class="legend-text">HTML (68.7%)</text>
+<rect x="836" y="175" width="12" height="12" rx="2" fill="#f1e05a" opacity="0.8" class="anim" style="animation-delay:880ms;"/>
+<text x="854" y="185" class="legend-text">JavaScript (10.4%)</text>
+<rect x="836" y="197" width="12" height="12" rx="2" fill="#3572A5" opacity="0.8" class="anim" style="animation-delay:960ms;"/>
+<text x="854" y="207" class="legend-text">Python (8.8%)</text>
+<rect x="836" y="219" width="12" height="12" rx="2" fill="#663399" opacity="0.8" class="anim" style="animation-delay:1040ms;"/>
+<text x="854" y="229" class="legend-text">CSS (2.8%)</text>
+<rect x="836" y="241" width="12" height="12" rx="2" fill="#6E4C13" opacity="0.8" class="anim" style="animation-delay:1120ms;"/>
+<text x="854" y="251" class="legend-text">Assembly (2.4%)</text>
+<rect x="836" y="263" width="12" height="12" rx="2" fill="#F05138" opacity="0.8" class="anim" style="animation-delay:1200ms;"/>
+<text x="854" y="273" class="legend-text">Swift (2.1%)</text>
+<rect x="836" y="285" width="12" height="12" rx="2" fill="#083fa1" opacity="0.8" class="anim" style="animation-delay:1280ms;"/>
+<text x="854" y="295" class="legend-text">Markdown (2.5%)</text>
+<rect x="836" y="307" width="12" height="12" rx="2" fill="#b07219" opacity="0.8" class="anim" style="animation-delay:1360ms;"/>
+<text x="854" y="317" class="legend-text">Java (1.1%)</text>
+<text x="836" y="358" class="subtitle">Contributions</text>
+<text x="836" y="376" class="axis-label">2023: 39</text>
+<text x="836" y="392" class="axis-label">2024: 646</text>
+<text x="836" y="408" class="axis-label">2025: 1,780</text>
+<text x="836" y="424" class="axis-label">2026: 288</text>
+<text x="836" y="450" class="subtitle">Statistics</text>
+<text x="836" y="468" class="axis-label">Active weeks: 75</text>
+<text x="836" y="483" class="axis-label">Add/Del ratio: 2.0x</text>
+<text x="836" y="498" class="axis-label">Avg lines/week: 15,638</text>
+<text x="836" y="513" class="axis-label">Peak: 2026-02-15</text>
+<text x="836" y="528" class="axis-label">  (540,713 lines)</text>
+<text x="65" y="746" class="axis-label">Total: +786,214 / -386,614 lines &#xb7; 2,753 contributions &#xb7; 71 repos &#xb7; &#x2605; 33</text>
 </svg>
