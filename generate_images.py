@@ -297,7 +297,7 @@ async def generate_history(s: Stats) -> None:
         # Write a minimal placeholder SVG
         with open("generated/history.svg", "w") as f:
             f.write(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="100">'
+                '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="100">'
                 '<text x="20" y="50" fill="#c9d1d9" '
                 'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="14">'
                 "Not enough data yet – chart will appear after the next run."
@@ -390,8 +390,8 @@ async def generate_history(s: Stats) -> None:
     contribs_series = [snap.get("total_contributions", 0) for snap in history]
 
     # ── Chart dimensions ─────────────────────────────────────────────────
-    svg_width = 900
-    svg_height = 680
+    svg_width = 1000
+    svg_height = 760
     margin_top = 60
     margin_bottom = 90
     margin_left = 65
