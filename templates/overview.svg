@@ -1,9 +1,10 @@
-<svg id="gh-dark-mode-only" width="495" height="210" xmlns="http://www.w3.org/2000/svg">
+<svg id="gh-dark-mode-only" width="495" height="210" viewBox="0 0 495 210" xmlns="http://www.w3.org/2000/svg">
 <style>
 svg {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
   font-size: 14px;
   line-height: 21px;
+  max-width: 100%;
 }
 
 #background {

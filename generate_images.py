@@ -297,7 +297,7 @@ async def generate_history(s: Stats) -> None:
         # Write a minimal placeholder SVG
         with open("generated/history.svg", "w") as f:
             f.write(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="100">'
+                '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="100" viewBox="0 0 495 100">'
                 '<text x="20" y="50" fill="#c9d1d9" '
                 'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="14">'
                 "Not enough data yet – chart will appear after the next run."
