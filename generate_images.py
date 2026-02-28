@@ -424,10 +424,15 @@ async def generate_history(s: Stats) -> None:
         base_adds = monthly_adds_series[n_real - 1] if monthly_adds_series else 0
         base_dels = monthly_dels_series[n_real - 1] if monthly_dels_series else 0
 
-        # Per-language trend: linear regression over all real snapshots
+        # Per-language trend: linear regression only over snapshots that have
+        # actual language data, to avoid zeros from early snapshots skewing the slope.
+        first_lang_idx = next(
+            (i for i, snap in enumerate(history) if snap.get("languages")),
+            n_real,
+        )
         lang_trends: Dict[str, float] = {}
         for lang in top_langs:
-            vals = lang_series[lang][:n_real]
+            vals = lang_series[lang][first_lang_idx:n_real]
             lang_trends[lang] = _linreg_slope(vals) if len(vals) >= 2 else 0.0
 
         # Stars trend: linear regression over all real snapshots
