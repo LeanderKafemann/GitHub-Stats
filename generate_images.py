@@ -494,7 +494,7 @@ async def generate_history(s: Stats) -> None:
     svg: List[str] = []
     svg.append(
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'width="{svg_width}" height="{svg_height}" '
+        f'width="495" height="376" '
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
 
@@ -1024,7 +1024,7 @@ def generate_milestones() -> None:
     svg: List[str] = []
     svg.append(
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'width="{svg_width}" height="{svg_height}" '
+        f'width="495" height="376" '
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
     svg.append(f"""<style>
@@ -1292,7 +1292,7 @@ def generate_achievements() -> None:
     svg = []
     svg.append(
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'width="{svg_width}" height="{svg_height}" '
+        f'width="495" height="376" '
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
     svg.append(f"""<style>

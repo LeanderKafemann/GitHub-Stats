@@ -1,179 +1,126 @@
-# [GitHub Stats Visualization](https://github.com/jstrieb/github-stats)
+# GitHub Stats
 
-<!--
-https://github.community/t/support-theme-context-for-images-in-light-vs-dark-mode/147981/84
--->
-<a href="https://github.com/jstrieb/github-stats">
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/overview.svg#gh-dark-mode-only" />
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/languages.svg#gh-dark-mode-only" />
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/overview.svg#gh-light-mode-only" />
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/languages.svg#gh-light-mode-only" />
-</a>
+> Automatically generate rich statistics cards for your GitHub profile — with activity history, language trends, milestones, and achievements.
 
-Generate visualizations of GitHub user and repository statistics with GitHub
-Actions. Visualizations can include data for both private repositories, and for
-repositories you have contributed to, but do not own.
+---
 
-Generated images automatically switch between GitHub light theme and GitHub
-dark theme.
+## Preview
 
-## Background
+| Overview | Languages |
+|:---:|:---:|
+| ![Overview](generated/overview.svg) | ![Languages](generated/languages.svg) |
 
-When someone views a profile on GitHub, it is often because they are curious
-about a user's open source projects and contributions. Unfortunately, that
-user's stars, forks, and pinned repositories do not necessarily reflect the
-contributions they make to private repositories. The data likewise does not
-present a complete picture of the user's total contributions beyond the current
-year.
+| Activity History | Milestones | Achievements |
+|:---:|:---:|:---:|
+| ![History](generated/history.svg) | ![Milestones](generated/milestones.svg) | ![Achievements](generated/achievements.svg) |
 
-This project aims to collect a variety of profile and repository statistics
-using the GitHub API. It then generates images that can be displayed in
-repository READMEs, or in a user's [Profile
-README](https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme).
+---
 
-Since the project runs on GitHub Actions, no server is required to regularly
-regenerate the images with updated statistics. Likewise, since the user runs
-the analysis code themselves via GitHub Actions, they can use their GitHub
-access token to collect statistics on private repositories that an external
-service would be unable to access.
+## Features
 
-## Disclaimer
+- **Overview card** — stars, forks, all-time contributions, lines changed, page views, repository count
+- **Language breakdown** — proportional bar chart of programming languages by file size
+- **Activity history with forecast** — lines added/deleted over time plus a 6-/12-month linear-regression prediction
+- **Milestones timeline** — automatically detected contribution & star milestones
+- **Achievements** — top rankings & records (best year, top language per year, peak week, …)
+- Runs entirely via **GitHub Actions** — no external server needed
+- Works with **private repositories** when given a token with `repo` scope
+- All cards are **dark-mode aware** using GitHub's `#gh-dark-mode-only` / `#gh-light-mode-only` fragments
 
-If the project is used with an access token that has sufficient permissions to
-read private repositories, it may leak details about those repositories in
-error messages. For example, the `aiohttp` library—used for asynchronous API
-requests—may include the requested URL in exceptions, which can leak the name
-of private repositories. If there is an exception caused by `aiohttp`, this
-exception will be viewable in the Actions tab of the repository fork, and
-anyone may be able to see the name of one or more private repositories.
+---
 
-Due to some issues with the GitHub statistics API, there are some situations
-where it returns inaccurate results. Specifically, the repository view count
-statistics and total lines of code modified are probably somewhat inaccurate.
-Unexpectedly, these values will become more accurate over time as GitHub
-caches statistics for your repositories. Additionally, repositories that were
-last contributed to more than a year ago may not be included in the statistics
-due to limitations in the results returned by the API.
+## Installation
 
-For more information on inaccuracies, see issue
-[#2](https://github.com/jstrieb/github-stats/issues/2),
-[#3](https://github.com/jstrieb/github-stats/issues/3), and
-[#13](https://github.com/jstrieb/github-stats/issues/13).
+### 1. Create a Personal Access Token
 
-# Installation
+Go to **Settings → Developer settings → Personal access tokens → Tokens (classic)** and generate a token with the following scopes:
 
-<!-- TODO: Add details and screenshots -->
+- `read:user`
+- `repo`
 
-1. Create a personal access token (not the default GitHub Actions token) using
-   the instructions
-   [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
-   Personal access token must have permissions: `read:user` and `repo`. Copy
-   the access token when it is generated – if you lose it, you will have to
-   regenerate the token.
-   - Some users are reporting that it can take a few minutes for the personal
-     access token to work. For more, see 
-     [#30](https://github.com/jstrieb/github-stats/issues/30).
-2. Create a copy of this repository by clicking
-   [here](https://github.com/jstrieb/github-stats/generate). Note: this is
-   **not** the same as forking a copy because it copies everything fresh,
-   without the huge commit history. 
-3. Go to the "Secrets" page of your copy of the repository. If this is the
-   README of your copy, click [this link](../../settings/secrets/actions) to go
-   to the "Secrets" page. Otherwise, go to the "Settings" tab of the
-   newly-created repository and go to the "Secrets" page (bottom left).
-4. Create a new secret with the name `ACCESS_TOKEN` and paste the copied
-   personal access token as the value.
-5. It is possible to change the type of statistics reported by adding other
-   repository secrets. 
-   - To ignore certain repos, add them (in owner/name format e.g.,
-     `jstrieb/github-stats`) separated by commas to a new secret—created as
-     before—called `EXCLUDED`.
-   - To ignore certain languages, add them (separated by commas) to a new
-     secret called `EXCLUDED_LANGS`. For example, to exclude HTML and TeX you
-     could set the value to `html,tex`.
-   - To show statistics only for "owned" repositories and not forks with
-     contributions, add an environment variable (under the `env` header in the
-     [main
-     workflow](https://github.com/jstrieb/github-stats/blob/master/.github/workflows/main.yml))
-     called `EXCLUDE_FORKED_REPOS` with a value of `true`.
-   - These other values are added as secrets by default to prevent leaking
-     information about private repositories. If you're not worried about that,
-     you can change the values directly [in the Actions workflow
-     itself](https://github.com/jstrieb/github-stats/blob/05de1314b870febd44d19ad2f55d5e59d83f5857/.github/workflows/main.yml#L48-L53).
-6. Go to the [Actions
-   Page](../../actions?query=workflow%3A"Generate+Stats+Images") and press "Run
-   Workflow" on the right side of the screen to generate images for the first
-   time. 
-   - The images will be automatically regenerated every 24 hours, but they can
-     be regenerated manually by running the workflow this way.
-7. Take a look at the images that have been created in the
-   [`generated`](generated) folder.
-8. To add your statistics to your GitHub Profile README, copy and paste the
-   following lines of code into your markdown content. Change the `username`
-   value to your GitHub username.
-   ```md
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
-   ```
-   ```md
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
-   ```
-9. Link back to this repository so that others can generate their own
-   statistics images.
-10. Star this repo if you like it!
+Copy the token — you will need it in the next step.
 
+> **Note:** It may take a few minutes for a newly created token to become active.
 
-## Embedding Files in a Profile README
+### 2. Use this Template
 
-After the workflow has run at least once, five SVG images are available in the
-`generated/` folder of your repository. Replace `username` with your GitHub
-username and `github-stats` with the repository name (if you renamed it) in
-every URL below.
+Click **[Use this template](../../generate)** to create a fresh copy of this repository in your account (this is different from forking — it starts without the commit history).
 
-### Available Charts
+### 3. Add the Secret
+
+1. Open your new repository and go to **Settings → Secrets and variables → Actions**.
+2. Click **New repository secret**.
+3. Name it `ACCESS_TOKEN` and paste your personal access token as the value.
+
+### 4. Run the Workflow
+
+Go to the [**Actions tab**](../../actions?query=workflow%3A"Generate+Stats+Images") and click **Run workflow**.
+
+The images are regenerated automatically every day at 00:05 UTC and on every push to `master`.
+
+### 5. Embed in Your Profile README
+
+Replace `username` with your GitHub username in the snippets below and paste them into your [Profile README](https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme).
+
+---
+
+## Generated Cards
+
+All five cards are saved in the `generated/` folder of your repository.
 
 | File | Description |
 |------|-------------|
 | `overview.svg` | Summary badge – stars, forks, contributions, lines changed, views |
 | `languages.svg` | Proportional breakdown of programming languages |
-| `history.svg` | Activity history + forecast (lines added/deleted, language trends) |
+| `history.svg` | Activity history + forecast (lines added/deleted, language share trends) |
 | `milestones.svg` | Timeline of automatically detected contribution & star milestones |
 | `achievements.svg` | Top rankings & records (best year, top language per year, peak week, …) |
 
-### Copy-paste snippets
+All cards share the same dimensions (`495 × 376 px`) so they align perfectly in any layout.
 
-**Overview card**
+---
+
+## Embedding Snippets
+
+> The `#gh-dark-mode-only` / `#gh-light-mode-only` fragments tell GitHub to show the card only in the matching colour scheme. Omit them if you want the card visible in both modes.
+
+### Overview
+
 ```md
 ![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
 ![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
 ```
 
-**Language breakdown**
+### Language Breakdown
+
 ```md
 ![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
 ![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
 ```
 
-**Activity history with forecast**
+### Activity History with Forecast
+
 ```md
 ![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-dark-mode-only)
 ![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-light-mode-only)
 ```
 
-**Milestones timeline**
+### Milestones Timeline
+
 ```md
 ![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-dark-mode-only)
 ![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-light-mode-only)
 ```
 
-**Top rankings & achievements**
+### Achievements
+
 ```md
 ![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-dark-mode-only)
 ![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-light-mode-only)
 ```
 
-**All cards at once**
+### All Cards at Once
+
 ```md
 ![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
 ![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
@@ -188,39 +135,32 @@ every URL below.
 ![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-light-mode-only)
 ```
 
-> **Tip:** The `#gh-dark-mode-only` / `#gh-light-mode-only` fragments tell
-> GitHub to show the image only in the matching color scheme. Omit them if you
-> want the image visible in both modes.
+---
 
+## Configuration
 
+Additional settings are configured via **repository secrets** (Settings → Secrets and variables → Actions):
 
+| Secret | Description | Example |
+|--------|-------------|---------|
+| `ACCESS_TOKEN` | **Required.** Personal access token with `read:user` and `repo` scopes. | — |
+| `EXCLUDED` | Comma-separated list of repositories to ignore (`owner/name` format). | `username/my-repo,username/other-repo` |
+| `EXCLUDED_LANGS` | Comma-separated list of languages to hide from the language card. | `html,tex,css` |
 
-# Support the Project
+To show only owned repositories and hide contributions to other repos, set `EXCLUDE_FORKED_REPOS: true` in the [workflow file](.github/workflows/main.yml) under the `env` section.
 
-There are a few things you can do to support the project:
+---
 
-- Star the repository (and follow me on GitHub for more)
-- Share and upvote on sites like Twitter, Reddit, and Hacker News
-- Report any bugs, glitches, or errors that you find
+## Disclaimer
 
-These things motivate me to keep sharing what I build, and they provide
-validation that my work is appreciated! They also help me improve the
-project. Thanks in advance!
+- If you use a token with `repo` scope, error messages from the `aiohttp` library may expose private repository names in the Actions log.
+- View counts and total lines of code are approximations — they become more accurate over time as GitHub caches statistics for your repositories.
+- Repositories last contributed to more than a year ago may be excluded due to GitHub API limitations.
 
-If you are insistent on spending money to show your support, I encourage you to
-instead make a generous donation to one of the following organizations. By advocating
-for Internet freedoms, organizations like these help me to feel comfortable
-releasing work publicly on the Web.
+---
 
-- [Electronic Frontier Foundation](https://supporters.eff.org/donate/)
-- [Signal Foundation](https://signal.org/donate/)
-- [Mozilla](https://donate.mozilla.org/en-US/)
-- [The Internet Archive](https://archive.org/donate/index.php)
+## Acknowledgements
 
-
-# Related Projects
-
-- Inspired by a desire to improve upon
-  [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
-- Makes use of [GitHub Octicons](https://primer.style/octicons/) to precisely
-  match the GitHub UI
+- Inspired by [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+- Icons from [GitHub Octicons](https://primer.style/octicons/)
+- Forked and extended from [jstrieb/github-stats](https://github.com/jstrieb/github-stats)
