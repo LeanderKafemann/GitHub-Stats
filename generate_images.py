@@ -1,6 +1,7 @@
 ﻿#!/usr/bin/python3
 
 import asyncio
+from datetime import datetime, timedelta
 import json
 import os
 import re
@@ -389,6 +390,32 @@ async def generate_history(s: Stats) -> None:
     # Total contributions over time
     contribs_series = [snap.get("total_contributions", 0) for snap in history]
 
+    # ── Forecast: add prediction for next month (+31 days) ───────────────
+    n_real = n  # number of actual historical data points
+    forecast_date_str = ""
+    if dates:
+        try:
+            last_date_obj = datetime.strptime(dates[-1], "%Y-%m-%d")
+            forecast_date_str = (last_date_obj + timedelta(days=31)).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    if forecast_date_str:
+        lookback = min(3, n_real)
+        forecast_adds = int(sum(monthly_adds_series[-lookback:]) / lookback) if lookback > 0 else 0
+        forecast_dels = int(sum(monthly_dels_series[-lookback:]) / lookback) if lookback > 0 else 0
+        dates.append(forecast_date_str)
+        monthly_adds_series.append(forecast_adds)
+        monthly_dels_series.append(forecast_dels)
+        monthly_lines.append(forecast_adds + forecast_dels)
+        for lang in top_langs:
+            lang_series[lang].append(lang_series[lang][-1] if lang_series[lang] else 0.0)
+        if len(stars_series) >= 2:
+            forecast_stars = max(0, stars_series[-1] + (stars_series[-1] - stars_series[-2]))
+        else:
+            forecast_stars = stars_series[-1] if stars_series else 0
+        stars_series.append(forecast_stars)
+        n = len(dates)
+
     # ── Chart dimensions ─────────────────────────────────────────────────
     svg_width = 1000
     svg_height = 760
@@ -511,10 +538,17 @@ async def generate_history(s: Stats) -> None:
         f'class="anim" style="animation-delay:200ms;"/>'
     )
     svg.append(
-        f'<polyline points="{" ".join(add_pts)}" fill="none" '
+        f'<polyline points="{" ".join(add_pts[:n_real])}" fill="none" '
         f'stroke="{add_color}" stroke-width="2" stroke-linejoin="round" '
         f'class="anim" style="animation-delay:250ms;"/>'
     )
+    if n > n_real:
+        svg.append(
+            f'<polyline points="{" ".join(add_pts[n_real - 1:])}" fill="none" '
+            f'stroke="{add_color}" stroke-width="1.5" stroke-dasharray="5,4" '
+            f'stroke-linejoin="round" opacity="0.6" '
+            f'class="anim" style="animation-delay:250ms;"/>'
+        )
 
     # Lines-deleted area (red)
     del_pts: List[str] = []
@@ -533,10 +567,17 @@ async def generate_history(s: Stats) -> None:
         f'class="anim" style="animation-delay:300ms;"/>'
     )
     svg.append(
-        f'<polyline points="{" ".join(del_pts)}" fill="none" '
+        f'<polyline points="{" ".join(del_pts[:n_real])}" fill="none" '
         f'stroke="{del_color}" stroke-width="1.5" stroke-linejoin="round" '
         f'class="anim" style="animation-delay:350ms;"/>'
     )
+    if n > n_real:
+        svg.append(
+            f'<polyline points="{" ".join(del_pts[n_real - 1:])}" fill="none" '
+            f'stroke="{del_color}" stroke-width="1" stroke-dasharray="5,4" '
+            f'stroke-linejoin="round" opacity="0.6" '
+            f'class="anim" style="animation-delay:350ms;"/>'
+        )
 
     # Stars overlay (secondary axis, right side)
     max_stars = max(stars_series) if stars_series else 1
@@ -553,10 +594,17 @@ async def generate_history(s: Stats) -> None:
         y = chart1_top + chart_h_top - ((val - star_base) / star_range) * chart_h_top * 0.8
         star_pts.append(f"{x:.1f},{y:.1f}")
     svg.append(
-        f'<polyline points="{" ".join(star_pts)}" fill="none" '
+        f'<polyline points="{" ".join(star_pts[:n_real])}" fill="none" '
         f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3" '
         f'stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>'
     )
+    if n > n_real:
+        svg.append(
+            f'<polyline points="{" ".join(star_pts[n_real - 1:])}" fill="none" '
+            f'stroke="{star_color}" stroke-width="1" stroke-dasharray="3,5" '
+            f'stroke-linejoin="round" opacity="0.5" '
+            f'class="anim" style="animation-delay:400ms;"/>'
+        )
 
     # Chart 1 label
     svg.append(
@@ -613,19 +661,39 @@ async def generate_history(s: Stats) -> None:
             f'Language data will appear after repositories are analyzed</text>'
         )
 
+    # ── Forecast separator ────────────────────────────────────────────────
+    if n > n_real:
+        fx = margin_left + (n_real - 1) * step_x
+        svg.append(
+            f'<line x1="{fx:.1f}" y1="{chart1_top}" '
+            f'x2="{fx:.1f}" y2="{chart2_top + chart_h_bottom}" '
+            f'stroke="{text_color}" stroke-width="1" stroke-dasharray="4,3" '
+            f'opacity="0.35"/>'
+        )
+        svg.append(
+            f'<text x="{margin_left + (n - 1) * step_x:.1f}" '
+            f'y="{chart1_top + 12}" '
+            f'text-anchor="middle" class="axis-label" opacity="0.6">Prognose</text>'
+        )
+
     # ── X-axis labels (shared) ───────────────────────────────────────────
     # Determine label format: use full date if month prefix is identical
     date_prefixes = {d[:7] for d in dates if len(d) >= 7}
     use_full_date = len(date_prefixes) <= 1
 
     label_step = max(1, n // 10)
-    for i in range(0, n, label_step):
+    shown_indices = set(range(0, n, label_step))
+    if n > n_real:
+        shown_indices.add(n - 1)  # always show the forecast label
+    for i in sorted(shown_indices):
         x = margin_left + i * step_x
         label_y = chart2_top + chart_h_bottom + 18
         if use_full_date:
             label_text = dates[i]
         else:
             label_text = dates[i][:7] if len(dates[i]) >= 7 else dates[i]
+        if i >= n_real:
+            label_text = "~" + label_text
         svg.append(
             f'<text x="{x:.1f}" y="{label_y}" '
             f'text-anchor="middle" class="axis-label" '
