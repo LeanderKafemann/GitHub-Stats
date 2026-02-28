@@ -843,7 +843,12 @@ async def generate_history(s: Stats) -> None:
         for i, lang in enumerate(top_langs):
             ly = lang_legend_y + 20 + i * 22
             color = lang_color_map.get(lang, "#888888")
-            prop = lang_series[lang][-1] if lang_series[lang] else 0
+            current_prop = lang_series[lang][n_real - 1] if len(lang_series[lang]) >= n_real else (lang_series[lang][-1] if lang_series[lang] else 0.0)
+            forecast_prop = lang_series[lang][-1] if lang_series[lang] else 0.0
+            if n > n_real and abs(forecast_prop - current_prop) >= 0.05:
+                label = f"{lang} ({current_prop:.1f}% → {forecast_prop:.1f}%)"
+            else:
+                label = f"{lang} ({current_prop:.1f}%)"
             svg.append(
                 f'<rect x="{legend_x}" y="{ly - 9}" width="12" height="12" '
                 f'rx="2" fill="{color}" opacity="0.8" '
@@ -851,7 +856,7 @@ async def generate_history(s: Stats) -> None:
             )
             svg.append(
                 f'<text x="{legend_x + 18}" y="{ly + 1}" '
-                f'class="legend-text">{lang} ({prop:.1f}%)</text>'
+                f'class="legend-text">{label}</text>'
             )
         next_section_y = lang_legend_y + 20 + len(top_langs) * 22 + 20
     else:
