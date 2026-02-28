@@ -25,7 +25,7 @@
 - **Achievements** — top rankings & records (best year, top language per year, peak week, …)
 - Runs entirely via **GitHub Actions** — no external server needed
 - Works with **private repositories** when given a token with `repo` scope
-- All cards are **dark-mode aware** using GitHub's `#gh-dark-mode-only` / `#gh-light-mode-only` fragments
+- All cards are **dark-mode aware** using CSS `@media (prefers-color-scheme: dark)` — a single image adapts automatically
 
 ---
 
@@ -82,57 +82,46 @@ All cards share the same dimensions (`495 × 376 px`) so they align perfectly in
 
 ## Embedding Snippets
 
-> The `#gh-dark-mode-only` / `#gh-light-mode-only` fragments tell GitHub to show the card only in the matching colour scheme. Omit them if you want the card visible in both modes.
+Replace `username` with your GitHub username in the snippets below.
 
 ### Overview
 
 ```md
-![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
-![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
+![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg)
 ```
 
 ### Language Breakdown
 
 ```md
-![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
-![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
+![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg)
 ```
 
 ### Activity History with Forecast
 
 ```md
-![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-dark-mode-only)
-![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-light-mode-only)
+![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg)
 ```
 
 ### Milestones Timeline
 
 ```md
-![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-dark-mode-only)
-![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-light-mode-only)
+![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg)
 ```
 
 ### Achievements
 
 ```md
-![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-dark-mode-only)
-![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-light-mode-only)
+![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg)
 ```
 
 ### All Cards at Once
 
 ```md
-![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
-![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
-![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-dark-mode-only)
-![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-dark-mode-only)
-![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-dark-mode-only)
-
-![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
-![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
-![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-light-mode-only)
-![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-light-mode-only)
-![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-light-mode-only)
+![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg)
+![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg)
+![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg)
+![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg)
+![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg)
 ```
 
 ---
