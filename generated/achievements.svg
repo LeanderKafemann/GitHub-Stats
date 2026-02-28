@@ -31,22 +31,22 @@
 <rect x="508" y="166" width="4" height="78" rx="2" fill="#3fb950" opacity="0.9" class="ach-row" style="animation-delay:165ms;"/>
 <g class="ach-row" style="animation-delay:195ms;">
 <text x="522" y="184" class="ach-label">📝 Total Lines Written (all-time)</text>
-<text x="522" y="202" class="ach-value">+792,610 added / -458,433 deleted</text>
+<text x="522" y="202" class="ach-value">+903,340 added / -567,386 deleted</text>
 </g>
 <rect x="8" y="256" width="4" height="78" rx="2" fill="#58a6ff" opacity="0.9" class="ach-row" style="animation-delay:220ms;"/>
 <g class="ach-row" style="animation-delay:250ms;">
 <text x="22" y="274" class="ach-label">⚖️ Add / Delete Ratio</text>
-<text x="22" y="292" class="ach-value">1.73x (higher = more net new code)</text>
+<text x="22" y="292" class="ach-value">1.59x (higher = more net new code)</text>
 </g>
 <rect x="508" y="256" width="4" height="78" rx="2" fill="#3fb950" opacity="0.9" class="ach-row" style="animation-delay:275ms;"/>
 <g class="ach-row" style="animation-delay:305ms;">
 <text x="522" y="274" class="ach-label">📈 Fastest Growing Language</text>
-<text x="522" y="292" class="ach-value">HTML (+13.2pp)</text>
+<text x="522" y="292" class="ach-value">HTML (+13.1pp)</text>
 </g>
 <rect x="8" y="346" width="4" height="78" rx="2" fill="#f85149" opacity="0.9" class="ach-row" style="animation-delay:330ms;"/>
 <g class="ach-row" style="animation-delay:360ms;">
 <text x="22" y="364" class="ach-label">📉 Most Reduced Language</text>
-<text x="22" y="382" class="ach-value">JavaScript (-6.8pp)</text>
+<text x="22" y="382" class="ach-value">JavaScript (-6.9pp)</text>
 </g>
 <rect x="508" y="346" width="4" height="78" rx="2" fill="#e3b341" opacity="0.9" class="ach-row" style="animation-delay:385ms;"/>
 <g class="ach-row" style="animation-delay:415ms;">
