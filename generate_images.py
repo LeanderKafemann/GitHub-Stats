@@ -390,30 +390,75 @@ async def generate_history(s: Stats) -> None:
     # Total contributions over time
     contribs_series = [snap.get("total_contributions", 0) for snap in history]
 
-    # ── Forecast: add prediction for next month (+31 days) ───────────────
+    # ── Forecast: add predictions for H1 and H2 of the next year ────────
     n_real = n  # number of actual historical data points
-    forecast_date_str = ""
+    forecast_dates: List[str] = []
+    forecast_labels: List[str] = []
     if dates:
         try:
             last_date_obj = datetime.strptime(dates[-1], "%Y-%m-%d")
-            forecast_date_str = (last_date_obj + timedelta(days=31)).strftime("%Y-%m-%d")
+            h1_date = last_date_obj + timedelta(days=183)
+            h2_date = last_date_obj + timedelta(days=365)
+            forecast_dates = [h1_date.strftime("%Y-%m-%d"), h2_date.strftime("%Y-%m-%d")]
+            forecast_labels = [f"H1 {h1_date.year}", f"H2 {h2_date.year}"]
         except ValueError:
             pass
-    if forecast_date_str:
+    if forecast_dates:
         lookback = min(3, n_real)
-        forecast_adds = int(sum(monthly_adds_series[-lookback:]) / lookback) if lookback > 0 else 0
-        forecast_dels = int(sum(monthly_dels_series[-lookback:]) / lookback) if lookback > 0 else 0
-        dates.append(forecast_date_str)
-        monthly_adds_series.append(forecast_adds)
-        monthly_dels_series.append(forecast_dels)
-        monthly_lines.append(forecast_adds + forecast_dels)
-        for lang in top_langs:
-            lang_series[lang].append(lang_series[lang][-1] if lang_series[lang] else 0.0)
-        if len(stars_series) >= 2:
-            forecast_stars = max(0, stars_series[-1] + (stars_series[-1] - stars_series[-2]))
+        # Trend-based projection for lines: average the per-period deltas and
+        # clamp to zero so the forecast never shows a decrease.
+        if lookback >= 2:
+            window_adds = monthly_adds_series[n_real - lookback: n_real]
+            window_dels = monthly_dels_series[n_real - lookback: n_real]
+            adds_deltas = [window_adds[j + 1] - window_adds[j] for j in range(len(window_adds) - 1)]
+            dels_deltas = [window_dels[j + 1] - window_dels[j] for j in range(len(window_dels) - 1)]
+            avg_delta_adds = max(0, int(sum(adds_deltas) / len(adds_deltas)))
+            avg_delta_dels = max(0, int(sum(dels_deltas) / len(dels_deltas)))
         else:
-            forecast_stars = stars_series[-1] if stars_series else 0
-        stars_series.append(forecast_stars)
+            avg_delta_adds = 0
+            avg_delta_dels = 0
+        base_adds = monthly_adds_series[n_real - 1] if monthly_adds_series else 0
+        base_dels = monthly_dels_series[n_real - 1] if monthly_dels_series else 0
+
+        # Per-language trend from the last two real snapshots
+        lang_trends: Dict[str, float] = {}
+        for lang in top_langs:
+            if n_real >= 2 and len(lang_series[lang]) >= 2:
+                lang_trends[lang] = lang_series[lang][n_real - 1] - lang_series[lang][n_real - 2]
+            else:
+                lang_trends[lang] = 0.0
+
+        # Stars trend from the last two real snapshots
+        if len(stars_series) >= 2:
+            stars_delta = stars_series[n_real - 1] - stars_series[n_real - 2]
+        else:
+            stars_delta = 0
+        base_stars = stars_series[n_real - 1] if stars_series else 0
+
+        for step, forecast_date_str in enumerate(forecast_dates):
+            mult = step + 1
+            dates.append(forecast_date_str)
+            monthly_adds_series.append(max(0, int(base_adds + mult * avg_delta_adds)))
+            monthly_dels_series.append(max(0, int(base_dels + mult * avg_delta_dels)))
+            monthly_lines.append(monthly_adds_series[-1] + monthly_dels_series[-1])
+
+            # Language forecast: extrapolate trend from real data, then
+            # re-normalise so the proportions still sum to the same total as
+            # the last real snapshot.
+            raw: Dict[str, float] = {}
+            for lang in top_langs:
+                base_val = lang_series[lang][n_real - 1] if lang_series[lang] else 0.0
+                raw[lang] = max(0.0, base_val + mult * lang_trends[lang])
+            raw_total = sum(raw.values())
+            real_total = sum(lang_series[lang][n_real - 1] for lang in top_langs)
+            if raw_total > 0 and real_total > 0:
+                scale = real_total / raw_total
+                for lang in top_langs:
+                    raw[lang] *= scale
+            for lang in top_langs:
+                lang_series[lang].append(raw.get(lang, 0.0))
+
+            stars_series.append(max(0, int(base_stars + mult * stars_delta)))
         n = len(dates)
 
     # ── Chart dimensions ─────────────────────────────────────────────────
@@ -670,30 +715,34 @@ async def generate_history(s: Stats) -> None:
             f'stroke="{text_color}" stroke-width="1" stroke-dasharray="4,3" '
             f'opacity="0.35"/>'
         )
-        svg.append(
-            f'<text x="{margin_left + (n - 1) * step_x:.1f}" '
-            f'y="{chart1_top + 12}" '
-            f'text-anchor="middle" class="axis-label" opacity="0.6">Prognose</text>'
-        )
+        for fi, flabel in enumerate(forecast_labels):
+            fx_label = margin_left + (n_real + fi) * step_x
+            svg.append(
+                f'<text x="{fx_label:.1f}" '
+                f'y="{chart1_top + 12}" '
+                f'text-anchor="middle" class="axis-label" opacity="0.6">{flabel}</text>'
+            )
 
     # ── X-axis labels (shared) ───────────────────────────────────────────
     # Determine label format: use full date if month prefix is identical
-    date_prefixes = {d[:7] for d in dates if len(d) >= 7}
+    date_prefixes = {d[:7] for d in dates[:n_real] if len(d) >= 7}
     use_full_date = len(date_prefixes) <= 1
 
     label_step = max(1, n // 10)
     shown_indices = set(range(0, n, label_step))
     if n > n_real:
-        shown_indices.add(n - 1)  # always show the forecast label
+        for fi in range(n_real, n):
+            shown_indices.add(fi)  # always show all forecast labels
     for i in sorted(shown_indices):
         x = margin_left + i * step_x
         label_y = chart2_top + chart_h_bottom + 18
-        if use_full_date:
+        if i >= n_real:
+            fi = i - n_real
+            label_text = forecast_labels[fi] if fi < len(forecast_labels) else dates[i][:7]
+        elif use_full_date:
             label_text = dates[i]
         else:
             label_text = dates[i][:7] if len(dates[i]) >= 7 else dates[i]
-        if i >= n_real:
-            label_text = "~" + label_text
         svg.append(
             f'<text x="{x:.1f}" y="{label_y}" '
             f'text-anchor="middle" class="axis-label" '
