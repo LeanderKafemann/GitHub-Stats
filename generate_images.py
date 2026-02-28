@@ -995,17 +995,26 @@ def generate_milestones() -> None:
             unique_milestones.append(m)
     milestones = unique_milestones
 
-    # ── SVG layout ────────────────────────────────────────────────────────
+    # ── SVG layout (fixed 1000×760 – same as history.svg) ────────────────
     card_bg = "#161b22"
     text_color = "#c9d1d9"
     grid_color = "#21262d"
 
-    row_h = 48
+    svg_width = 1000
+    svg_height = 760
     header_h = 70
     footer_h = 30
-    svg_width = 600
-    n_items = max(len(milestones), 1)
-    svg_height = header_h + n_items * row_h + footer_h
+    content_h = svg_height - header_h - footer_h  # 660 px
+
+    # Two-column layout so that many milestones still fit at 1000×760.
+    n_ms = len(milestones)
+    n_rows = max((n_ms + 1) // 2, 1)
+    row_h = min(80, content_h // n_rows) if n_ms > 0 else 80
+
+    # Column origins (timeline circle x, content-text x)
+    col_tl_x = [38, 538]        # timeline circle x for left / right column
+    col_txt_x = [col_tl_x[0] + 28, col_tl_x[1] + 28]
+    col_sep_x = 500             # vertical separator between columns
 
     svg: List[str] = []
     svg.append(
@@ -1039,39 +1048,51 @@ def generate_milestones() -> None:
             f'No milestones detected yet – check back after more activity.</text>'
         )
     else:
-        # Timeline vertical line
-        tl_x = 40
-        tl_top = header_h + 10
-        tl_bot = header_h + len(milestones) * row_h - 10
+        # Column separator
         svg.append(
-            f'<line x1="{tl_x}" y1="{tl_top}" x2="{tl_x}" y2="{tl_bot}" '
-            f'stroke="{grid_color}" stroke-width="2"/>'
+            f'<line x1="{col_sep_x}" y1="{header_h + 8}" '
+            f'x2="{col_sep_x}" y2="{svg_height - footer_h - 8}" '
+            f'stroke="{grid_color}" stroke-width="1" opacity="0.5"/>'
         )
+        # Timeline vertical lines per column
+        for col in range(2):
+            tl_x = col_tl_x[col]
+            n_in_col = (n_ms + 1 - col) // 2
+            if n_in_col <= 0:
+                continue
+            tl_top = header_h + 10
+            tl_bot = header_h + n_in_col * row_h - 10
+            svg.append(
+                f'<line x1="{tl_x}" y1="{tl_top}" x2="{tl_x}" y2="{tl_bot}" '
+                f'stroke="{grid_color}" stroke-width="2"/>'
+            )
+
         for idx, m in enumerate(milestones):
-            y = header_h + idx * row_h
+            col = idx % 2
+            row = idx // 2
+            tl_x = col_tl_x[col]
+            txt_x = col_txt_x[col]
+            y = header_h + row * row_h
             delay = idx * 60
             cy = y + row_h // 2
             color = m.get("color", "#c9d1d9")
             svg.append(
                 f'<g class="ms-row" style="animation-delay:{delay}ms;">'
             )
-            # Circle on timeline
             svg.append(
                 f'<circle cx="{tl_x}" cy="{cy}" r="7" '
                 f'fill="{color}" opacity="0.85"/>'
             )
-            # Horizontal connector
             svg.append(
                 f'<line x1="{tl_x + 7}" y1="{cy}" x2="{tl_x + 22}" y2="{cy}" '
                 f'stroke="{color}" stroke-width="1.5" opacity="0.5"/>'
             )
-            # Icon + label
             svg.append(
-                f'<text x="{tl_x + 28}" y="{cy - 5}" class="ms-label">'
+                f'<text x="{txt_x}" y="{cy - 5}" class="ms-label">'
                 f'{m["icon"]} {m["label"]}</text>'
             )
             svg.append(
-                f'<text x="{tl_x + 28}" y="{cy + 12}" class="ms-date">'
+                f'<text x="{txt_x}" y="{cy + 12}" class="ms-date">'
                 f'{m["date"]}  ·  {m["value"]}</text>'
             )
             svg.append('</g>')
@@ -1247,13 +1268,21 @@ def generate_achievements() -> None:
             "color": purple,
         })
 
-    # ── SVG layout ────────────────────────────────────────────────────────
-    row_h = 52
+    # ── SVG layout (fixed 1000×760 – same as history.svg) ────────────────
+    svg_width = 1000
+    svg_height = 760
     header_h = 70
     footer_h = 30
-    svg_width = 680
-    n_items = max(len(achievements), 1)
-    svg_height = header_h + n_items * row_h + footer_h
+    content_h = svg_height - header_h - footer_h  # 660 px
+
+    # Two-column layout: left col x=8..490, right col x=510..992
+    n_ach = len(achievements)
+    n_rows = max((n_ach + 1) // 2, 1)
+    row_h = min(90, content_h // n_rows) if n_ach > 0 else 90
+
+    col_badge_x = [8, 508]      # badge stripe x for left / right column
+    col_txt_x = [22, 522]       # label/value text x
+    col_sep_x = 500
 
     svg = []
     svg.append(
@@ -1287,13 +1316,22 @@ def generate_achievements() -> None:
             f'No achievements detected yet.</text>'
         )
     else:
+        # Column separator
+        svg.append(
+            f'<line x1="{col_sep_x}" y1="{header_h + 8}" '
+            f'x2="{col_sep_x}" y2="{svg_height - footer_h - 8}" '
+            f'stroke="{grid_color}" stroke-width="1" opacity="0.5"/>'
+        )
         for idx, ach in enumerate(achievements):
-            y = header_h + idx * row_h
+            col = idx % 2
+            row = idx // 2
+            bx = col_badge_x[col]
+            tx = col_txt_x[col]
+            y = header_h + row * row_h
             delay = idx * 55
             color = ach.get("color", accent)
-            # Badge stripe on left
             svg.append(
-                f'<rect x="8" y="{y + 6}" width="4" height="{row_h - 12}" '
+                f'<rect x="{bx}" y="{y + 6}" width="4" height="{row_h - 12}" '
                 f'rx="2" fill="{color}" opacity="0.9" '
                 f'class="ach-row" style="animation-delay:{delay}ms;"/>'
             )
@@ -1301,11 +1339,11 @@ def generate_achievements() -> None:
                 f'<g class="ach-row" style="animation-delay:{delay + 30}ms;">'
             )
             svg.append(
-                f'<text x="22" y="{y + 22}" class="ach-label">'
+                f'<text x="{tx}" y="{y + 24}" class="ach-label">'
                 f'{ach["icon"]} {ach["label"]}</text>'
             )
             svg.append(
-                f'<text x="22" y="{y + 38}" class="ach-value">'
+                f'<text x="{tx}" y="{y + 42}" class="ach-value">'
                 f'{ach["value"]}</text>'
             )
             svg.append('</g>')
