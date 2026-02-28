@@ -390,20 +390,11 @@ async def generate_history(s: Stats) -> None:
     # Total contributions over time
     contribs_series = [snap.get("total_contributions", 0) for snap in history]
 
-    # ── Forecast: add predictions for H1 and H2 of the next year ────────
+    # ── Forecast: dynamically determined horizon ──────────────────────────
     n_real = n  # number of actual historical data points
     forecast_dates: List[str] = []
     forecast_labels: List[str] = []
     if dates:
-        try:
-            last_date_obj = datetime.strptime(dates[-1], "%Y-%m-%d")
-            h1_date = last_date_obj + timedelta(days=183)
-            h2_date = last_date_obj + timedelta(days=365)
-            forecast_dates = [h1_date.strftime("%Y-%m-%d"), h2_date.strftime("%Y-%m-%d")]
-            forecast_labels = [f"H1 {h1_date.year}", f"H2 {h2_date.year}"]
-        except ValueError:
-            pass
-    if forecast_dates:
         # ── Linear regression helpers (no external dependencies) ──────────
         def _linreg_slope(ys: List[float]) -> float:
             """Return the OLS slope for a sequence y[0..m-1] vs x=0..m-1."""
@@ -418,24 +409,80 @@ async def generate_history(s: Stats) -> None:
             return (m * sxy - sx * sy) / denom if denom != 0 else 0.0
 
         # Trend-based projection using linear regression over ALL real data.
-        avg_delta_adds = max(0, int(_linreg_slope([float(v) for v in monthly_adds_series[:n_real]])))
-        avg_delta_dels = max(0, int(_linreg_slope([float(v) for v in monthly_dels_series[:n_real]])))
+        # Keep float precision so small slopes are not truncated to zero.
+        avg_delta_adds = max(0.0, _linreg_slope([float(v) for v in monthly_adds_series[:n_real]]))
+        avg_delta_dels = max(0.0, _linreg_slope([float(v) for v in monthly_dels_series[:n_real]]))
 
         base_adds = monthly_adds_series[n_real - 1] if monthly_adds_series else 0
         base_dels = monthly_dels_series[n_real - 1] if monthly_dels_series else 0
 
-        # Per-language trend: linear regression over all real snapshots
+        # Per-language trend: linear regression only over snapshots that have
+        # actual language data, to avoid zeros from early snapshots skewing the slope.
+        first_lang_idx = next(
+            (i for i, snap in enumerate(history) if snap.get("languages")),
+            n_real,
+        )
         lang_trends: Dict[str, float] = {}
         for lang in top_langs:
-            vals = lang_series[lang][:n_real]
+            vals = lang_series[lang][first_lang_idx:n_real]
             lang_trends[lang] = _linreg_slope(vals) if len(vals) >= 2 else 0.0
 
         # Stars trend: linear regression over all real snapshots
         stars_slope = _linreg_slope([float(v) for v in stars_series[:n_real]])
         base_stars = stars_series[n_real - 1] if stars_series else 0
 
-        for step, forecast_date_str in enumerate(forecast_dates):
-            mult = step + 1
+        # ── Dynamic forecast horizon ──────────────────────────────────────
+        # Compute the average interval between real snapshots in days so that
+        # slopes (which are in "per snapshot step" units) can be converted to
+        # a per-day rate.
+        try:
+            d_first = datetime.strptime(dates[0], "%Y-%m-%d")
+            d_last = datetime.strptime(dates[n_real - 1], "%Y-%m-%d")
+            avg_step_days = (
+                max(1.0, (d_last - d_first).days / (n_real - 1))
+                if n_real > 1
+                else 1.0
+            )
+        except ValueError:
+            avg_step_days = 1.0
+
+        # Find how many snapshot steps are required for any tracked metric
+        # to change by ≥10% of its current value.  Use the shortest such
+        # horizon so the chart always shows a "meaningful" change.
+        MIN_FORECAST_DAYS = 14
+        MAX_FORECAST_DAYS = 365
+        candidate_steps: List[float] = []
+        if avg_delta_adds > 0 and base_adds > 0:
+            candidate_steps.append(0.10 * base_adds / avg_delta_adds)
+        for lang in top_langs:
+            slope = abs(lang_trends.get(lang, 0.0))
+            base_val = lang_series[lang][n_real - 1] if lang_series[lang] else 0.0
+            if slope > 0 and base_val > 0:
+                candidate_steps.append(0.10 * base_val / slope)
+
+        if candidate_steps:
+            h1_steps = min(candidate_steps)
+        else:
+            # No active trend detected; fall back to the minimum horizon so
+            # the chart still shows two forecast points (flat extrapolation).
+            h1_steps = MIN_FORECAST_DAYS / avg_step_days
+
+        # Clamp horizon to [MIN_FORECAST_DAYS, MAX_FORECAST_DAYS]
+        h1_days = max(float(MIN_FORECAST_DAYS), h1_steps * avg_step_days)
+        h1_days = min(h1_days, float(MAX_FORECAST_DAYS))
+        h1_steps = h1_days / avg_step_days
+        h2_steps = h1_steps * 2.0
+
+        try:
+            last_date_obj = datetime.strptime(dates[n_real - 1], "%Y-%m-%d")
+            h1_date = last_date_obj + timedelta(days=int(h1_days))
+            h2_date = last_date_obj + timedelta(days=int(h1_days * 2))
+            forecast_dates = [h1_date.strftime("%Y-%m-%d"), h2_date.strftime("%Y-%m-%d")]
+            forecast_labels = [h1_date.strftime("%b %d, %Y"), h2_date.strftime("%b %d, %Y")]
+        except ValueError:
+            pass
+
+        for mult, forecast_date_str in zip([h1_steps, h2_steps], forecast_dates):
             dates.append(forecast_date_str)
             monthly_adds_series.append(max(0, int(base_adds + mult * avg_delta_adds)))
             monthly_dels_series.append(max(0, int(base_dels + mult * avg_delta_dels)))
@@ -489,7 +536,7 @@ async def generate_history(s: Stats) -> None:
     svg: List[str] = []
     svg.append(
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'width="{svg_width}" height="{svg_height}" '
+        f'width="495" height="376" '
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
 
@@ -1019,7 +1066,7 @@ def generate_milestones() -> None:
     svg: List[str] = []
     svg.append(
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'width="{svg_width}" height="{svg_height}" '
+        f'width="495" height="376" '
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
     svg.append(f"""<style>
@@ -1287,7 +1334,7 @@ def generate_achievements() -> None:
     svg = []
     svg.append(
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'width="{svg_width}" height="{svg_height}" '
+        f'width="495" height="376" '
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
     svg.append(f"""<style>
