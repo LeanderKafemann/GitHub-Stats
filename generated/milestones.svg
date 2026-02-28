@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="868" viewBox="0 0 600 868">
+<style>
+  .ms-title { font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+  .ms-sub   { font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.75; }
+  .ms-label { font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+  .ms-date  { font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.6; }
+  .ms-value { font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.75; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); }
+                        to   { opacity: 1; transform: translateX(0); } }
+  .ms-row { animation: slideIn 0.4s ease forwards; opacity: 0; }
+</style>
+<rect x="0.5" y="0.5" rx="4.5" width="599" height="867" fill="#161b22" stroke="#21262d"/>
+<text x="20" y="30" class="ms-title">🏆 Milestones</text>
+<text x="20" y="50" class="ms-sub">Achievements automatically detected from activity data</text>
+<line x1="40" y1="80" x2="40" y2="828" stroke="#21262d" stroke-width="2"/>
+<g class="ms-row" style="animation-delay:0ms;">
+<circle cx="40" cy="94" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="94" x2="62" y2="94" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="89" class="ms-label">🎯 100 Contributions</text>
+<text x="68" y="106" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:60ms;">
+<circle cx="40" cy="142" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="142" x2="62" y2="142" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="137" class="ms-label">🎯 250 Contributions</text>
+<text x="68" y="154" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:120ms;">
+<circle cx="40" cy="190" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="190" x2="62" y2="190" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="185" class="ms-label">🎯 500 Contributions</text>
+<text x="68" y="202" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:180ms;">
+<circle cx="40" cy="238" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="238" x2="62" y2="238" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="233" class="ms-label">🎯 1,000 Contributions</text>
+<text x="68" y="250" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:240ms;">
+<circle cx="40" cy="286" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="286" x2="62" y2="286" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="281" class="ms-label">🎯 1,500 Contributions</text>
+<text x="68" y="298" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:300ms;">
+<circle cx="40" cy="334" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="334" x2="62" y2="334" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="329" class="ms-label">🎯 2,000 Contributions</text>
+<text x="68" y="346" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:360ms;">
+<circle cx="40" cy="382" r="7" fill="#bc8cff" opacity="0.85"/>
+<line x1="47" y1="382" x2="62" y2="382" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="377" class="ms-label">🎯 2,500 Contributions</text>
+<text x="68" y="394" class="ms-date">2026-02-06  ·  2,516</text>
+</g>
+<g class="ms-row" style="animation-delay:420ms;">
+<circle cx="40" cy="430" r="7" fill="#e3b341" opacity="0.85"/>
+<line x1="47" y1="430" x2="62" y2="430" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="425" class="ms-label">⭐ 1 Stars</text>
+<text x="68" y="442" class="ms-date">2026-02-06  ·  32 stars</text>
+</g>
+<g class="ms-row" style="animation-delay:480ms;">
+<circle cx="40" cy="478" r="7" fill="#e3b341" opacity="0.85"/>
+<line x1="47" y1="478" x2="62" y2="478" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="473" class="ms-label">⭐ 5 Stars</text>
+<text x="68" y="490" class="ms-date">2026-02-06  ·  32 stars</text>
+</g>
+<g class="ms-row" style="animation-delay:540ms;">
+<circle cx="40" cy="526" r="7" fill="#e3b341" opacity="0.85"/>
+<line x1="47" y1="526" x2="62" y2="526" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="521" class="ms-label">⭐ 10 Stars</text>
+<text x="68" y="538" class="ms-date">2026-02-06  ·  32 stars</text>
+</g>
+<g class="ms-row" style="animation-delay:600ms;">
+<circle cx="40" cy="574" r="7" fill="#e3b341" opacity="0.85"/>
+<line x1="47" y1="574" x2="62" y2="574" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="569" class="ms-label">⭐ 20 Stars</text>
+<text x="68" y="586" class="ms-date">2026-02-06  ·  32 stars</text>
+</g>
+<g class="ms-row" style="animation-delay:660ms;">
+<circle cx="40" cy="622" r="7" fill="#e3b341" opacity="0.85"/>
+<line x1="47" y1="622" x2="62" y2="622" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="617" class="ms-label">⭐ 30 Stars</text>
+<text x="68" y="634" class="ms-date">2026-02-06  ·  32 stars</text>
+</g>
+<g class="ms-row" style="animation-delay:720ms;">
+<circle cx="40" cy="670" r="7" fill="#58a6ff" opacity="0.85"/>
+<line x1="47" y1="670" x2="62" y2="670" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="665" class="ms-label">📁 5 Repos</text>
+<text x="68" y="682" class="ms-date">2026-02-06  ·  67 repos</text>
+</g>
+<g class="ms-row" style="animation-delay:780ms;">
+<circle cx="40" cy="718" r="7" fill="#58a6ff" opacity="0.85"/>
+<line x1="47" y1="718" x2="62" y2="718" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="713" class="ms-label">📁 10 Repos</text>
+<text x="68" y="730" class="ms-date">2026-02-06  ·  67 repos</text>
+</g>
+<g class="ms-row" style="animation-delay:840ms;">
+<circle cx="40" cy="766" r="7" fill="#58a6ff" opacity="0.85"/>
+<line x1="47" y1="766" x2="62" y2="766" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="761" class="ms-label">📁 25 Repos</text>
+<text x="68" y="778" class="ms-date">2026-02-06  ·  67 repos</text>
+</g>
+<g class="ms-row" style="animation-delay:900ms;">
+<circle cx="40" cy="814" r="7" fill="#58a6ff" opacity="0.85"/>
+<line x1="47" y1="814" x2="62" y2="814" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
+<text x="68" y="809" class="ms-label">📁 50 Repos</text>
+<text x="68" y="826" class="ms-date">2026-02-06  ·  67 repos</text>
+</g>
+<text x="590" y="860" text-anchor="end" class="ms-date">Updated 2026-02-28</text>
+</svg>

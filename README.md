@@ -124,6 +124,77 @@ For more information on inaccuracies, see issue
 10. Star this repo if you like it!
 
 
+## Embedding Files in a Profile README
+
+After the workflow has run at least once, five SVG images are available in the
+`generated/` folder of your repository. Replace `username` with your GitHub
+username and `github-stats` with the repository name (if you renamed it) in
+every URL below.
+
+### Available Charts
+
+| File | Description |
+|------|-------------|
+| `overview.svg` | Summary badge – stars, forks, contributions, lines changed, views |
+| `languages.svg` | Proportional breakdown of programming languages |
+| `history.svg` | Activity history + forecast (lines added/deleted, language trends) |
+| `milestones.svg` | Timeline of automatically detected contribution & star milestones |
+| `achievements.svg` | Top rankings & records (best year, top language per year, peak week, …) |
+
+### Copy-paste snippets
+
+**Overview card**
+```md
+![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
+![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
+```
+
+**Language breakdown**
+```md
+![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
+![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
+```
+
+**Activity history with forecast**
+```md
+![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-dark-mode-only)
+![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-light-mode-only)
+```
+
+**Milestones timeline**
+```md
+![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-dark-mode-only)
+![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-light-mode-only)
+```
+
+**Top rankings & achievements**
+```md
+![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-dark-mode-only)
+![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-light-mode-only)
+```
+
+**All cards at once**
+```md
+![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
+![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
+![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-dark-mode-only)
+![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-dark-mode-only)
+![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-dark-mode-only)
+
+![GitHub Stats](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
+![Top Languages](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
+![Activity History](https://raw.githubusercontent.com/username/github-stats/master/generated/history.svg#gh-light-mode-only)
+![Milestones](https://raw.githubusercontent.com/username/github-stats/master/generated/milestones.svg#gh-light-mode-only)
+![Achievements](https://raw.githubusercontent.com/username/github-stats/master/generated/achievements.svg#gh-light-mode-only)
+```
+
+> **Tip:** The `#gh-dark-mode-only` / `#gh-light-mode-only` fragments tell
+> GitHub to show the image only in the matching color scheme. Omit them if you
+> want the image visible in both modes.
+
+
+
+
 # Support the Project
 
 There are a few things you can do to support the project:

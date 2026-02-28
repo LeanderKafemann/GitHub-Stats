@@ -404,35 +404,34 @@ async def generate_history(s: Stats) -> None:
         except ValueError:
             pass
     if forecast_dates:
-        lookback = min(3, n_real)
-        # Trend-based projection for lines: average the per-period deltas and
-        # clamp to zero so the forecast never shows a decrease.
-        if lookback >= 2:
-            window_adds = monthly_adds_series[n_real - lookback: n_real]
-            window_dels = monthly_dels_series[n_real - lookback: n_real]
-            adds_deltas = [window_adds[j + 1] - window_adds[j] for j in range(len(window_adds) - 1)]
-            dels_deltas = [window_dels[j + 1] - window_dels[j] for j in range(len(window_dels) - 1)]
-            avg_delta_adds = max(0, int(sum(adds_deltas) / len(adds_deltas)))
-            avg_delta_dels = max(0, int(sum(dels_deltas) / len(dels_deltas)))
-        else:
-            avg_delta_adds = 0
-            avg_delta_dels = 0
+        # ── Linear regression helpers (no external dependencies) ──────────
+        def _linreg_slope(ys: List[float]) -> float:
+            """Return the OLS slope for a sequence y[0..m-1] vs x=0..m-1."""
+            m = len(ys)
+            if m < 2:
+                return 0.0
+            sx = m * (m - 1) / 2          # sum of 0..m-1
+            sx2 = m * (m - 1) * (2 * m - 1) / 6
+            sy = sum(ys)
+            sxy = sum(i * ys[i] for i in range(m))
+            denom = m * sx2 - sx * sx
+            return (m * sxy - sx * sy) / denom if denom != 0 else 0.0
+
+        # Trend-based projection using linear regression over ALL real data.
+        avg_delta_adds = max(0, int(_linreg_slope([float(v) for v in monthly_adds_series[:n_real]])))
+        avg_delta_dels = max(0, int(_linreg_slope([float(v) for v in monthly_dels_series[:n_real]])))
+
         base_adds = monthly_adds_series[n_real - 1] if monthly_adds_series else 0
         base_dels = monthly_dels_series[n_real - 1] if monthly_dels_series else 0
 
-        # Per-language trend from the last two real snapshots
+        # Per-language trend: linear regression over all real snapshots
         lang_trends: Dict[str, float] = {}
         for lang in top_langs:
-            if n_real >= 2 and len(lang_series[lang]) >= 2:
-                lang_trends[lang] = lang_series[lang][n_real - 1] - lang_series[lang][n_real - 2]
-            else:
-                lang_trends[lang] = 0.0
+            vals = lang_series[lang][:n_real]
+            lang_trends[lang] = _linreg_slope(vals) if len(vals) >= 2 else 0.0
 
-        # Stars trend from the last two real snapshots
-        if len(stars_series) >= 2:
-            stars_delta = stars_series[n_real - 1] - stars_series[n_real - 2]
-        else:
-            stars_delta = 0
+        # Stars trend: linear regression over all real snapshots
+        stars_slope = _linreg_slope([float(v) for v in stars_series[:n_real]])
         base_stars = stars_series[n_real - 1] if stars_series else 0
 
         for step, forecast_date_str in enumerate(forecast_dates):
@@ -458,7 +457,7 @@ async def generate_history(s: Stats) -> None:
             for lang in top_langs:
                 lang_series[lang].append(raw.get(lang, 0.0))
 
-            stars_series.append(max(0, int(base_stars + mult * stars_delta)))
+            stars_series.append(max(0, int(base_stars + mult * stars_slope)))
         n = len(dates)
 
     # ── Chart dimensions ─────────────────────────────────────────────────
@@ -899,8 +898,435 @@ async def generate_history(s: Stats) -> None:
 
 
 ################################################################################
-# Main Function
+# Milestones Chart
 ################################################################################
+
+
+def generate_milestones() -> None:
+    """
+    Generate milestones.svg from history data.
+    Detects when contribution/star/repo thresholds were first crossed and
+    draws a vertical timeline.
+    """
+    generate_output_folder()
+    history = load_history()
+
+    # ── Derive milestones from history ────────────────────────────────────
+    # Thresholds to watch for (label, metric key, value)
+    CONTRIB_THRESHOLDS = [100, 250, 500, 1000, 1500, 2000, 2500]
+    STAR_THRESHOLDS = [1, 5, 10, 20, 30, 50]
+    REPO_THRESHOLDS = [5, 10, 25, 50]
+
+    milestones: List[Dict[str, Any]] = []
+
+    # Sort history by date
+    sorted_history = sorted(history, key=lambda s: s.get("date", ""))
+
+    # Track cumulative contributions across years (use max seen per year to avoid
+    # regressions from API noise).
+    cum_contribs_seen: Dict[str, int] = {}
+    prev_total_contribs = 0
+    prev_stars = 0
+    prev_repos = 0
+    contrib_thresholds_left = sorted(CONTRIB_THRESHOLDS)
+    star_thresholds_left = sorted(STAR_THRESHOLDS)
+    repo_thresholds_left = sorted(REPO_THRESHOLDS)
+
+    for snap in sorted_history:
+        date = snap.get("date", "")
+
+        # Compute best estimate of total contributions at this snapshot
+        by_year = snap.get("contributions_by_year", {})
+        for yr, val in by_year.items():
+            if val > cum_contribs_seen.get(yr, 0):
+                cum_contribs_seen[yr] = val
+        total_contribs = sum(cum_contribs_seen.values())
+
+        stars = snap.get("stargazers", 0)
+        repos = snap.get("repo_count", 0)
+
+        # Check contribution thresholds
+        for thr in list(contrib_thresholds_left):
+            if total_contribs >= thr:
+                if thr >= prev_total_contribs:
+                    milestones.append({
+                        "date": date,
+                        "icon": "🎯",
+                        "label": f"{thr:,} Contributions",
+                        "value": f"{total_contribs:,}",
+                        "color": "#bc8cff",
+                    })
+                contrib_thresholds_left.remove(thr)
+
+        # Check star thresholds
+        for thr in list(star_thresholds_left):
+            if stars >= thr:
+                milestones.append({
+                    "date": date,
+                    "icon": "⭐",
+                    "label": f"{thr} Stars",
+                    "value": f"{stars:,} stars",
+                    "color": "#e3b341",
+                })
+                star_thresholds_left.remove(thr)
+
+        # Check repo thresholds
+        for thr in list(repo_thresholds_left):
+            if repos >= thr:
+                milestones.append({
+                    "date": date,
+                    "icon": "📁",
+                    "label": f"{thr} Repos",
+                    "value": f"{repos} repos",
+                    "color": "#58a6ff",
+                })
+                repo_thresholds_left.remove(thr)
+
+        prev_total_contribs = total_contribs
+        prev_stars = stars
+        prev_repos = repos
+
+    # Deduplicate (keep first occurrence per label)
+    seen_labels: set = set()
+    unique_milestones: List[Dict[str, Any]] = []
+    for m in milestones:
+        if m["label"] not in seen_labels:
+            seen_labels.add(m["label"])
+            unique_milestones.append(m)
+    milestones = unique_milestones
+
+    # ── SVG layout ────────────────────────────────────────────────────────
+    card_bg = "#161b22"
+    text_color = "#c9d1d9"
+    grid_color = "#21262d"
+
+    row_h = 48
+    header_h = 70
+    footer_h = 30
+    svg_width = 600
+    n_items = max(len(milestones), 1)
+    svg_height = header_h + n_items * row_h + footer_h
+
+    svg: List[str] = []
+    svg.append(
+        f'<svg xmlns="http://www.w3.org/2000/svg" '
+        f'width="{svg_width}" height="{svg_height}" '
+        f'viewBox="0 0 {svg_width} {svg_height}">'
+    )
+    svg.append(f"""<style>
+  .ms-title {{ font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ms-sub   {{ font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ms-label {{ font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ms-date  {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.6; }}
+  .ms-value {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  @keyframes slideIn {{ from {{ opacity: 0; transform: translateX(-8px); }}
+                        to   {{ opacity: 1; transform: translateX(0); }} }}
+  .ms-row {{ animation: slideIn 0.4s ease forwards; opacity: 0; }}
+</style>""")
+    svg.append(
+        f'<rect x="0.5" y="0.5" rx="4.5" width="{svg_width-1}" '
+        f'height="{svg_height-1}" fill="{card_bg}" stroke="{grid_color}"/>'
+    )
+    svg.append(f'<text x="20" y="30" class="ms-title">🏆 Milestones</text>')
+    svg.append(
+        f'<text x="20" y="50" class="ms-sub">'
+        f'Achievements automatically detected from activity data</text>'
+    )
+
+    if not milestones:
+        svg.append(
+            f'<text x="20" y="{header_h + 30}" class="ms-date">'
+            f'No milestones detected yet – check back after more activity.</text>'
+        )
+    else:
+        # Timeline vertical line
+        tl_x = 40
+        tl_top = header_h + 10
+        tl_bot = header_h + len(milestones) * row_h - 10
+        svg.append(
+            f'<line x1="{tl_x}" y1="{tl_top}" x2="{tl_x}" y2="{tl_bot}" '
+            f'stroke="{grid_color}" stroke-width="2"/>'
+        )
+        for idx, m in enumerate(milestones):
+            y = header_h + idx * row_h
+            delay = idx * 60
+            cy = y + row_h // 2
+            color = m.get("color", "#c9d1d9")
+            svg.append(
+                f'<g class="ms-row" style="animation-delay:{delay}ms;">'
+            )
+            # Circle on timeline
+            svg.append(
+                f'<circle cx="{tl_x}" cy="{cy}" r="7" '
+                f'fill="{color}" opacity="0.85"/>'
+            )
+            # Horizontal connector
+            svg.append(
+                f'<line x1="{tl_x + 7}" y1="{cy}" x2="{tl_x + 22}" y2="{cy}" '
+                f'stroke="{color}" stroke-width="1.5" opacity="0.5"/>'
+            )
+            # Icon + label
+            svg.append(
+                f'<text x="{tl_x + 28}" y="{cy - 5}" class="ms-label">'
+                f'{m["icon"]} {m["label"]}</text>'
+            )
+            svg.append(
+                f'<text x="{tl_x + 28}" y="{cy + 12}" class="ms-date">'
+                f'{m["date"]}  ·  {m["value"]}</text>'
+            )
+            svg.append('</g>')
+
+    # Footer
+    now_str = datetime.utcnow().strftime("%Y-%m-%d")
+    svg.append(
+        f'<text x="{svg_width - 10}" y="{svg_height - 8}" '
+        f'text-anchor="end" class="ms-date">Updated {now_str}</text>'
+    )
+    svg.append("</svg>")
+
+    with open("generated/milestones.svg", "w") as f:
+        f.write("\n".join(svg))
+
+
+################################################################################
+# Achievements / Top-Rankings Chart
+################################################################################
+
+
+def generate_achievements() -> None:
+    """
+    Generate achievements.svg: a 'Top Rankings' card.
+    Derives facts such as top language per year, best contribution year,
+    most active coding week, add/delete ratio, etc. from history.json.
+    """
+    generate_output_folder()
+    history = load_history()
+
+    card_bg = "#161b22"
+    text_color = "#c9d1d9"
+    grid_color = "#21262d"
+    gold = "#e3b341"
+    silver = "#c0c0c0"
+    bronze = "#cd7f32"
+    accent = "#58a6ff"
+    green = "#3fb950"
+    red = "#f85149"
+    purple = "#bc8cff"
+
+    # ── Compute achievements ───────────────────────────────────────────────
+
+    achievements: List[Dict[str, Any]] = []
+
+    # 1. Best contribution year
+    contribs_by_year: Dict[str, int] = {}
+    for snap in history:
+        for yr, val in snap.get("contributions_by_year", {}).items():
+            if val > contribs_by_year.get(yr, 0):
+                contribs_by_year[yr] = val
+    if contribs_by_year:
+        best_year = max(contribs_by_year, key=lambda y: contribs_by_year[y])
+        achievements.append({
+            "icon": "🏆",
+            "label": f"Most Active Year: {best_year}",
+            "value": f"{contribs_by_year[best_year]:,} contributions",
+            "color": gold,
+        })
+
+    # 2. Top language per year (only from snapshots that have language data)
+    lang_by_year: Dict[str, Dict[str, float]] = {}
+    for snap in history:
+        langs = snap.get("languages", {})
+        if not langs:
+            continue
+        yr = snap.get("date", "")[:4]
+        if yr not in lang_by_year:
+            lang_by_year[yr] = {}
+        for lname, ldata in langs.items():
+            prop = ldata.get("prop", 0.0)
+            if prop > lang_by_year[yr].get(lname, 0.0):
+                lang_by_year[yr][lname] = prop
+
+    rank_colors = [gold, silver, bronze]
+    for yr in sorted(lang_by_year.keys(), reverse=True)[:3]:
+        data = lang_by_year[yr]
+        if data:
+            top = max(data, key=lambda l: data[l])
+            color = rank_colors.pop(0) if rank_colors else accent
+            achievements.append({
+                "icon": "💻",
+                "label": f"Top Language {yr}: {top}",
+                "value": f"{data[top]:.1f}% of code",
+                "color": color,
+            })
+
+    # 3. Most active week (lines changed)
+    all_weekly: Dict[str, List[int]] = {}
+    for snap in history:
+        for wk, vals in snap.get("lines_changed_by_week", {}).items():
+            if isinstance(vals, (list, tuple)) and len(vals) >= 2:
+                total = int(vals[0]) + int(vals[1])
+                if total > sum(all_weekly.get(wk, [0, 0])):
+                    all_weekly[wk] = [int(vals[0]), int(vals[1])]
+    if all_weekly:
+        peak_week = max(all_weekly, key=lambda w: sum(all_weekly[w]))
+        peak_vals = all_weekly[peak_week]
+        achievements.append({
+            "icon": "🔥",
+            "label": f"Peak Week: {peak_week}",
+            "value": f"+{peak_vals[0]:,} / -{peak_vals[1]:,} lines",
+            "color": red,
+        })
+
+    # 4. Total lines written (all-time adds)
+    total_adds_all = sum(v[0] for v in all_weekly.values() if isinstance(v, list))
+    total_dels_all = sum(v[1] for v in all_weekly.values() if isinstance(v, list))
+    if total_adds_all > 0:
+        achievements.append({
+            "icon": "📝",
+            "label": "Total Lines Written (all-time)",
+            "value": f"+{total_adds_all:,} added / -{total_dels_all:,} deleted",
+            "color": green,
+        })
+
+    # 5. Add/Delete ratio
+    if total_dels_all > 0:
+        ratio = total_adds_all / total_dels_all
+        achievements.append({
+            "icon": "⚖️",
+            "label": "Add / Delete Ratio",
+            "value": f"{ratio:.2f}x (higher = more net new code)",
+            "color": accent,
+        })
+
+    # 6. Language with highest growth (last snapshot vs earliest snapshot with data)
+    first_snap_langs = None
+    last_snap_langs = None
+    for snap in sorted(history, key=lambda s: s.get("date", "")):
+        if snap.get("languages"):
+            if first_snap_langs is None:
+                first_snap_langs = snap["languages"]
+            last_snap_langs = snap["languages"]
+    if first_snap_langs and last_snap_langs and first_snap_langs != last_snap_langs:
+        growth: Dict[str, float] = {}
+        for lang in last_snap_langs:
+            old_prop = first_snap_langs.get(lang, {}).get("prop", 0.0)
+            new_prop = last_snap_langs[lang].get("prop", 0.0)
+            growth[lang] = new_prop - old_prop
+        fastest_growing = max(growth, key=lambda l: growth[l])
+        fastest_shrinking = min(growth, key=lambda l: growth[l])
+        if growth[fastest_growing] > 0:
+            achievements.append({
+                "icon": "📈",
+                "label": f"Fastest Growing Language",
+                "value": f"{fastest_growing} (+{growth[fastest_growing]:.1f}pp)",
+                "color": green,
+            })
+        if growth[fastest_shrinking] < 0:
+            achievements.append({
+                "icon": "📉",
+                "label": f"Most Reduced Language",
+                "value": f"{fastest_shrinking} ({growth[fastest_shrinking]:.1f}pp)",
+                "color": red,
+            })
+
+    # 7. Max stars / repos from any snapshot
+    max_stars = max((s.get("stargazers", 0) for s in history), default=0)
+    max_repos = max((s.get("repo_count", 0) for s in history), default=0)
+    if max_stars > 0:
+        achievements.append({
+            "icon": "⭐",
+            "label": "Peak Stars",
+            "value": f"{max_stars:,} stars across all repos",
+            "color": gold,
+        })
+    if max_repos > 0:
+        achievements.append({
+            "icon": "📦",
+            "label": "Peak Repository Count",
+            "value": f"{max_repos} repos",
+            "color": purple,
+        })
+
+    # ── SVG layout ────────────────────────────────────────────────────────
+    row_h = 52
+    header_h = 70
+    footer_h = 30
+    svg_width = 680
+    n_items = max(len(achievements), 1)
+    svg_height = header_h + n_items * row_h + footer_h
+
+    svg = []
+    svg.append(
+        f'<svg xmlns="http://www.w3.org/2000/svg" '
+        f'width="{svg_width}" height="{svg_height}" '
+        f'viewBox="0 0 {svg_width} {svg_height}">'
+    )
+    svg.append(f"""<style>
+  .ach-title {{ font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ach-sub   {{ font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ach-label {{ font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ach-value {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ach-note  {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.5; }}
+  @keyframes popIn {{ from {{ opacity: 0; transform: scale(0.92); }}
+                      to   {{ opacity: 1; transform: scale(1);    }} }}
+  .ach-row {{ animation: popIn 0.35s ease forwards; opacity: 0; }}
+</style>""")
+    svg.append(
+        f'<rect x="0.5" y="0.5" rx="4.5" width="{svg_width-1}" '
+        f'height="{svg_height-1}" fill="{card_bg}" stroke="{grid_color}"/>'
+    )
+    svg.append(f'<text x="20" y="30" class="ach-title">🎖️ Top Rankings &amp; Records</text>')
+    svg.append(
+        f'<text x="20" y="50" class="ach-sub">'
+        f'Highlights automatically derived from GitHub activity data</text>'
+    )
+
+    if not achievements:
+        svg.append(
+            f'<text x="20" y="{header_h + 30}" class="ach-note">'
+            f'No achievements detected yet.</text>'
+        )
+    else:
+        for idx, ach in enumerate(achievements):
+            y = header_h + idx * row_h
+            delay = idx * 55
+            color = ach.get("color", accent)
+            # Badge stripe on left
+            svg.append(
+                f'<rect x="8" y="{y + 6}" width="4" height="{row_h - 12}" '
+                f'rx="2" fill="{color}" opacity="0.9" '
+                f'class="ach-row" style="animation-delay:{delay}ms;"/>'
+            )
+            svg.append(
+                f'<g class="ach-row" style="animation-delay:{delay + 30}ms;">'
+            )
+            svg.append(
+                f'<text x="22" y="{y + 22}" class="ach-label">'
+                f'{ach["icon"]} {ach["label"]}</text>'
+            )
+            svg.append(
+                f'<text x="22" y="{y + 38}" class="ach-value">'
+                f'{ach["value"]}</text>'
+            )
+            svg.append('</g>')
+
+    # Separator above footer
+    svg.append(
+        f'<line x1="8" y1="{svg_height - footer_h}" x2="{svg_width - 8}" '
+        f'y2="{svg_height - footer_h}" stroke="{grid_color}" stroke-width="1"/>'
+    )
+    now_str = datetime.utcnow().strftime("%Y-%m-%d")
+    svg.append(
+        f'<text x="{svg_width - 10}" y="{svg_height - 8}" '
+        f'text-anchor="end" class="ach-note">Updated {now_str}</text>'
+    )
+    svg.append("</svg>")
+
+    with open("generated/achievements.svg", "w") as f:
+        f.write("\n".join(svg))
+
+
+
 
 
 async def main() -> None:
@@ -941,6 +1367,8 @@ async def main() -> None:
             generate_overview(s),
         )
         await generate_history(s)
+        generate_milestones()
+        generate_achievements()
 
 
 if __name__ == "__main__":
