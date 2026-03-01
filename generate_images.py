@@ -561,7 +561,7 @@ async def generate_history(s: Stats) -> None:
   .title {{ font: bold 28px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
   .subtitle {{ font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.8; }}
   .axis-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
-  .legend-text {{ font: 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .legend-text {{ font: 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
   .value-text {{ font: bold 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
   .stat-value {{ font: bold 22px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
   .stat-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
@@ -587,14 +587,30 @@ async def generate_history(s: Stats) -> None:
 
     step_x = chart_w / max(n - 1, 1)
 
+    # ── Helper: compact number formatting ───────────────────────────────
+    def compact_number(val: float) -> str:
+        """Format large numbers compactly (e.g. 2,836,638 → 2.8M)."""
+        abs_val = abs(val)
+        if abs_val >= 1_000_000:
+            return f"{val / 1_000_000:,.1f}M"
+        if abs_val >= 10_000:
+            return f"{val / 1_000:,.0f}K"
+        if abs_val >= 1_000:
+            return f"{val / 1_000:,.1f}K"
+        return f"{val:,.0f}"
+
     # ── Helper: draw grid + axis ─────────────────────────────────────────
     def draw_grid(
-        top_y: float, height: float, max_val: float, label_fmt: str = "{:,.0f}"
+        top_y: float, height: float, max_val: float, label_fmt: str = ""
     ) -> None:
         num_grid = 4
         for i in range(num_grid + 1):
             y = top_y + height - (i / num_grid) * height
             val = max_val * i / num_grid
+            if label_fmt:
+                label_text = label_fmt.format(val)
+            else:
+                label_text = compact_number(val)
             svg.append(
                 f'<line x1="{margin_left}" y1="{y:.1f}" '
                 f'x2="{margin_left + chart_w}" y2="{y:.1f}" '
@@ -603,7 +619,7 @@ async def generate_history(s: Stats) -> None:
             svg.append(
                 f'<text x="{margin_left - 8}" y="{y + 4:.1f}" '
                 f'text-anchor="end" class="axis-label">'
-                f'{label_fmt.format(val)}</text>'
+                f'{label_text}</text>'
             )
 
     # ── Chart 1: Lines added vs deleted (area) ─────────────────────────
@@ -763,24 +779,40 @@ async def generate_history(s: Stats) -> None:
             f'stroke="{text_color}" stroke-width="1" stroke-dasharray="4,3" '
             f'opacity="0.35"/>'
         )
+        last_fx = -999.0
         for fi, flabel in enumerate(forecast_labels):
             fx_label = margin_left + (n_real + fi) * step_x
+            if fx_label - last_fx < 70:
+                continue
             svg.append(
                 f'<text x="{fx_label:.1f}" '
                 f'y="{chart1_top + 12}" '
                 f'text-anchor="middle" class="axis-label" opacity="0.6">{flabel}</text>'
             )
+            last_fx = fx_label
 
     # ── X-axis labels (shared) ───────────────────────────────────────────
     # Determine label format: use full date if month prefix is identical
     date_prefixes = {d[:7] for d in dates[:n_real] if len(d) >= 7}
     use_full_date = len(date_prefixes) <= 1
 
+    # Ensure minimum pixel spacing between labels to prevent overlap
+    min_label_spacing = 70  # minimum px between label centers
     label_step = max(1, n // 10)
-    shown_indices = set(range(0, n, label_step))
+    # Adjust step so labels are at least min_label_spacing apart
+    while label_step > 1 and label_step * step_x < min_label_spacing:
+        label_step += 1
+    if label_step * step_x < min_label_spacing:
+        label_step = max(1, int(min_label_spacing / step_x) + 1)
+
+    shown_indices = set(range(0, n_real, label_step))
     if n > n_real:
+        shown_indices.add(n_real - 1)  # always show last real data point
         for fi in range(n_real, n):
-            shown_indices.add(fi)  # always show all forecast labels
+            shown_indices.add(fi)  # always show forecast labels
+
+    last_rendered_x = -999.0
+    last_rendered_label = ""
     for i in sorted(shown_indices):
         x = margin_left + i * step_x
         label_y = chart2_top + chart_h_bottom + 18
@@ -791,12 +823,21 @@ async def generate_history(s: Stats) -> None:
             label_text = dates[i]
         else:
             label_text = dates[i][:7] if len(dates[i]) >= 7 else dates[i]
+
+        # Skip labels that are too close together or identical to previous
+        if x - last_rendered_x < min_label_spacing and last_rendered_label:
+            continue
+        if label_text == last_rendered_label:
+            continue
+
         svg.append(
             f'<text x="{x:.1f}" y="{label_y}" '
             f'text-anchor="middle" class="axis-label" '
             f'transform="rotate(-35 {x:.1f} {label_y})">'
             f'{label_text}</text>'
         )
+        last_rendered_x = x
+        last_rendered_label = label_text
 
     # ── Legend (right side) ──────────────────────────────────────────────
     legend_x = margin_left + chart_w + 16
@@ -837,54 +878,61 @@ async def generate_history(s: Stats) -> None:
 
     # Language legend for chart 2
     if has_lang_data and top_langs:
-        lang_legend_y = legend_y + 110
+        lang_legend_y = legend_y + 90
         svg.append(
             f'<text x="{legend_x}" y="{lang_legend_y}" '
             f'class="subtitle">Languages</text>'
         )
+        max_label_chars = 22  # max characters for legend label
         for i, lang in enumerate(top_langs):
-            ly = lang_legend_y + 30 + i * 32
+            ly = lang_legend_y + 22 + i * 22
             color = lang_color_map.get(lang, "#888888")
             current_prop = lang_series[lang][n_real - 1] if len(lang_series[lang]) >= n_real else (lang_series[lang][-1] if lang_series[lang] else 0.0)
             forecast_prop = lang_series[lang][-1] if lang_series[lang] else 0.0
             if n > n_real and abs(forecast_prop - current_prop) >= 0.05:
-                label = f"{lang} ({current_prop:.1f}% → {forecast_prop:.1f}%)"
+                label = f"{lang} ({current_prop:.0f}%→{forecast_prop:.0f}%)"
             else:
                 label = f"{lang} ({current_prop:.1f}%)"
+            if len(label) > max_label_chars:
+                label = label[:max_label_chars - 1] + "…"
             svg.append(
-                f'<rect x="{legend_x}" y="{ly - 13}" width="16" height="16" '
+                f'<rect x="{legend_x}" y="{ly - 10}" width="12" height="12" '
                 f'rx="2" fill="{color}" opacity="0.8" '
                 f'class="anim" style="animation-delay:{800 + i * 80}ms;"/>'
             )
             svg.append(
-                f'<text x="{legend_x + 24}" y="{ly + 1}" '
+                f'<text x="{legend_x + 18}" y="{ly + 1}" '
                 f'class="legend-text">{label}</text>'
             )
-        next_section_y = lang_legend_y + 30 + len(top_langs) * 32 + 26
+        next_section_y = lang_legend_y + 22 + len(top_langs) * 22 + 14
     else:
         next_section_y = legend_y + 72
 
     # Contributions-by-year mini summary
+    max_sidebar_y = svg_height - 40  # leave room for summary footer
     contribs_by_year = current_snapshot.get("contributions_by_year", {})
     sorted_years = sorted(contribs_by_year.keys())
-    if sorted_years:
+    if sorted_years and next_section_y < max_sidebar_y:
         cy_y = next_section_y
         svg.append(
             f'<text x="{legend_x}" y="{cy_y}" '
             f'class="subtitle">Contributions</text>'
         )
         for i, year in enumerate(sorted_years):
+            item_y = cy_y + 20 + i * 20
+            if item_y > max_sidebar_y:
+                break
             val = contribs_by_year[year]
             svg.append(
-                f'<text x="{legend_x}" y="{cy_y + 26 + i * 26}" '
+                f'<text x="{legend_x}" y="{item_y}" '
                 f'class="axis-label">{year}: {val:,}</text>'
             )
-        next_section_y = cy_y + 26 + len(sorted_years) * 26 + 14
+        next_section_y = cy_y + 20 + len(sorted_years) * 20 + 10
 
     # ── Additional statistics (right side) ───────────────────────────────
     # Contribution streak (consecutive days with contributions from weekly data)
     weekly_data = current_snapshot.get("lines_changed_by_week", {})
-    if weekly_data:
+    if weekly_data and next_section_y < max_sidebar_y:
         sorted_weeks = sorted(weekly_data.keys())
         # Most active week
         most_active_week = max(
@@ -916,15 +964,18 @@ async def generate_history(s: Stats) -> None:
             f'class="subtitle">Statistics</text>'
         )
         stats_items = [
-            (f"Active weeks: {active_weeks}",),
-            (f"Add/Del ratio: {ratio_str}",),
-            (f"Avg lines/week: {avg_lines:,.0f}",),
-            (f"Peak: {most_active_week}",),
-            (f"  ({most_active_val:,} lines)",),
+            f"Active weeks: {active_weeks}",
+            f"Add/Del ratio: {ratio_str}",
+            f"Avg lines/wk: {compact_number(avg_lines)}",
+            f"Peak: {most_active_week}",
+            f"  ({compact_number(most_active_val)} lines)",
         ]
-        for i, (text,) in enumerate(stats_items):
+        for i, text in enumerate(stats_items):
+            item_y = stat_y + 20 + i * 20
+            if item_y > max_sidebar_y:
+                break
             svg.append(
-                f'<text x="{legend_x}" y="{stat_y + 26 + i * 26}" '
+                f'<text x="{legend_x}" y="{item_y}" '
                 f'class="axis-label">{text}</text>'
             )
 
