@@ -800,8 +800,6 @@ async def generate_history(s: Stats) -> None:
     min_label_spacing = 70  # minimum px between label centers
     label_step = max(1, n // 10)
     # Adjust step so labels are at least min_label_spacing apart
-    while label_step > 1 and label_step * step_x < min_label_spacing:
-        label_step += 1
     if label_step * step_x < min_label_spacing:
         label_step = max(1, int(min_label_spacing / step_x) + 1)
 
@@ -892,7 +890,7 @@ async def generate_history(s: Stats) -> None:
             if n > n_real and abs(forecast_prop - current_prop) >= 0.05:
                 label = f"{lang} ({current_prop:.0f}%→{forecast_prop:.0f}%)"
             else:
-                label = f"{lang} ({current_prop:.1f}%)"
+                label = f"{lang} ({current_prop:.0f}%)"
             if len(label) > max_label_chars:
                 label = label[:max_label_chars - 1] + "…"
             svg.append(
