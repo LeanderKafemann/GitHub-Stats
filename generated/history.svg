@@ -27,96 +27,96 @@
 </style>
 
 <rect x="0.5" y="0.5" rx="4.5" width="999" height="759" fill="#161b22" stroke="#21262d"/>
-<text x="65" y="30" class="title">Activity History</text>
-<text x="65" y="48" class="subtitle">Lines added vs deleted &amp; activity trends over time</text>
-<line x1="65" y1="240.0" x2="820" y2="240.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="244.0" text-anchor="end" class="axis-label">0</text>
-<line x1="65" y1="195.0" x2="820" y2="195.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="199.0" text-anchor="end" class="axis-label">708,972</text>
-<line x1="65" y1="150.0" x2="820" y2="150.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="154.0" text-anchor="end" class="axis-label">1,417,944</text>
-<line x1="65" y1="105.0" x2="820" y2="105.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="109.0" text-anchor="end" class="axis-label">2,126,916</text>
-<line x1="65" y1="60.0" x2="820" y2="60.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="64.0" text-anchor="end" class="axis-label">2,835,888</text>
-<polygon points="65.0,240.0 65.0,216.8 95.2,217.7 125.4,216.8 155.6,217.7 185.8,223.0 216.0,212.4 246.2,212.4 276.4,208.4 306.6,208.2 336.8,208.0 367.0,208.0 397.2,200.8 427.4,200.8 457.6,200.8 487.8,190.2 518.0,190.1 548.2,190.0 578.4,190.0 608.6,190.0 638.8,190.0 669.0,190.0 699.2,189.7 729.4,182.6 759.6,182.6 789.8,158.6 820.0,134.6 820.0,240.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
-<polyline points="65.0,216.8 95.2,217.7 125.4,216.8 155.6,217.7 185.8,223.0 216.0,212.4 246.2,212.4 276.4,208.4 306.6,208.2 336.8,208.0 367.0,208.0 397.2,200.8 427.4,200.8 457.6,200.8 487.8,190.2 518.0,190.1 548.2,190.0 578.4,190.0 608.6,190.0 638.8,190.0 669.0,190.0 699.2,189.7 729.4,182.6 759.6,182.6" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
-<polyline points="759.6,182.6 789.8,158.6 820.0,134.6" fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="5,4" stroke-linejoin="round" opacity="0.6" class="anim" style="animation-delay:250ms;"/>
-<polygon points="65.0,240.0 65.0,233.5 95.2,234.2 125.4,233.5 155.6,234.2 185.8,236.9 216.0,232.7 246.2,232.7 276.4,232.2 306.6,232.1 336.8,231.9 367.0,231.9 397.2,224.2 427.4,224.2 457.6,224.2 487.8,215.5 518.0,215.5 548.2,215.4 578.4,215.4 608.6,215.4 638.8,215.4 669.0,215.4 699.2,210.9 729.4,204.0 759.6,204.0 789.8,184.7 820.0,165.4 820.0,240.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
-<polyline points="65.0,233.5 95.2,234.2 125.4,233.5 155.6,234.2 185.8,236.9 216.0,232.7 246.2,232.7 276.4,232.2 306.6,232.1 336.8,231.9 367.0,231.9 397.2,224.2 427.4,224.2 457.6,224.2 487.8,215.5 518.0,215.5 548.2,215.4 578.4,215.4 608.6,215.4 638.8,215.4 669.0,215.4 699.2,210.9 729.4,204.0 759.6,204.0" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
-<polyline points="759.6,204.0 789.8,184.7 820.0,165.4" fill="none" stroke="#f85149" stroke-width="1" stroke-dasharray="5,4" stroke-linejoin="round" opacity="0.6" class="anim" style="animation-delay:350ms;"/>
-<polyline points="65.0,240.0 95.2,240.0 125.4,240.0 155.6,240.0 185.8,240.0 216.0,240.0 246.2,240.0 276.4,240.0 306.6,168.0 336.8,168.0 367.0,168.0 397.2,168.0 427.4,168.0 457.6,168.0 487.8,168.0 518.0,168.0 548.2,168.0 578.4,168.0 608.6,168.0 638.8,168.0 669.0,168.0 699.2,168.0 729.4,168.0 759.6,168.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
-<polyline points="759.6,168.0 789.8,168.0 820.0,96.0" fill="none" stroke="#e3b341" stroke-width="1" stroke-dasharray="3,5" stroke-linejoin="round" opacity="0.5" class="anim" style="animation-delay:400ms;"/>
-<text x="65" y="54" class="subtitle">Lines Added vs Deleted (per snapshot)</text>
-<text x="65" y="294" class="subtitle">Programming Language Development (%)</text>
-<line x1="65" y1="480.0" x2="820" y2="480.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="484.0" text-anchor="end" class="axis-label">0%</text>
-<line x1="65" y1="435.0" x2="820" y2="435.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="439.0" text-anchor="end" class="axis-label">25%</text>
-<line x1="65" y1="390.0" x2="820" y2="390.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="394.0" text-anchor="end" class="axis-label">50%</text>
-<line x1="65" y1="345.0" x2="820" y2="345.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="349.0" text-anchor="end" class="axis-label">75%</text>
-<line x1="65" y1="300.0" x2="820" y2="300.0" stroke="#21262d" stroke-width="1"/>
-<text x="57" y="304.0" text-anchor="end" class="axis-label">100%</text>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,388.6 336.8,388.8 367.0,389.8 397.2,366.9 427.4,366.9 457.6,369.6 487.8,356.3 518.0,356.3 548.2,356.5 578.4,356.5 608.6,356.5 638.8,356.5 669.0,356.5 699.2,364.8 729.4,365.0 759.6,365.0 789.8,341.7 820.0,324.4 820.0,480.0 789.8,480.0 759.6,480.0 729.4,480.0 699.2,480.0 669.0,480.0 638.8,480.0 608.6,480.0 578.4,480.0 548.2,480.0 518.0,480.0 487.8,480.0 457.6,480.0 427.4,480.0 397.2,480.0 367.0,480.0 336.8,480.0 306.6,480.0 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#e34c26" opacity="0.6" class="anim" style="animation-delay:500ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,358.8 336.8,358.5 367.0,359.2 397.2,349.5 427.4,349.5 457.6,350.4 487.8,337.6 518.0,337.6 548.2,338.0 578.4,338.0 608.6,338.0 638.8,338.0 669.0,338.0 699.2,347.2 729.4,347.6 759.6,347.6 789.8,334.2 820.0,324.4 820.0,324.4 789.8,341.7 759.6,365.0 729.4,365.0 699.2,364.8 669.0,356.5 638.8,356.5 608.6,356.5 578.4,356.5 548.2,356.5 518.0,356.3 487.8,356.3 457.6,369.6 427.4,366.9 397.2,366.9 367.0,389.8 336.8,388.8 306.6,388.6 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#f1e05a" opacity="0.6" class="anim" style="animation-delay:600ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,334.2 336.8,334.0 367.0,333.9 397.2,327.7 427.4,327.7 457.6,328.6 487.8,321.7 518.0,321.7 548.2,322.2 578.4,322.2 608.6,322.2 638.8,322.2 669.0,322.2 699.2,326.7 729.4,326.7 759.6,326.7 789.8,319.1 820.0,315.4 820.0,324.4 789.8,334.2 759.6,347.6 729.4,347.6 699.2,347.2 669.0,338.0 638.8,338.0 608.6,338.0 578.4,338.0 548.2,338.0 518.0,337.6 487.8,337.6 457.6,350.4 427.4,349.5 397.2,349.5 367.0,359.2 336.8,358.5 306.6,358.8 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#3572A5" opacity="0.6" class="anim" style="animation-delay:700ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,324.2 336.8,324.0 367.0,323.7 397.2,322.1 427.4,322.1 457.6,322.1 487.8,316.7 518.0,316.6 548.2,316.9 578.4,316.9 608.6,316.9 638.8,316.9 669.0,316.9 699.2,322.0 729.4,321.9 759.6,321.9 789.8,318.9 820.0,315.4 820.0,315.4 789.8,319.1 759.6,326.7 729.4,326.7 699.2,326.7 669.0,322.2 638.8,322.2 608.6,322.2 578.4,322.2 548.2,322.2 518.0,321.7 487.8,321.7 457.6,328.6 427.4,327.7 397.2,327.7 367.0,333.9 336.8,334.0 306.6,334.2 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#663399" opacity="0.6" class="anim" style="animation-delay:800ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,317.0 336.8,316.9 367.0,316.7 397.2,316.1 427.4,316.1 457.6,316.1 487.8,312.3 518.0,312.3 548.2,312.6 578.4,312.6 608.6,312.6 638.8,312.6 669.0,312.6 699.2,316.4 729.4,316.4 759.6,316.4 789.8,315.3 820.0,313.8 820.0,315.4 789.8,318.9 759.6,321.9 729.4,321.9 699.2,322.0 669.0,316.9 638.8,316.9 608.6,316.9 578.4,316.9 548.2,316.9 518.0,316.6 487.8,316.7 457.6,322.1 427.4,322.1 397.2,322.1 367.0,323.7 336.8,324.0 306.6,324.2 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#6E4C13" opacity="0.6" class="anim" style="animation-delay:900ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,312.7 336.8,312.6 367.0,312.4 397.2,310.7 427.4,310.7 457.6,310.6 487.8,307.8 518.0,307.7 548.2,307.7 578.4,307.7 608.6,307.7 638.8,307.7 669.0,307.7 699.2,310.0 729.4,309.9 759.6,309.9 789.8,307.3 820.0,304.7 820.0,313.8 789.8,315.3 759.6,316.4 729.4,316.4 699.2,316.4 669.0,312.6 638.8,312.6 608.6,312.6 578.4,312.6 548.2,312.6 518.0,312.3 487.8,312.3 457.6,316.1 427.4,316.1 397.2,316.1 367.0,316.7 336.8,316.9 306.6,317.0 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#083fa1" opacity="0.6" class="anim" style="animation-delay:1000ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,306.5 336.8,306.5 367.0,306.4 397.2,305.4 427.4,305.4 457.6,305.4 487.8,304.0 518.0,304.0 548.2,303.9 578.4,303.9 608.6,303.9 638.8,303.9 669.0,303.9 699.2,305.1 729.4,305.1 759.6,305.1 789.8,304.2 820.0,303.3 820.0,304.7 789.8,307.3 759.6,309.9 729.4,309.9 699.2,310.0 669.0,307.7 638.8,307.7 608.6,307.7 578.4,307.7 548.2,307.7 518.0,307.7 487.8,307.8 457.6,310.6 427.4,310.7 397.2,310.7 367.0,312.4 336.8,312.6 306.6,312.7 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#F05138" opacity="0.6" class="anim" style="animation-delay:1100ms;"/>
-<polygon points="65.0,480.0 95.2,480.0 125.4,480.0 155.6,480.0 185.8,480.0 216.0,480.0 246.2,480.0 276.4,480.0 306.6,303.3 336.8,303.3 367.0,303.2 397.2,302.8 427.4,302.8 457.6,302.8 487.8,302.0 518.0,302.0 548.2,302.0 578.4,302.0 608.6,302.0 638.8,302.0 669.0,302.0 699.2,302.6 729.4,302.6 759.6,302.6 789.8,302.6 820.0,302.6 820.0,303.3 789.8,304.2 759.6,305.1 729.4,305.1 699.2,305.1 669.0,303.9 638.8,303.9 608.6,303.9 578.4,303.9 548.2,303.9 518.0,304.0 487.8,304.0 457.6,305.4 427.4,305.4 397.2,305.4 367.0,306.4 336.8,306.5 306.6,306.5 276.4,480.0 246.2,480.0 216.0,480.0 185.8,480.0 155.6,480.0 125.4,480.0 95.2,480.0 65.0,480.0" fill="#b07219" opacity="0.6" class="anim" style="animation-delay:1200ms;"/>
-<line x1="759.6" y1="60" x2="759.6" y2="480" stroke="#c9d1d9" stroke-width="1" stroke-dasharray="4,3" opacity="0.35"/>
-<text x="789.8" y="72" text-anchor="middle" class="axis-label" opacity="0.6">Mar 15, 2026</text>
-<text x="820.0" y="72" text-anchor="middle" class="axis-label" opacity="0.6">Mar 29, 2026</text>
-<text x="65.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 65.0 498)">2026-02</text>
-<text x="125.4" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 125.4 498)">2026-02</text>
-<text x="185.8" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 185.8 498)">2026-02</text>
-<text x="246.2" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 246.2 498)">2026-02</text>
-<text x="306.6" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 306.6 498)">2026-02</text>
-<text x="367.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 367.0 498)">2026-02</text>
-<text x="427.4" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 427.4 498)">2026-02</text>
-<text x="487.8" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 487.8 498)">2026-02</text>
-<text x="548.2" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 548.2 498)">2026-02</text>
-<text x="608.6" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 608.6 498)">2026-02</text>
-<text x="669.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 669.0 498)">2026-02</text>
-<text x="729.4" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 729.4 498)">2026-02</text>
-<text x="789.8" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 789.8 498)">Mar 15, 2026</text>
-<text x="820.0" y="498" text-anchor="middle" class="axis-label" transform="rotate(-35 820.0 498)">Mar 29, 2026</text>
-<line x1="836" y1="70" x2="856" y2="70" stroke="#3fb950" stroke-width="2"/>
-<text x="862" y="74" class="legend-text">Lines Added</text>
-<line x1="836" y1="88" x2="856" y2="88" stroke="#f85149" stroke-width="1.5"/>
-<text x="862" y="92" class="legend-text">Lines Deleted</text>
-<line x1="836" y1="108" x2="856" y2="108" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="862" y="112" class="legend-text">&#x2605; Stars</text>
-<text x="836" y="142" class="subtitle">Languages</text>
-<rect x="836" y="153" width="12" height="12" rx="2" fill="#e34c26" opacity="0.8" class="anim" style="animation-delay:800ms;"/>
-<text x="854" y="163" class="legend-text">HTML (63.9% → 86.4%)</text>
-<rect x="836" y="175" width="12" height="12" rx="2" fill="#f1e05a" opacity="0.8" class="anim" style="animation-delay:880ms;"/>
-<text x="854" y="185" class="legend-text">JavaScript (9.7% → 0.0%)</text>
-<rect x="836" y="197" width="12" height="12" rx="2" fill="#3572A5" opacity="0.8" class="anim" style="animation-delay:960ms;"/>
-<text x="854" y="207" class="legend-text">Python (11.6% → 5.0%)</text>
-<rect x="836" y="219" width="12" height="12" rx="2" fill="#663399" opacity="0.8" class="anim" style="animation-delay:1040ms;"/>
-<text x="854" y="229" class="legend-text">CSS (2.6% → 0.0%)</text>
-<rect x="836" y="241" width="12" height="12" rx="2" fill="#6E4C13" opacity="0.8" class="anim" style="animation-delay:1120ms;"/>
-<text x="854" y="251" class="legend-text">Assembly (3.1% → 0.9%)</text>
-<rect x="836" y="263" width="12" height="12" rx="2" fill="#083fa1" opacity="0.8" class="anim" style="animation-delay:1200ms;"/>
-<text x="854" y="273" class="legend-text">Markdown (3.6% → 5.0%)</text>
-<rect x="836" y="285" width="12" height="12" rx="2" fill="#F05138" opacity="0.8" class="anim" style="animation-delay:1280ms;"/>
-<text x="854" y="295" class="legend-text">Swift (2.7% → 0.8%)</text>
-<rect x="836" y="307" width="12" height="12" rx="2" fill="#b07219" opacity="0.8" class="anim" style="animation-delay:1360ms;"/>
-<text x="854" y="317" class="legend-text">Java (1.4% → 0.4%)</text>
-<text x="836" y="358" class="subtitle">Contributions</text>
-<text x="836" y="376" class="axis-label">2023: 39</text>
-<text x="836" y="392" class="axis-label">2024: 646</text>
-<text x="836" y="408" class="axis-label">2025: 1,780</text>
-<text x="836" y="424" class="axis-label">2026: 317</text>
-<text x="836" y="450" class="subtitle">Statistics</text>
-<text x="836" y="468" class="axis-label">Active weeks: 76</text>
-<text x="836" y="483" class="axis-label">Add/Del ratio: 1.6x</text>
-<text x="836" y="498" class="axis-label">Avg lines/week: 19,361</text>
-<text x="836" y="513" class="axis-label">Peak: 2026-02-15</text>
-<text x="836" y="528" class="axis-label">  (542,929 lines)</text>
-<text x="65" y="746" class="axis-label">Total: +903,695 / -567,716 lines &#xb7; 2,782 contributions &#xb7; 71 repos &#xb7; &#x2605; 33</text>
+<text x="90" y="45" class="title">Activity History</text>
+<text x="90" y="72" class="subtitle">Lines added vs deleted &amp; activity trends over time</text>
+<line x1="90" y1="340.0" x2="780" y2="340.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="344.0" text-anchor="end" class="axis-label">0</text>
+<line x1="90" y1="280.0" x2="780" y2="280.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="284.0" text-anchor="end" class="axis-label">709,160</text>
+<line x1="90" y1="220.0" x2="780" y2="220.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="224.0" text-anchor="end" class="axis-label">1,418,319</text>
+<line x1="90" y1="160.0" x2="780" y2="160.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="164.0" text-anchor="end" class="axis-label">2,127,478</text>
+<line x1="90" y1="100.0" x2="780" y2="100.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="104.0" text-anchor="end" class="axis-label">2,836,638</text>
+<polygon points="90.0,340.0 90.0,309.1 117.6,310.2 145.2,309.1 172.8,310.2 200.4,317.4 228.0,303.2 255.6,303.2 283.2,297.9 310.8,297.7 338.4,297.3 366.0,297.3 393.6,287.8 421.2,287.8 448.8,287.7 476.4,273.7 504.0,273.5 531.6,273.3 559.2,273.3 586.8,273.3 614.4,273.3 642.0,273.3 669.6,273.0 697.2,263.5 724.8,263.5 752.4,231.5 780.0,199.5 780.0,340.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
+<polyline points="90.0,309.1 117.6,310.2 145.2,309.1 172.8,310.2 200.4,317.4 228.0,303.2 255.6,303.2 283.2,297.9 310.8,297.7 338.4,297.3 366.0,297.3 393.6,287.8 421.2,287.8 448.8,287.7 476.4,273.7 504.0,273.5 531.6,273.3 559.2,273.3 586.8,273.3 614.4,273.3 642.0,273.3 669.6,273.0 697.2,263.5 724.8,263.5" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
+<polyline points="724.8,263.5 752.4,231.5 780.0,199.5" fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="5,4" stroke-linejoin="round" opacity="0.6" class="anim" style="animation-delay:250ms;"/>
+<polygon points="90.0,340.0 90.0,331.3 117.6,332.2 145.2,331.3 172.8,332.2 200.4,335.9 228.0,330.3 255.6,330.3 283.2,329.6 310.8,329.4 338.4,329.3 366.0,329.2 393.6,319.0 421.2,319.0 448.8,319.0 476.4,307.4 504.0,307.3 531.6,307.3 559.2,307.3 586.8,307.3 614.4,307.3 642.0,307.3 669.6,301.2 697.2,292.0 724.8,291.9 752.4,266.2 780.0,240.5 780.0,340.0" fill="url(#delGrad)" class="anim" style="animation-delay:300ms;"/>
+<polyline points="90.0,331.3 117.6,332.2 145.2,331.3 172.8,332.2 200.4,335.9 228.0,330.3 255.6,330.3 283.2,329.6 310.8,329.4 338.4,329.3 366.0,329.2 393.6,319.0 421.2,319.0 448.8,319.0 476.4,307.4 504.0,307.3 531.6,307.3 559.2,307.3 586.8,307.3 614.4,307.3 642.0,307.3 669.6,301.2 697.2,292.0 724.8,291.9" fill="none" stroke="#f85149" stroke-width="1.5" stroke-linejoin="round" class="anim" style="animation-delay:350ms;"/>
+<polyline points="724.8,291.9 752.4,266.2 780.0,240.5" fill="none" stroke="#f85149" stroke-width="1" stroke-dasharray="5,4" stroke-linejoin="round" opacity="0.6" class="anim" style="animation-delay:350ms;"/>
+<polyline points="90.0,340.0 117.6,340.0 145.2,340.0 172.8,340.0 200.4,340.0 228.0,340.0 255.6,340.0 283.2,340.0 310.8,244.0 338.4,244.0 366.0,244.0 393.6,244.0 421.2,244.0 448.8,244.0 476.4,244.0 504.0,244.0 531.6,244.0 559.2,244.0 586.8,244.0 614.4,244.0 642.0,244.0 669.6,244.0 697.2,244.0 724.8,244.0" fill="none" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3" stroke-linejoin="round" class="anim" style="animation-delay:400ms;"/>
+<polyline points="724.8,244.0 752.4,244.0 780.0,148.0" fill="none" stroke="#e3b341" stroke-width="1" stroke-dasharray="3,5" stroke-linejoin="round" opacity="0.5" class="anim" style="animation-delay:400ms;"/>
+<text x="90" y="90" class="subtitle">Lines Added vs Deleted (per snapshot)</text>
+<text x="90" y="400" class="subtitle">Programming Language Development (%)</text>
+<line x1="90" y1="650.0" x2="780" y2="650.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="654.0" text-anchor="end" class="axis-label">0%</text>
+<line x1="90" y1="590.0" x2="780" y2="590.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="594.0" text-anchor="end" class="axis-label">25%</text>
+<line x1="90" y1="530.0" x2="780" y2="530.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="534.0" text-anchor="end" class="axis-label">50%</text>
+<line x1="90" y1="470.0" x2="780" y2="470.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="474.0" text-anchor="end" class="axis-label">75%</text>
+<line x1="90" y1="410.0" x2="780" y2="410.0" stroke="#21262d" stroke-width="1"/>
+<text x="82" y="414.0" text-anchor="end" class="axis-label">100%</text>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,528.2 338.4,528.5 366.0,529.7 393.6,499.3 421.2,499.3 448.8,502.9 476.4,485.0 504.0,485.1 531.6,485.4 559.2,485.4 586.8,485.4 614.4,485.4 642.0,485.4 669.6,496.4 697.2,496.7 724.8,490.9 752.4,458.3 780.0,436.7 780.0,650.0 752.4,650.0 724.8,650.0 697.2,650.0 669.6,650.0 642.0,650.0 614.4,650.0 586.8,650.0 559.2,650.0 531.6,650.0 504.0,650.0 476.4,650.0 448.8,650.0 421.2,650.0 393.6,650.0 366.0,650.0 338.4,650.0 310.8,650.0 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#e34c26" opacity="0.6" class="anim" style="animation-delay:500ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,488.4 338.4,488.0 366.0,489.0 393.6,476.0 421.2,476.0 448.8,477.2 476.4,460.1 504.0,460.2 531.6,460.6 559.2,460.6 586.8,460.6 614.4,460.6 642.0,460.6 669.6,473.0 697.2,473.5 724.8,469.4 752.4,450.6 780.0,436.7 780.0,436.7 752.4,458.3 724.8,490.9 697.2,496.7 669.6,496.4 642.0,485.4 614.4,485.4 586.8,485.4 559.2,485.4 531.6,485.4 504.0,485.1 476.4,485.0 448.8,502.9 421.2,499.3 393.6,499.3 366.0,529.7 338.4,528.5 310.8,528.2 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#f1e05a" opacity="0.6" class="anim" style="animation-delay:600ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,455.5 338.4,455.4 366.0,455.1 393.6,447.0 421.2,447.0 448.8,448.2 476.4,438.9 504.0,439.0 531.6,439.6 559.2,439.6 586.8,439.6 614.4,439.6 642.0,439.6 669.6,445.6 697.2,445.6 724.8,443.3 752.4,432.8 780.0,427.6 780.0,436.7 752.4,450.6 724.8,469.4 697.2,473.5 669.6,473.0 642.0,460.6 614.4,460.6 586.8,460.6 559.2,460.6 531.6,460.6 504.0,460.2 476.4,460.1 448.8,477.2 421.2,476.0 393.6,476.0 366.0,489.0 338.4,488.0 310.8,488.4 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#3572A5" opacity="0.6" class="anim" style="animation-delay:700ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,442.3 338.4,442.0 366.0,441.6 393.6,439.5 421.2,439.5 448.8,439.4 476.4,432.3 504.0,432.2 531.6,432.6 559.2,432.6 586.8,432.6 614.4,432.6 642.0,432.6 669.6,439.3 697.2,439.3 724.8,437.4 752.4,432.8 780.0,427.6 780.0,427.6 752.4,432.8 724.8,443.3 697.2,445.6 669.6,445.6 642.0,439.6 614.4,439.6 586.8,439.6 559.2,439.6 531.6,439.6 504.0,439.0 476.4,438.9 448.8,448.2 421.2,447.0 393.6,447.0 366.0,455.1 338.4,455.4 310.8,455.5 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#663399" opacity="0.6" class="anim" style="animation-delay:800ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,432.7 338.4,432.5 366.0,432.2 393.6,431.5 421.2,431.5 448.8,431.4 476.4,426.4 504.0,426.4 531.6,426.8 559.2,426.8 586.8,426.8 614.4,426.8 642.0,426.8 669.6,431.8 697.2,431.8 724.8,430.4 752.4,428.6 780.0,426.2 780.0,427.6 752.4,432.8 724.8,437.4 697.2,439.3 669.6,439.3 642.0,432.6 614.4,432.6 586.8,432.6 559.2,432.6 531.6,432.6 504.0,432.2 476.4,432.3 448.8,439.4 421.2,439.5 393.6,439.5 366.0,441.6 338.4,442.0 310.8,442.3 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#6E4C13" opacity="0.6" class="anim" style="animation-delay:900ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,427.0 338.4,426.8 366.0,426.6 393.6,424.2 421.2,424.2 448.8,424.2 476.4,420.4 504.0,420.3 531.6,420.3 559.2,420.3 586.8,420.3 614.4,420.3 642.0,420.3 669.6,423.3 697.2,423.2 724.8,422.4 752.4,418.7 780.0,415.1 780.0,426.2 752.4,428.6 724.8,430.4 697.2,431.8 669.6,431.8 642.0,426.8 614.4,426.8 586.8,426.8 559.2,426.8 531.6,426.8 504.0,426.4 476.4,426.4 448.8,431.4 421.2,431.5 393.6,431.5 366.0,432.2 338.4,432.5 310.8,432.7 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#083fa1" opacity="0.6" class="anim" style="animation-delay:1000ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,418.7 338.4,418.6 366.0,418.5 393.6,417.3 421.2,417.3 448.8,417.2 476.4,415.3 504.0,415.3 531.6,415.2 559.2,415.2 586.8,415.2 614.4,415.2 642.0,415.2 669.6,416.8 697.2,416.8 724.8,416.3 752.4,415.1 780.0,413.8 780.0,415.1 752.4,418.7 724.8,422.4 697.2,423.2 669.6,423.3 642.0,420.3 614.4,420.3 586.8,420.3 559.2,420.3 531.6,420.3 504.0,420.3 476.4,420.4 448.8,424.2 421.2,424.2 393.6,424.2 366.0,426.6 338.4,426.8 310.8,427.0 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#F05138" opacity="0.6" class="anim" style="animation-delay:1100ms;"/>
+<polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,414.4 338.4,414.4 366.0,414.3 393.6,413.7 421.2,413.7 448.8,413.7 476.4,412.7 504.0,412.7 531.6,412.7 559.2,412.7 586.8,412.7 614.4,412.7 642.0,412.7 669.6,413.5 697.2,413.4 724.8,413.2 752.4,413.2 780.0,413.2 780.0,413.8 752.4,415.1 724.8,416.3 697.2,416.8 669.6,416.8 642.0,415.2 614.4,415.2 586.8,415.2 559.2,415.2 531.6,415.2 504.0,415.3 476.4,415.3 448.8,417.2 421.2,417.3 393.6,417.3 366.0,418.5 338.4,418.6 310.8,418.7 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#b07219" opacity="0.6" class="anim" style="animation-delay:1200ms;"/>
+<line x1="724.8" y1="100" x2="724.8" y2="650" stroke="#c9d1d9" stroke-width="1" stroke-dasharray="4,3" opacity="0.35"/>
+<text x="752.4" y="112" text-anchor="middle" class="axis-label" opacity="0.6">Mar 15, 2026</text>
+<text x="780.0" y="112" text-anchor="middle" class="axis-label" opacity="0.6">Mar 29, 2026</text>
+<text x="90.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 90.0 668)">2026-02</text>
+<text x="145.2" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 145.2 668)">2026-02</text>
+<text x="200.4" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 200.4 668)">2026-02</text>
+<text x="255.6" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 255.6 668)">2026-02</text>
+<text x="310.8" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 310.8 668)">2026-02</text>
+<text x="366.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 366.0 668)">2026-02</text>
+<text x="421.2" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 421.2 668)">2026-02</text>
+<text x="476.4" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 476.4 668)">2026-02</text>
+<text x="531.6" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 531.6 668)">2026-02</text>
+<text x="586.8" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 586.8 668)">2026-02</text>
+<text x="642.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 642.0 668)">2026-02</text>
+<text x="697.2" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 697.2 668)">2026-02</text>
+<text x="752.4" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 752.4 668)">Mar 15, 2026</text>
+<text x="780.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 780.0 668)">Mar 29, 2026</text>
+<line x1="796" y1="110" x2="824" y2="110" stroke="#3fb950" stroke-width="2"/>
+<text x="832" y="116" class="legend-text">Lines Added</text>
+<line x1="796" y1="140" x2="824" y2="140" stroke="#f85149" stroke-width="1.5"/>
+<text x="832" y="146" class="legend-text">Lines Deleted</text>
+<line x1="796" y1="170" x2="824" y2="170" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="832" y="176" class="legend-text">&#x2605; Stars</text>
+<text x="796" y="220" class="subtitle">Languages</text>
+<rect x="796" y="237" width="16" height="16" rx="2" fill="#e34c26" opacity="0.8" class="anim" style="animation-delay:800ms;"/>
+<text x="820" y="251" class="legend-text">HTML (66.3% → 88.9%)</text>
+<rect x="796" y="269" width="16" height="16" rx="2" fill="#f1e05a" opacity="0.8" class="anim" style="animation-delay:880ms;"/>
+<text x="820" y="283" class="legend-text">JavaScript (9.0% → 0.0%)</text>
+<rect x="796" y="301" width="16" height="16" rx="2" fill="#3572A5" opacity="0.8" class="anim" style="animation-delay:960ms;"/>
+<text x="820" y="315" class="legend-text">Python (10.9% → 3.8%)</text>
+<rect x="796" y="333" width="16" height="16" rx="2" fill="#663399" opacity="0.8" class="anim" style="animation-delay:1040ms;"/>
+<text x="820" y="347" class="legend-text">CSS (2.5% → 0.0%)</text>
+<rect x="796" y="365" width="16" height="16" rx="2" fill="#6E4C13" opacity="0.8" class="anim" style="animation-delay:1120ms;"/>
+<text x="820" y="379" class="legend-text">Assembly (2.9% → 0.6%)</text>
+<rect x="796" y="397" width="16" height="16" rx="2" fill="#083fa1" opacity="0.8" class="anim" style="animation-delay:1200ms;"/>
+<text x="820" y="411" class="legend-text">Markdown (3.4% → 4.6%)</text>
+<rect x="796" y="429" width="16" height="16" rx="2" fill="#F05138" opacity="0.8" class="anim" style="animation-delay:1280ms;"/>
+<text x="820" y="443" class="legend-text">Swift (2.5% → 0.5%)</text>
+<rect x="796" y="461" width="16" height="16" rx="2" fill="#b07219" opacity="0.8" class="anim" style="animation-delay:1360ms;"/>
+<text x="820" y="475" class="legend-text">Java (1.3% → 0.3%)</text>
+<text x="796" y="532" class="subtitle">Contributions</text>
+<text x="796" y="558" class="axis-label">2023: 39</text>
+<text x="796" y="584" class="axis-label">2024: 646</text>
+<text x="796" y="610" class="axis-label">2025: 1,780</text>
+<text x="796" y="636" class="axis-label">2026: 322</text>
+<text x="796" y="676" class="subtitle">Statistics</text>
+<text x="796" y="702" class="axis-label">Active weeks: 77</text>
+<text x="796" y="728" class="axis-label">Add/Del ratio: 1.6x</text>
+<text x="796" y="754" class="axis-label">Avg lines/week: 19,117</text>
+<text x="796" y="780" class="axis-label">Peak: 2026-02-15</text>
+<text x="796" y="806" class="axis-label">  (542,929 lines)</text>
+<text x="90" y="742" class="axis-label">Total: +903,991 / -568,006 lines &#xb7; 2,787 contributions &#xb7; 71 repos &#xb7; &#x2605; 33</text>
 </svg>

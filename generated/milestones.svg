@@ -12,104 +12,104 @@
 <rect x="0.5" y="0.5" rx="4.5" width="999" height="759" fill="#161b22" stroke="#21262d"/>
 <text x="20" y="50" class="ms-title">🏆 Milestones</text>
 <text x="20" y="78" class="ms-sub">Achievements automatically detected from activity data</text>
-<line x1="500" y1="78" x2="500" y2="722" stroke="#21262d" stroke-width="1" opacity="0.5"/>
-<line x1="38" y1="80" x2="38" y2="700" stroke="#21262d" stroke-width="2"/>
-<line x1="538" y1="80" x2="538" y2="700" stroke="#21262d" stroke-width="2"/>
+<line x1="500" y1="108" x2="500" y2="707" stroke="#21262d" stroke-width="1" opacity="0.5"/>
+<line x1="50" y1="110" x2="50" y2="698" stroke="#21262d" stroke-width="2"/>
+<line x1="550" y1="110" x2="550" y2="698" stroke="#21262d" stroke-width="2"/>
 <g class="ms-row" style="animation-delay:0ms;">
-<circle cx="38" cy="110" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="50" y1="110" x2="78" y2="110" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="98" class="ms-label">🎯 100 Contributions</text>
-<text x="82" y="130" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="50" cy="138" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="62" y1="138" x2="88" y2="138" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="94" y="129" class="ms-label">🎯 100 Contributions</text>
+<text x="94" y="158" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:60ms;">
-<circle cx="538" cy="110" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="550" y1="110" x2="578" y2="110" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="98" class="ms-label">🎯 250 Contributions</text>
-<text x="582" y="130" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="550" cy="138" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="562" y1="138" x2="588" y2="138" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="594" y="129" class="ms-label">🎯 250 Contributions</text>
+<text x="594" y="158" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:120ms;">
-<circle cx="38" cy="190" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="50" y1="190" x2="78" y2="190" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="178" class="ms-label">🎯 500 Contributions</text>
-<text x="82" y="210" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="50" cy="214" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="62" y1="214" x2="88" y2="214" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="94" y="205" class="ms-label">🎯 500 Contributions</text>
+<text x="94" y="234" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:180ms;">
-<circle cx="538" cy="190" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="550" y1="190" x2="578" y2="190" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="178" class="ms-label">🎯 1,000 Contributions</text>
-<text x="582" y="210" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="550" cy="214" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="562" y1="214" x2="588" y2="214" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="594" y="205" class="ms-label">🎯 1,000 Contributions</text>
+<text x="594" y="234" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:240ms;">
-<circle cx="38" cy="270" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="50" y1="270" x2="78" y2="270" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="258" class="ms-label">🎯 1,500 Contributions</text>
-<text x="82" y="290" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="50" cy="290" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="62" y1="290" x2="88" y2="290" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="94" y="281" class="ms-label">🎯 1,500 Contributions</text>
+<text x="94" y="310" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:300ms;">
-<circle cx="538" cy="270" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="550" y1="270" x2="578" y2="270" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="258" class="ms-label">🎯 2,000 Contributions</text>
-<text x="582" y="290" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="550" cy="290" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="562" y1="290" x2="588" y2="290" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="594" y="281" class="ms-label">🎯 2,000 Contributions</text>
+<text x="594" y="310" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:360ms;">
-<circle cx="38" cy="350" r="12" fill="#bc8cff" opacity="0.85"/>
-<line x1="50" y1="350" x2="78" y2="350" stroke="#bc8cff" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="338" class="ms-label">🎯 2,500 Contributions</text>
-<text x="82" y="370" class="ms-date">2026-02-06  ·  2,516</text>
+<circle cx="50" cy="366" r="12" fill="#bc8cff" opacity="0.85"/>
+<line x1="62" y1="366" x2="88" y2="366" stroke="#bc8cff" stroke-width="2" opacity="0.5"/>
+<text x="94" y="357" class="ms-label">🎯 2,500 Contributions</text>
+<text x="94" y="386" class="ms-date">2026-02-06  ·  2,516</text>
 </g>
 <g class="ms-row" style="animation-delay:420ms;">
-<circle cx="538" cy="350" r="12" fill="#e3b341" opacity="0.85"/>
-<line x1="550" y1="350" x2="578" y2="350" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="338" class="ms-label">⭐ 1 Stars</text>
-<text x="582" y="370" class="ms-date">2026-02-06  ·  32 stars</text>
+<circle cx="550" cy="366" r="12" fill="#e3b341" opacity="0.85"/>
+<line x1="562" y1="366" x2="588" y2="366" stroke="#e3b341" stroke-width="2" opacity="0.5"/>
+<text x="594" y="357" class="ms-label">⭐ 1 Stars</text>
+<text x="594" y="386" class="ms-date">2026-02-06  ·  32 stars</text>
 </g>
 <g class="ms-row" style="animation-delay:480ms;">
-<circle cx="38" cy="430" r="12" fill="#e3b341" opacity="0.85"/>
-<line x1="50" y1="430" x2="78" y2="430" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="418" class="ms-label">⭐ 5 Stars</text>
-<text x="82" y="450" class="ms-date">2026-02-06  ·  32 stars</text>
+<circle cx="50" cy="442" r="12" fill="#e3b341" opacity="0.85"/>
+<line x1="62" y1="442" x2="88" y2="442" stroke="#e3b341" stroke-width="2" opacity="0.5"/>
+<text x="94" y="433" class="ms-label">⭐ 5 Stars</text>
+<text x="94" y="462" class="ms-date">2026-02-06  ·  32 stars</text>
 </g>
 <g class="ms-row" style="animation-delay:540ms;">
-<circle cx="538" cy="430" r="12" fill="#e3b341" opacity="0.85"/>
-<line x1="550" y1="430" x2="578" y2="430" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="418" class="ms-label">⭐ 10 Stars</text>
-<text x="582" y="450" class="ms-date">2026-02-06  ·  32 stars</text>
+<circle cx="550" cy="442" r="12" fill="#e3b341" opacity="0.85"/>
+<line x1="562" y1="442" x2="588" y2="442" stroke="#e3b341" stroke-width="2" opacity="0.5"/>
+<text x="594" y="433" class="ms-label">⭐ 10 Stars</text>
+<text x="594" y="462" class="ms-date">2026-02-06  ·  32 stars</text>
 </g>
 <g class="ms-row" style="animation-delay:600ms;">
-<circle cx="38" cy="510" r="12" fill="#e3b341" opacity="0.85"/>
-<line x1="50" y1="510" x2="78" y2="510" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="498" class="ms-label">⭐ 20 Stars</text>
-<text x="82" y="530" class="ms-date">2026-02-06  ·  32 stars</text>
+<circle cx="50" cy="518" r="12" fill="#e3b341" opacity="0.85"/>
+<line x1="62" y1="518" x2="88" y2="518" stroke="#e3b341" stroke-width="2" opacity="0.5"/>
+<text x="94" y="509" class="ms-label">⭐ 20 Stars</text>
+<text x="94" y="538" class="ms-date">2026-02-06  ·  32 stars</text>
 </g>
 <g class="ms-row" style="animation-delay:660ms;">
-<circle cx="538" cy="510" r="12" fill="#e3b341" opacity="0.85"/>
-<line x1="550" y1="510" x2="578" y2="510" stroke="#e3b341" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="498" class="ms-label">⭐ 30 Stars</text>
-<text x="582" y="530" class="ms-date">2026-02-06  ·  32 stars</text>
+<circle cx="550" cy="518" r="12" fill="#e3b341" opacity="0.85"/>
+<line x1="562" y1="518" x2="588" y2="518" stroke="#e3b341" stroke-width="2" opacity="0.5"/>
+<text x="594" y="509" class="ms-label">⭐ 30 Stars</text>
+<text x="594" y="538" class="ms-date">2026-02-06  ·  32 stars</text>
 </g>
 <g class="ms-row" style="animation-delay:720ms;">
-<circle cx="38" cy="590" r="12" fill="#58a6ff" opacity="0.85"/>
-<line x1="50" y1="590" x2="78" y2="590" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="578" class="ms-label">📁 5 Repos</text>
-<text x="82" y="610" class="ms-date">2026-02-06  ·  67 repos</text>
+<circle cx="50" cy="594" r="12" fill="#58a6ff" opacity="0.85"/>
+<line x1="62" y1="594" x2="88" y2="594" stroke="#58a6ff" stroke-width="2" opacity="0.5"/>
+<text x="94" y="585" class="ms-label">📁 5 Repos</text>
+<text x="94" y="614" class="ms-date">2026-02-06  ·  67 repos</text>
 </g>
 <g class="ms-row" style="animation-delay:780ms;">
-<circle cx="538" cy="590" r="12" fill="#58a6ff" opacity="0.85"/>
-<line x1="550" y1="590" x2="578" y2="590" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="578" class="ms-label">📁 10 Repos</text>
-<text x="582" y="610" class="ms-date">2026-02-06  ·  67 repos</text>
+<circle cx="550" cy="594" r="12" fill="#58a6ff" opacity="0.85"/>
+<line x1="562" y1="594" x2="588" y2="594" stroke="#58a6ff" stroke-width="2" opacity="0.5"/>
+<text x="594" y="585" class="ms-label">📁 10 Repos</text>
+<text x="594" y="614" class="ms-date">2026-02-06  ·  67 repos</text>
 </g>
 <g class="ms-row" style="animation-delay:840ms;">
-<circle cx="38" cy="670" r="12" fill="#58a6ff" opacity="0.85"/>
-<line x1="50" y1="670" x2="78" y2="670" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
-<text x="82" y="658" class="ms-label">📁 25 Repos</text>
-<text x="82" y="690" class="ms-date">2026-02-06  ·  67 repos</text>
+<circle cx="50" cy="670" r="12" fill="#58a6ff" opacity="0.85"/>
+<line x1="62" y1="670" x2="88" y2="670" stroke="#58a6ff" stroke-width="2" opacity="0.5"/>
+<text x="94" y="661" class="ms-label">📁 25 Repos</text>
+<text x="94" y="690" class="ms-date">2026-02-06  ·  67 repos</text>
 </g>
 <g class="ms-row" style="animation-delay:900ms;">
-<circle cx="538" cy="670" r="12" fill="#58a6ff" opacity="0.85"/>
-<line x1="550" y1="670" x2="578" y2="670" stroke="#58a6ff" stroke-width="1.5" opacity="0.5"/>
-<text x="582" y="658" class="ms-label">📁 50 Repos</text>
-<text x="582" y="690" class="ms-date">2026-02-06  ·  67 repos</text>
+<circle cx="550" cy="670" r="12" fill="#58a6ff" opacity="0.85"/>
+<line x1="562" y1="670" x2="588" y2="670" stroke="#58a6ff" stroke-width="2" opacity="0.5"/>
+<text x="594" y="661" class="ms-label">📁 50 Repos</text>
+<text x="594" y="690" class="ms-date">2026-02-06  ·  67 repos</text>
 </g>
-<text x="990" y="752" text-anchor="end" class="ms-date">Updated 2026-03-01</text>
+<text x="990" y="748" text-anchor="end" class="ms-date">Updated 2026-03-01</text>
 </svg>
