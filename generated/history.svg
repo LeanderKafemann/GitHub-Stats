@@ -18,7 +18,7 @@
   .title { font: bold 28px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
   .subtitle { font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.8; }
   .axis-label { font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.7; }
-  .legend-text { font: 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+  .legend-text { font: 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
   .value-text { font: bold 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
   .stat-value { font: bold 22px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
   .stat-label { font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; opacity: 0.7; }
@@ -32,13 +32,13 @@
 <line x1="90" y1="340.0" x2="780" y2="340.0" stroke="#21262d" stroke-width="1"/>
 <text x="82" y="344.0" text-anchor="end" class="axis-label">0</text>
 <line x1="90" y1="280.0" x2="780" y2="280.0" stroke="#21262d" stroke-width="1"/>
-<text x="82" y="284.0" text-anchor="end" class="axis-label">709,160</text>
+<text x="82" y="284.0" text-anchor="end" class="axis-label">709K</text>
 <line x1="90" y1="220.0" x2="780" y2="220.0" stroke="#21262d" stroke-width="1"/>
-<text x="82" y="224.0" text-anchor="end" class="axis-label">1,418,319</text>
+<text x="82" y="224.0" text-anchor="end" class="axis-label">1.4M</text>
 <line x1="90" y1="160.0" x2="780" y2="160.0" stroke="#21262d" stroke-width="1"/>
-<text x="82" y="164.0" text-anchor="end" class="axis-label">2,127,478</text>
+<text x="82" y="164.0" text-anchor="end" class="axis-label">2.1M</text>
 <line x1="90" y1="100.0" x2="780" y2="100.0" stroke="#21262d" stroke-width="1"/>
-<text x="82" y="104.0" text-anchor="end" class="axis-label">2,836,638</text>
+<text x="82" y="104.0" text-anchor="end" class="axis-label">2.8M</text>
 <polygon points="90.0,340.0 90.0,309.1 117.6,310.2 145.2,309.1 172.8,310.2 200.4,317.4 228.0,303.2 255.6,303.2 283.2,297.9 310.8,297.7 338.4,297.3 366.0,297.3 393.6,287.8 421.2,287.8 448.8,287.7 476.4,273.7 504.0,273.5 531.6,273.3 559.2,273.3 586.8,273.3 614.4,273.3 642.0,273.3 669.6,273.0 697.2,263.5 724.8,263.5 752.4,231.5 780.0,199.5 780.0,340.0" fill="url(#addGrad)" class="anim" style="animation-delay:200ms;"/>
 <polyline points="90.0,309.1 117.6,310.2 145.2,309.1 172.8,310.2 200.4,317.4 228.0,303.2 255.6,303.2 283.2,297.9 310.8,297.7 338.4,297.3 366.0,297.3 393.6,287.8 421.2,287.8 448.8,287.7 476.4,273.7 504.0,273.5 531.6,273.3 559.2,273.3 586.8,273.3 614.4,273.3 642.0,273.3 669.6,273.0 697.2,263.5 724.8,263.5" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round" class="anim" style="animation-delay:250ms;"/>
 <polyline points="724.8,263.5 752.4,231.5 780.0,199.5" fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="5,4" stroke-linejoin="round" opacity="0.6" class="anim" style="animation-delay:250ms;"/>
@@ -69,54 +69,41 @@
 <polygon points="90.0,650.0 117.6,650.0 145.2,650.0 172.8,650.0 200.4,650.0 228.0,650.0 255.6,650.0 283.2,650.0 310.8,414.4 338.4,414.4 366.0,414.3 393.6,413.7 421.2,413.7 448.8,413.7 476.4,412.7 504.0,412.7 531.6,412.7 559.2,412.7 586.8,412.7 614.4,412.7 642.0,412.7 669.6,413.5 697.2,413.4 724.8,413.2 752.4,413.2 780.0,413.2 780.0,413.8 752.4,415.1 724.8,416.3 697.2,416.8 669.6,416.8 642.0,415.2 614.4,415.2 586.8,415.2 559.2,415.2 531.6,415.2 504.0,415.3 476.4,415.3 448.8,417.2 421.2,417.3 393.6,417.3 366.0,418.5 338.4,418.6 310.8,418.7 283.2,650.0 255.6,650.0 228.0,650.0 200.4,650.0 172.8,650.0 145.2,650.0 117.6,650.0 90.0,650.0" fill="#b07219" opacity="0.6" class="anim" style="animation-delay:1200ms;"/>
 <line x1="724.8" y1="100" x2="724.8" y2="650" stroke="#c9d1d9" stroke-width="1" stroke-dasharray="4,3" opacity="0.35"/>
 <text x="752.4" y="112" text-anchor="middle" class="axis-label" opacity="0.6">Mar 15, 2026</text>
-<text x="780.0" y="112" text-anchor="middle" class="axis-label" opacity="0.6">Mar 29, 2026</text>
 <text x="90.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 90.0 668)">2026-02</text>
-<text x="145.2" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 145.2 668)">2026-02</text>
-<text x="200.4" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 200.4 668)">2026-02</text>
-<text x="255.6" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 255.6 668)">2026-02</text>
-<text x="310.8" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 310.8 668)">2026-02</text>
-<text x="366.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 366.0 668)">2026-02</text>
-<text x="421.2" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 421.2 668)">2026-02</text>
-<text x="476.4" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 476.4 668)">2026-02</text>
-<text x="531.6" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 531.6 668)">2026-02</text>
-<text x="586.8" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 586.8 668)">2026-02</text>
-<text x="642.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 642.0 668)">2026-02</text>
-<text x="697.2" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 697.2 668)">2026-02</text>
-<text x="752.4" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 752.4 668)">Mar 15, 2026</text>
-<text x="780.0" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 780.0 668)">Mar 29, 2026</text>
+<text x="724.8" y="668" text-anchor="middle" class="axis-label" transform="rotate(-35 724.8 668)">2026-03</text>
 <line x1="796" y1="110" x2="824" y2="110" stroke="#3fb950" stroke-width="2"/>
 <text x="832" y="116" class="legend-text">Lines Added</text>
 <line x1="796" y1="140" x2="824" y2="140" stroke="#f85149" stroke-width="1.5"/>
 <text x="832" y="146" class="legend-text">Lines Deleted</text>
 <line x1="796" y1="170" x2="824" y2="170" stroke="#e3b341" stroke-width="1.5" stroke-dasharray="4,3"/>
 <text x="832" y="176" class="legend-text">&#x2605; Stars</text>
-<text x="796" y="220" class="subtitle">Languages</text>
-<rect x="796" y="237" width="16" height="16" rx="2" fill="#e34c26" opacity="0.8" class="anim" style="animation-delay:800ms;"/>
-<text x="820" y="251" class="legend-text">HTML (66.3% → 88.9%)</text>
-<rect x="796" y="269" width="16" height="16" rx="2" fill="#f1e05a" opacity="0.8" class="anim" style="animation-delay:880ms;"/>
-<text x="820" y="283" class="legend-text">JavaScript (9.0% → 0.0%)</text>
-<rect x="796" y="301" width="16" height="16" rx="2" fill="#3572A5" opacity="0.8" class="anim" style="animation-delay:960ms;"/>
-<text x="820" y="315" class="legend-text">Python (10.9% → 3.8%)</text>
-<rect x="796" y="333" width="16" height="16" rx="2" fill="#663399" opacity="0.8" class="anim" style="animation-delay:1040ms;"/>
-<text x="820" y="347" class="legend-text">CSS (2.5% → 0.0%)</text>
-<rect x="796" y="365" width="16" height="16" rx="2" fill="#6E4C13" opacity="0.8" class="anim" style="animation-delay:1120ms;"/>
-<text x="820" y="379" class="legend-text">Assembly (2.9% → 0.6%)</text>
-<rect x="796" y="397" width="16" height="16" rx="2" fill="#083fa1" opacity="0.8" class="anim" style="animation-delay:1200ms;"/>
-<text x="820" y="411" class="legend-text">Markdown (3.4% → 4.6%)</text>
-<rect x="796" y="429" width="16" height="16" rx="2" fill="#F05138" opacity="0.8" class="anim" style="animation-delay:1280ms;"/>
-<text x="820" y="443" class="legend-text">Swift (2.5% → 0.5%)</text>
-<rect x="796" y="461" width="16" height="16" rx="2" fill="#b07219" opacity="0.8" class="anim" style="animation-delay:1360ms;"/>
-<text x="820" y="475" class="legend-text">Java (1.3% → 0.3%)</text>
-<text x="796" y="532" class="subtitle">Contributions</text>
-<text x="796" y="558" class="axis-label">2023: 39</text>
-<text x="796" y="584" class="axis-label">2024: 646</text>
-<text x="796" y="610" class="axis-label">2025: 1,780</text>
-<text x="796" y="636" class="axis-label">2026: 322</text>
-<text x="796" y="676" class="subtitle">Statistics</text>
-<text x="796" y="702" class="axis-label">Active weeks: 77</text>
-<text x="796" y="728" class="axis-label">Add/Del ratio: 1.6x</text>
-<text x="796" y="754" class="axis-label">Avg lines/week: 19,117</text>
-<text x="796" y="780" class="axis-label">Peak: 2026-02-15</text>
-<text x="796" y="806" class="axis-label">  (542,929 lines)</text>
+<text x="796" y="200" class="subtitle">Languages</text>
+<rect x="796" y="212" width="12" height="12" rx="2" fill="#e34c26" opacity="0.8" class="anim" style="animation-delay:800ms;"/>
+<text x="814" y="223" class="legend-text">HTML (66%→89%)</text>
+<rect x="796" y="234" width="12" height="12" rx="2" fill="#f1e05a" opacity="0.8" class="anim" style="animation-delay:880ms;"/>
+<text x="814" y="245" class="legend-text">JavaScript (9%→0%)</text>
+<rect x="796" y="256" width="12" height="12" rx="2" fill="#3572A5" opacity="0.8" class="anim" style="animation-delay:960ms;"/>
+<text x="814" y="267" class="legend-text">Python (11%→4%)</text>
+<rect x="796" y="278" width="12" height="12" rx="2" fill="#663399" opacity="0.8" class="anim" style="animation-delay:1040ms;"/>
+<text x="814" y="289" class="legend-text">CSS (2%→0%)</text>
+<rect x="796" y="300" width="12" height="12" rx="2" fill="#6E4C13" opacity="0.8" class="anim" style="animation-delay:1120ms;"/>
+<text x="814" y="311" class="legend-text">Assembly (3%→1%)</text>
+<rect x="796" y="322" width="12" height="12" rx="2" fill="#083fa1" opacity="0.8" class="anim" style="animation-delay:1200ms;"/>
+<text x="814" y="333" class="legend-text">Markdown (3%→5%)</text>
+<rect x="796" y="344" width="12" height="12" rx="2" fill="#F05138" opacity="0.8" class="anim" style="animation-delay:1280ms;"/>
+<text x="814" y="355" class="legend-text">Swift (3%→1%)</text>
+<rect x="796" y="366" width="12" height="12" rx="2" fill="#b07219" opacity="0.8" class="anim" style="animation-delay:1360ms;"/>
+<text x="814" y="377" class="legend-text">Java (1%→0%)</text>
+<text x="796" y="412" class="subtitle">Contributions</text>
+<text x="796" y="432" class="axis-label">2023: 39</text>
+<text x="796" y="452" class="axis-label">2024: 646</text>
+<text x="796" y="472" class="axis-label">2025: 1,780</text>
+<text x="796" y="492" class="axis-label">2026: 322</text>
+<text x="796" y="522" class="subtitle">Statistics</text>
+<text x="796" y="542" class="axis-label">Active weeks: 77</text>
+<text x="796" y="562" class="axis-label">Add/Del ratio: 1.6x</text>
+<text x="796" y="582" class="axis-label">Avg lines/wk: 19K</text>
+<text x="796" y="602" class="axis-label">Peak: 2026-02-15</text>
+<text x="796" y="622" class="axis-label">  (543K lines)</text>
 <text x="90" y="742" class="axis-label">Total: +903,991 / -568,006 lines &#xb7; 2,787 contributions &#xb7; 71 repos &#xb7; &#x2605; 33</text>
 </svg>
