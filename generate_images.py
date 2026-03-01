@@ -298,9 +298,10 @@ async def generate_history(s: Stats) -> None:
         # Write a minimal placeholder SVG
         with open("generated/history.svg", "w") as f:
             f.write(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="100" viewBox="0 0 495 100">'
-                '<text x="20" y="50" fill="#c9d1d9" '
-                'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="14">'
+                '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="150" '
+                'style="max-width: 100%;" viewBox="0 0 1000 150">'
+                '<text x="40" y="80" fill="#c9d1d9" '
+                'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="22">'
                 "Not enough data yet – chart will appear after the next run."
                 "</text></svg>"
             )
@@ -510,14 +511,14 @@ async def generate_history(s: Stats) -> None:
     # ── Chart dimensions ─────────────────────────────────────────────────
     svg_width = 1000
     svg_height = 760
-    margin_top = 60
-    margin_bottom = 90
-    margin_left = 65
-    margin_right = 180
+    margin_top = 100
+    margin_bottom = 100
+    margin_left = 90
+    margin_right = 220
     chart_w = svg_width - margin_left - margin_right
-    chart_h_top = 180
-    chart_h_bottom = 180
-    gap = 60
+    chart_h_top = 240
+    chart_h_bottom = 240
+    gap = 70
     chart1_top = margin_top
     chart2_top = margin_top + chart_h_top + gap
 
@@ -557,13 +558,13 @@ async def generate_history(s: Stats) -> None:
   </linearGradient>
 </defs>
 <style>
-  .title {{ font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .subtitle {{ font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.8; }}
-  .axis-label {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
-  .legend-text {{ font: 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .value-text {{ font: bold 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .stat-value {{ font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .stat-label {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
+  .title {{ font: bold 28px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .subtitle {{ font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.8; }}
+  .axis-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
+  .legend-text {{ font: 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .value-text {{ font: bold 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .stat-value {{ font: bold 22px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .stat-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
   @keyframes fadeIn {{ from {{ opacity: 0; }} to {{ opacity: 1; }} }}
   .anim {{ animation: fadeIn 0.6s ease-in-out forwards; opacity: 0; }}
 </style>
@@ -577,10 +578,10 @@ async def generate_history(s: Stats) -> None:
 
     # Title
     svg.append(
-        f'<text x="{margin_left}" y="30" class="title">Activity History</text>'
+        f'<text x="{margin_left}" y="45" class="title">Activity History</text>'
     )
     svg.append(
-        f'<text x="{margin_left}" y="48" class="subtitle">'
+        f'<text x="{margin_left}" y="72" class="subtitle">'
         f'Lines added vs deleted &amp; activity trends over time</text>'
     )
 
@@ -700,14 +701,14 @@ async def generate_history(s: Stats) -> None:
 
     # Chart 1 label
     svg.append(
-        f'<text x="{margin_left}" y="{chart1_top - 6}" '
+        f'<text x="{margin_left}" y="{chart1_top - 10}" '
         f'class="subtitle">Lines Added vs Deleted (per snapshot)</text>'
     )
 
     # ── Chart 2: Language proportions over time ────────────────────────
     # Always show language chart (with fallback message if no data)
     svg.append(
-        f'<text x="{margin_left}" y="{chart2_top - 6}" '
+        f'<text x="{margin_left}" y="{chart2_top - 10}" '
         f'class="subtitle">Programming Language Development (%)</text>'
     )
     
@@ -804,45 +805,45 @@ async def generate_history(s: Stats) -> None:
     # Lines added legend
     svg.append(
         f'<line x1="{legend_x}" y1="{legend_y}" '
-        f'x2="{legend_x + 20}" y2="{legend_y}" '
+        f'x2="{legend_x + 28}" y2="{legend_y}" '
         f'stroke="{add_color}" stroke-width="2"/>'
     )
     svg.append(
-        f'<text x="{legend_x + 26}" y="{legend_y + 4}" '
+        f'<text x="{legend_x + 36}" y="{legend_y + 6}" '
         f'class="legend-text">Lines Added</text>'
     )
 
     # Lines deleted legend
     svg.append(
-        f'<line x1="{legend_x}" y1="{legend_y + 18}" '
-        f'x2="{legend_x + 20}" y2="{legend_y + 18}" '
+        f'<line x1="{legend_x}" y1="{legend_y + 30}" '
+        f'x2="{legend_x + 28}" y2="{legend_y + 30}" '
         f'stroke="{del_color}" stroke-width="1.5"/>'
     )
     svg.append(
-        f'<text x="{legend_x + 26}" y="{legend_y + 22}" '
+        f'<text x="{legend_x + 36}" y="{legend_y + 36}" '
         f'class="legend-text">Lines Deleted</text>'
     )
 
     # Stars legend
     svg.append(
-        f'<line x1="{legend_x}" y1="{legend_y + 38}" '
-        f'x2="{legend_x + 20}" y2="{legend_y + 38}" '
+        f'<line x1="{legend_x}" y1="{legend_y + 60}" '
+        f'x2="{legend_x + 28}" y2="{legend_y + 60}" '
         f'stroke="{star_color}" stroke-width="1.5" stroke-dasharray="4,3"/>'
     )
     svg.append(
-        f'<text x="{legend_x + 26}" y="{legend_y + 42}" '
+        f'<text x="{legend_x + 36}" y="{legend_y + 66}" '
         f'class="legend-text">&#x2605; Stars</text>'
     )
 
     # Language legend for chart 2
     if has_lang_data and top_langs:
-        lang_legend_y = legend_y + 72
+        lang_legend_y = legend_y + 110
         svg.append(
             f'<text x="{legend_x}" y="{lang_legend_y}" '
             f'class="subtitle">Languages</text>'
         )
         for i, lang in enumerate(top_langs):
-            ly = lang_legend_y + 20 + i * 22
+            ly = lang_legend_y + 30 + i * 32
             color = lang_color_map.get(lang, "#888888")
             current_prop = lang_series[lang][n_real - 1] if len(lang_series[lang]) >= n_real else (lang_series[lang][-1] if lang_series[lang] else 0.0)
             forecast_prop = lang_series[lang][-1] if lang_series[lang] else 0.0
@@ -851,15 +852,15 @@ async def generate_history(s: Stats) -> None:
             else:
                 label = f"{lang} ({current_prop:.1f}%)"
             svg.append(
-                f'<rect x="{legend_x}" y="{ly - 9}" width="12" height="12" '
+                f'<rect x="{legend_x}" y="{ly - 13}" width="16" height="16" '
                 f'rx="2" fill="{color}" opacity="0.8" '
                 f'class="anim" style="animation-delay:{800 + i * 80}ms;"/>'
             )
             svg.append(
-                f'<text x="{legend_x + 18}" y="{ly + 1}" '
+                f'<text x="{legend_x + 24}" y="{ly + 1}" '
                 f'class="legend-text">{label}</text>'
             )
-        next_section_y = lang_legend_y + 20 + len(top_langs) * 22 + 20
+        next_section_y = lang_legend_y + 30 + len(top_langs) * 32 + 26
     else:
         next_section_y = legend_y + 72
 
@@ -875,10 +876,10 @@ async def generate_history(s: Stats) -> None:
         for i, year in enumerate(sorted_years):
             val = contribs_by_year[year]
             svg.append(
-                f'<text x="{legend_x}" y="{cy_y + 18 + i * 16}" '
+                f'<text x="{legend_x}" y="{cy_y + 26 + i * 26}" '
                 f'class="axis-label">{year}: {val:,}</text>'
             )
-        next_section_y = cy_y + 18 + len(sorted_years) * 16 + 10
+        next_section_y = cy_y + 26 + len(sorted_years) * 26 + 14
 
     # ── Additional statistics (right side) ───────────────────────────────
     # Contribution streak (consecutive days with contributions from weekly data)
@@ -923,7 +924,7 @@ async def generate_history(s: Stats) -> None:
         ]
         for i, (text,) in enumerate(stats_items):
             svg.append(
-                f'<text x="{legend_x}" y="{stat_y + 18 + i * 15}" '
+                f'<text x="{legend_x}" y="{stat_y + 26 + i * 26}" '
                 f'class="axis-label">{text}</text>'
             )
 
@@ -935,7 +936,7 @@ async def generate_history(s: Stats) -> None:
     total_repos = current_snapshot.get("repo_count", 0)
     total_stars = current_snapshot.get("stargazers", 0)
 
-    summary_y = svg_height - 14
+    summary_y = svg_height - 18
     svg.append(
         f'<text x="{margin_left}" y="{summary_y}" class="axis-label">'
         f"Total: +{total_adds:,} / -{total_dels:,} lines &#xb7; "
@@ -1055,18 +1056,18 @@ def generate_milestones() -> None:
 
     svg_width = 1000
     svg_height = 760
-    header_h = 70
-    footer_h = 30
-    content_h = svg_height - header_h - footer_h  # 660 px
+    header_h = 100
+    footer_h = 45
+    content_h = svg_height - header_h - footer_h  # 615 px
 
     # Two-column layout so that many milestones still fit at 1000×760.
     n_ms = len(milestones)
     n_rows = max((n_ms + 1) // 2, 1)
-    row_h = min(80, content_h // n_rows) if n_ms > 0 else 80
+    row_h = min(160, content_h // n_rows) if n_ms > 0 else 160
 
     # Column origins (timeline circle x, content-text x)
-    col_tl_x = [38, 538]        # timeline circle x for left / right column
-    col_txt_x = [col_tl_x[0] + 28, col_tl_x[1] + 28]
+    col_tl_x = [50, 550]        # timeline circle x for left / right column
+    col_txt_x = [col_tl_x[0] + 44, col_tl_x[1] + 44]
     col_sep_x = 500             # vertical separator between columns
 
     svg: List[str] = []
@@ -1077,11 +1078,11 @@ def generate_milestones() -> None:
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
     svg.append(f"""<style>
-  .ms-title {{ font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .ms-sub   {{ font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
-  .ms-label {{ font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .ms-date  {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.6; }}
-  .ms-value {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ms-title {{ font: bold 28px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ms-sub   {{ font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ms-label {{ font: bold 22px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ms-date  {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.6; }}
+  .ms-value {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
   @keyframes slideIn {{ from {{ opacity: 0; transform: translateX(-8px); }}
                         to   {{ opacity: 1; transform: translateX(0); }} }}
   .ms-row {{ animation: slideIn 0.4s ease forwards; opacity: 0; }}
@@ -1090,15 +1091,15 @@ def generate_milestones() -> None:
         f'<rect x="0.5" y="0.5" rx="4.5" width="{svg_width-1}" '
         f'height="{svg_height-1}" fill="{card_bg}" stroke="{grid_color}"/>'
     )
-    svg.append(f'<text x="20" y="30" class="ms-title">🏆 Milestones</text>')
+    svg.append(f'<text x="20" y="50" class="ms-title">🏆 Milestones</text>')
     svg.append(
-        f'<text x="20" y="50" class="ms-sub">'
+        f'<text x="20" y="78" class="ms-sub">'
         f'Achievements automatically detected from activity data</text>'
     )
 
     if not milestones:
         svg.append(
-            f'<text x="20" y="{header_h + 30}" class="ms-date">'
+            f'<text x="20" y="{header_h + 45}" class="ms-date">'
             f'No milestones detected yet – check back after more activity.</text>'
         )
     else:
@@ -1134,19 +1135,19 @@ def generate_milestones() -> None:
                 f'<g class="ms-row" style="animation-delay:{delay}ms;">'
             )
             svg.append(
-                f'<circle cx="{tl_x}" cy="{cy}" r="7" '
+                f'<circle cx="{tl_x}" cy="{cy}" r="12" '
                 f'fill="{color}" opacity="0.85"/>'
             )
             svg.append(
-                f'<line x1="{tl_x + 7}" y1="{cy}" x2="{tl_x + 22}" y2="{cy}" '
-                f'stroke="{color}" stroke-width="1.5" opacity="0.5"/>'
+                f'<line x1="{tl_x + 12}" y1="{cy}" x2="{tl_x + 38}" y2="{cy}" '
+                f'stroke="{color}" stroke-width="2" opacity="0.5"/>'
             )
             svg.append(
-                f'<text x="{txt_x}" y="{cy - 5}" class="ms-label">'
+                f'<text x="{txt_x}" y="{cy - 9}" class="ms-label">'
                 f'{m["icon"]} {m["label"]}</text>'
             )
             svg.append(
-                f'<text x="{txt_x}" y="{cy + 12}" class="ms-date">'
+                f'<text x="{txt_x}" y="{cy + 20}" class="ms-date">'
                 f'{m["date"]}  ·  {m["value"]}</text>'
             )
             svg.append('</g>')
@@ -1154,7 +1155,7 @@ def generate_milestones() -> None:
     # Footer
     now_str = datetime.utcnow().strftime("%Y-%m-%d")
     svg.append(
-        f'<text x="{svg_width - 10}" y="{svg_height - 8}" '
+        f'<text x="{svg_width - 10}" y="{svg_height - 12}" '
         f'text-anchor="end" class="ms-date">Updated {now_str}</text>'
     )
     svg.append("</svg>")
@@ -1325,17 +1326,17 @@ def generate_achievements() -> None:
     # ── SVG layout (fixed 1000×760 – same as history.svg) ────────────────
     svg_width = 1000
     svg_height = 760
-    header_h = 70
-    footer_h = 30
-    content_h = svg_height - header_h - footer_h  # 660 px
+    header_h = 100
+    footer_h = 45
+    content_h = svg_height - header_h - footer_h  # 615 px
 
-    # Two-column layout: left col x=8..490, right col x=510..992
+    # Two-column layout: left col x=12..490, right col x=512..992
     n_ach = len(achievements)
     n_rows = max((n_ach + 1) // 2, 1)
-    row_h = min(90, content_h // n_rows) if n_ach > 0 else 90
+    row_h = min(165, content_h // n_rows) if n_ach > 0 else 165
 
-    col_badge_x = [8, 508]      # badge stripe x for left / right column
-    col_txt_x = [22, 522]       # label/value text x
+    col_badge_x = [12, 512]     # badge stripe x for left / right column
+    col_txt_x = [34, 534]       # label/value text x
     col_sep_x = 500
 
     svg = []
@@ -1346,11 +1347,11 @@ def generate_achievements() -> None:
         f'viewBox="0 0 {svg_width} {svg_height}">'
     )
     svg.append(f"""<style>
-  .ach-title {{ font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .ach-sub   {{ font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
-  .ach-label {{ font: bold 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .ach-value {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
-  .ach-note  {{ font: 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.5; }}
+  .ach-title {{ font: bold 28px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ach-sub   {{ font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ach-label {{ font: bold 22px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .ach-value {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.75; }}
+  .ach-note  {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.5; }}
   @keyframes popIn {{ from {{ opacity: 0; transform: scale(0.92); }}
                       to   {{ opacity: 1; transform: scale(1);    }} }}
   .ach-row {{ animation: popIn 0.35s ease forwards; opacity: 0; }}
@@ -1359,22 +1360,22 @@ def generate_achievements() -> None:
         f'<rect x="0.5" y="0.5" rx="4.5" width="{svg_width-1}" '
         f'height="{svg_height-1}" fill="{card_bg}" stroke="{grid_color}"/>'
     )
-    svg.append(f'<text x="20" y="30" class="ach-title">🎖️ Top Rankings &amp; Records</text>')
+    svg.append(f'<text x="20" y="50" class="ach-title">🎖️ Top Rankings &amp; Records</text>')
     svg.append(
-        f'<text x="20" y="50" class="ach-sub">'
+        f'<text x="20" y="78" class="ach-sub">'
         f'Highlights automatically derived from GitHub activity data</text>'
     )
 
     if not achievements:
         svg.append(
-            f'<text x="20" y="{header_h + 30}" class="ach-note">'
+            f'<text x="20" y="{header_h + 45}" class="ach-note">'
             f'No achievements detected yet.</text>'
         )
     else:
         # Column separator
         svg.append(
-            f'<line x1="{col_sep_x}" y1="{header_h + 8}" '
-            f'x2="{col_sep_x}" y2="{svg_height - footer_h - 8}" '
+            f'<line x1="{col_sep_x}" y1="{header_h + 12}" '
+            f'x2="{col_sep_x}" y2="{svg_height - footer_h - 12}" '
             f'stroke="{grid_color}" stroke-width="1" opacity="0.5"/>'
         )
         for idx, ach in enumerate(achievements):
@@ -1386,7 +1387,7 @@ def generate_achievements() -> None:
             delay = idx * 55
             color = ach.get("color", accent)
             svg.append(
-                f'<rect x="{bx}" y="{y + 6}" width="4" height="{row_h - 12}" '
+                f'<rect x="{bx}" y="{y + 10}" width="6" height="{row_h - 20}" '
                 f'rx="2" fill="{color}" opacity="0.9" '
                 f'class="ach-row" style="animation-delay:{delay}ms;"/>'
             )
@@ -1394,11 +1395,11 @@ def generate_achievements() -> None:
                 f'<g class="ach-row" style="animation-delay:{delay + 30}ms;">'
             )
             svg.append(
-                f'<text x="{tx}" y="{y + 24}" class="ach-label">'
+                f'<text x="{tx}" y="{y + 38}" class="ach-label">'
                 f'{ach["icon"]} {ach["label"]}</text>'
             )
             svg.append(
-                f'<text x="{tx}" y="{y + 42}" class="ach-value">'
+                f'<text x="{tx}" y="{y + 64}" class="ach-value">'
                 f'{ach["value"]}</text>'
             )
             svg.append('</g>')
@@ -1410,7 +1411,7 @@ def generate_achievements() -> None:
     )
     now_str = datetime.utcnow().strftime("%Y-%m-%d")
     svg.append(
-        f'<text x="{svg_width - 10}" y="{svg_height - 8}" '
+        f'<text x="{svg_width - 10}" y="{svg_height - 12}" '
         f'text-anchor="end" class="ach-note">Updated {now_str}</text>'
     )
     svg.append("</svg>")
