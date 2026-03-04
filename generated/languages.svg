@@ -69,62 +69,62 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 106.61 542.22 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
-<text x="411.9" y="498.3" class="slice-label">66.3%</text>
-<path d="M 290.0 430.0 L 106.61 542.22 A 215 215 0 0 1 77.01 400.64 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
-<text x="153.2" y="458.6" class="slice-label">10.9%</text>
-<path d="M 290.0 430.0 L 77.01 400.64 A 215 215 0 0 1 125.46 291.61 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
-<text x="162.3" y="373.3" class="slice-label">8.9%</text>
-<path d="M 290.0 430.0 L 125.46 291.61 A 215 215 0 0 1 158.01 260.28 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 158.01 260.28 A 215 215 0 0 1 190.95 239.17 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 190.95 239.17 A 215 215 0 0 1 222.28 225.94 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 222.28 225.94 A 215 215 0 0 1 254.50 217.95 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 254.50 217.95 A 215 215 0 0 1 271.92 215.76 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 271.92 215.76 A 215 215 0 0 1 278.79 215.29 Z" fill="#3178c6" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 278.79 215.29 A 215 215 0 0 1 285.14 215.05 Z" fill="#adb2cb" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 285.14 215.05 A 215 215 0 0 1 287.84 215.01 Z" fill="#89e051" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 287.84 215.01 A 215 215 0 0 1 289.46 215.00 Z" fill="#04133b" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 289.46 215.00 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 108.87 545.83 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<text x="412.6" y="497.1" class="slice-label">65.9%</text>
+<path d="M 290.0 430.0 L 108.87 545.83 A 215 215 0 0 1 76.36 405.85 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<text x="153.9" y="461.6" class="slice-label">10.8%</text>
+<path d="M 290.0 430.0 L 76.36 405.85 A 215 215 0 0 1 124.22 293.10 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<text x="161.4" y="375.4" class="slice-label">9.2%</text>
+<path d="M 290.0 430.0 L 124.22 293.10 A 215 215 0 0 1 156.65 261.35 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 156.65 261.35 A 215 215 0 0 1 189.19 240.10 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 189.19 240.10 A 215 215 0 0 1 222.03 226.03 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 222.03 226.03 A 215 215 0 0 1 254.81 217.90 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 254.81 217.90 A 215 215 0 0 1 272.10 215.75 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 272.10 215.75 A 215 215 0 0 1 278.94 215.28 Z" fill="#3178c6" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 278.94 215.28 A 215 215 0 0 1 285.21 215.05 Z" fill="#adb2cb" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 285.21 215.05 A 215 215 0 0 1 287.84 215.01 Z" fill="#89e051" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 287.84 215.01 A 215 215 0 0 1 289.43 215.00 Z" fill="#04133b" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 289.43 215.00 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
 
 <g class="legend-item" style="animation-delay: 0ms;">
 <rect x="565" y="95" width="22" height="22" rx="3" fill="#e34c26"/>
 <text x="597" y="109" class="lang-name">HTML</text>
-<text x="597" y="130" class="lang-pct">66.26%</text>
+<text x="597" y="130" class="lang-pct">65.94%</text>
 </g>
 <g class="legend-item" style="animation-delay: 100ms;">
 <rect x="565" y="143" width="22" height="22" rx="3" fill="#3572A5"/>
 <text x="597" y="157" class="lang-name">Python</text>
-<text x="597" y="178" class="lang-pct">10.92%</text>
+<text x="597" y="178" class="lang-pct">10.85%</text>
 </g>
 <g class="legend-item" style="animation-delay: 200ms;">
 <rect x="565" y="191" width="22" height="22" rx="3" fill="#f1e05a"/>
 <text x="597" y="205" class="lang-name">JavaScript</text>
-<text x="597" y="226" class="lang-pct">8.95%</text>
+<text x="597" y="226" class="lang-pct">9.19%</text>
 </g>
 <g class="legend-item" style="animation-delay: 300ms;">
 <rect x="565" y="239" width="22" height="22" rx="3" fill="#083fa1"/>
 <text x="597" y="253" class="lang-name">Markdown</text>
-<text x="597" y="274" class="lang-pct">3.35%</text>
+<text x="597" y="274" class="lang-pct">3.37%</text>
 </g>
 <g class="legend-item" style="animation-delay: 400ms;">
 <rect x="565" y="287" width="22" height="22" rx="3" fill="#6E4C13"/>
 <text x="597" y="301" class="lang-name">Assembly</text>
-<text x="597" y="322" class="lang-pct">2.90%</text>
+<text x="597" y="322" class="lang-pct">2.88%</text>
 </g>
 <g class="legend-item" style="animation-delay: 500ms;">
-<rect x="565" y="335" width="22" height="22" rx="3" fill="#F05138"/>
-<text x="597" y="349" class="lang-name">Swift</text>
-<text x="597" y="370" class="lang-pct">2.52%</text>
+<rect x="565" y="335" width="22" height="22" rx="3" fill="#663399"/>
+<text x="597" y="349" class="lang-name">CSS</text>
+<text x="597" y="370" class="lang-pct">2.65%</text>
 </g>
 <g class="legend-item" style="animation-delay: 600ms;">
-<rect x="565" y="383" width="22" height="22" rx="3" fill="#663399"/>
-<text x="597" y="397" class="lang-name">CSS</text>
-<text x="597" y="418" class="lang-pct">2.46%</text>
+<rect x="565" y="383" width="22" height="22" rx="3" fill="#F05138"/>
+<text x="597" y="397" class="lang-name">Swift</text>
+<text x="597" y="418" class="lang-pct">2.50%</text>
 </g>
 <g class="legend-item" style="animation-delay: 700ms;">
 <rect x="565" y="431" width="22" height="22" rx="3" fill="#b07219"/>
 <text x="597" y="445" class="lang-name">Java</text>
-<text x="597" y="466" class="lang-pct">1.30%</text>
+<text x="597" y="466" class="lang-pct">1.29%</text>
 </g>
 <g class="legend-item" style="animation-delay: 800ms;">
 <rect x="565" y="479" width="22" height="22" rx="3" fill="#3178c6"/>
@@ -134,12 +134,12 @@ svg {
 <g class="legend-item" style="animation-delay: 900ms;">
 <rect x="565" y="527" width="22" height="22" rx="3" fill="#adb2cb"/>
 <text x="597" y="541" class="lang-name">VHDL</text>
-<text x="597" y="562" class="lang-pct">0.47%</text>
+<text x="597" y="562" class="lang-pct">0.46%</text>
 </g>
 <g class="legend-item" style="animation-delay: 1000ms;">
 <rect x="565" y="575" width="22" height="22" rx="3" fill="#89e051"/>
 <text x="597" y="589" class="lang-name">Shell</text>
-<text x="597" y="610" class="lang-pct">0.20%</text>
+<text x="597" y="610" class="lang-pct">0.19%</text>
 </g>
 <g class="legend-item" style="animation-delay: 1100ms;">
 <rect x="565" y="623" width="22" height="22" rx="3" fill="#04133b"/>
