@@ -205,39 +205,84 @@ async def generate_overview(s: Stats) -> None:
 
 async def generate_languages(s: Stats) -> None:
     """
-    Generate an SVG badge with summary languages used
+    Generate an SVG badge with a labeled pie chart of languages used
     :param s: Represents user's GitHub statistics
     """
+    import math
+
     with open("templates/languages.svg", "r") as f:
         output = f.read()
 
-    progress = ""
-    lang_list = ""
     sorted_languages = sorted(
         (await s.languages).items(), reverse=True, key=lambda t: t[1].get("size")
     )
-    delay_between = 150
-    for i, (lang, data) in enumerate(sorted_languages):
-        color = data.get("color")
-        color = color if color is not None else "#000000"
-        progress += (
-            f'<span style="background-color: {color};'
-            f'width: {data.get("prop", 0):0.3f}%;" '
-            f'class="progress-item"></span>'
+
+    # Group languages beyond the top 12 into "Other"
+    MAX_LANGS = 12
+    display_langs = list(sorted_languages[:MAX_LANGS])
+    remaining = list(sorted_languages[MAX_LANGS:])
+    if remaining:
+        other_prop = sum(d.get("prop", 0) for _, d in remaining)
+        other_size = sum(d.get("size", 0) for _, d in remaining)
+        display_langs.append(
+            ("Other", {"prop": other_prop, "size": other_size, "color": "#888888"})
         )
-        lang_list += f"""
-<li style="animation-delay: {i * delay_between}ms;">
-<svg xmlns="http://www.w3.org/2000/svg" class="octicon" style="fill:{color};"
-viewBox="0 0 16 16" version="1.1" width="32" height="32"><path
-fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
-<span class="lang">{lang}</span>
-<span class="percent">{data.get("prop", 0):0.2f}%</span>
-</li>
 
-"""
+    # Pie chart parameters
+    cx, cy = 290, 430  # center of pie
+    r = 215  # radius
+    MIN_LABEL_PCT = 5  # minimum slice percentage to show an inline label
 
-    output = re.sub(r"{{ progress }}", progress, output)
-    output = re.sub(r"{{ lang_list }}", lang_list, output)
+    pie_slices = ""
+    legend = ""
+    start_angle = -math.pi / 2  # begin at 12 o'clock
+
+    for i, (lang, data) in enumerate(display_langs):
+        color = data.get("color") or "#888888"
+        prop = data.get("prop", 0)
+        if prop <= 0:
+            continue
+
+        angle = 2 * math.pi * prop / 100
+        end_angle = start_angle + angle
+
+        x1 = cx + r * math.cos(start_angle)
+        y1 = cy + r * math.sin(start_angle)
+        x2 = cx + r * math.cos(end_angle)
+        y2 = cy + r * math.sin(end_angle)
+        large_arc = 1 if angle > math.pi else 0
+
+        pie_slices += (
+            f'<path d="M {cx:.1f} {cy:.1f} L {x1:.2f} {y1:.2f} '
+            f'A {r} {r} 0 {large_arc} 1 {x2:.2f} {y2:.2f} Z" '
+            f'fill="{color}" stroke="white" stroke-width="1.5"/>\n'
+        )
+
+        # Label inside the slice for large segments
+        if prop >= MIN_LABEL_PCT:
+            mid_angle = start_angle + angle / 2
+            lx = cx + r * 0.65 * math.cos(mid_angle)
+            ly = cy + r * 0.65 * math.sin(mid_angle)
+            pie_slices += (
+                f'<text x="{lx:.1f}" y="{ly:.1f}" class="slice-label">'
+                f'{prop:.1f}%</text>\n'
+            )
+
+        start_angle = end_angle
+
+        # Legend entry
+        leg_x = 565
+        leg_y = 95 + i * 48
+        legend += (
+            f'<g class="legend-item" style="animation-delay: {i * 100}ms;">\n'
+            f'<rect x="{leg_x}" y="{leg_y}" width="22" height="22" rx="3" fill="{color}"/>\n'
+            f'<text x="{leg_x + 32}" y="{leg_y + 14}" class="lang-name">{lang}</text>\n'
+            f'<text x="{leg_x + 32}" y="{leg_y + 35}" class="lang-pct">{prop:.2f}%</text>\n'
+            f'</g>\n'
+        )
+
+    output = re.sub(r"\{\{ pie_slices \}\}", pie_slices, output)
+    output = re.sub(r"\{\{ legend \}\}", legend, output)
 
     generate_output_folder()
     with open("generated/languages.svg", "w") as f:

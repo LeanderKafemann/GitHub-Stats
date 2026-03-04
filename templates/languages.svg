@@ -1,10 +1,8 @@
 <svg width="1000" height="760" style="max-width: 100%;" viewBox="0 0 1000 760" xmlns="http://www.w3.org/2000/svg">
+<defs>
 <style>
 svg {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  font-size: 28px;
-  line-height: 42px;
-  max-width: 100%;
 }
 
 #background {
@@ -13,8 +11,6 @@ svg {
   fill: white;
   stroke: rgb(225, 228, 232);
   stroke-width: 1px;
-  rx: 6px;
-  ry: 6px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,141 +20,55 @@ svg {
   }
 }
 
-foreignObject {
-  width: calc(100% - 20px - 64px);
-  height: calc(100% - 20px - 48px);
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 0.75em;
-  line-height: 48px;
+.title {
   font-size: 32px;
   font-weight: 600;
-  color: rgb(36, 41, 46);
   fill: rgb(36, 41, 46);
 }
 
 @media (prefers-color-scheme: dark) {
-  h2 {
-    color: #c9d1d9;
-    fill: #c9d1d9;
-  }
+  .title { fill: #c9d1d9; }
 }
 
-ul {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
+.lang-name {
+  font-size: 21px;
+  font-weight: 600;
+  fill: rgb(36, 41, 46);
 }
 
-li {
-  display: inline-flex;
-  font-size: 24px;
-  margin-right: 2ch;
-  align-items: center;
-  flex-wrap: nowrap;
+@media (prefers-color-scheme: dark) {
+  .lang-name { fill: #c9d1d9; }
+}
+
+.lang-pct {
+  font-size: 17px;
+  fill: rgb(88, 96, 105);
+}
+
+@media (prefers-color-scheme: dark) {
+  .lang-pct { fill: #8b949e; }
+}
+
+.slice-label {
+  font-size: 15px;
+  font-weight: 600;
+  fill: white;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.legend-item {
   transform: translateX(-500%);
   animation: slideIn 2s ease-in-out forwards;
 }
 
 @keyframes slideIn {
-  to {
-    transform: translateX(0);
-  }
-}
-
-div.ellipsis {
-  height: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.octicon {
-  fill: rgb(88, 96, 105);
-  margin-right: 0.5ch;
-  vertical-align: top;
-}
-
-@media (prefers-color-scheme: dark) {
-  .octicon {
-    color: #8b949e;
-    fill: #8b949e;
-  }
-}
-
-.progress {
-  display: flex;
-  height: 16px;
-  overflow: hidden;
-  background-color: rgb(225, 228, 232);
-  border-radius: 12px;
-  outline: 1px solid transparent;
-  margin-bottom: 1em;
-}
-
-@media (prefers-color-scheme: dark) {
-  .progress {
-    background-color: rgba(110, 118, 129, 0.4);
-  }
-}
-
-.progress-item {
-  outline: 4px solid rgb(225, 228, 232);
-  border-collapse: collapse;
-}
-
-@media (prefers-color-scheme: dark) {
-  .progress-item {
-    outline: 4px solid #393f47;
-  }
-}
-
-.lang {
-  font-weight: 600;
-  margin-right: 8px;
-  color: rgb(36, 41, 46);
-}
-
-@media (prefers-color-scheme: dark) {
-  .lang {
-    color: #c9d1d9;
-  }
-}
-
-.percent {
-  color: rgb(88, 96, 105)
-}
-
-@media (prefers-color-scheme: dark) {
-  .percent {
-    color: #8b949e;
-  }
+  to { transform: translateX(0); }
 }
 </style>
-<g>
-<rect x="10" y="10" id="background" />
-<g>
-<foreignObject x="42" y="34" width="916" height="684">
-<div xmlns="http://www.w3.org/1999/xhtml" class="ellipsis">
-
-<h2>Languages Used (By File Size)</h2>
-
-<div>
-<span class="progress">
-{{ progress }}
-</span>
-</div>
-
-<ul>
-
-{{ lang_list }}
-
-</ul>
-
-</div>
-</foreignObject>
-</g>
-</g>
+</defs>
+<rect x="10" y="10" id="background"/>
+<text x="42" y="65" class="title">Languages Used (By File Size)</text>
+{{ pie_slices }}
+{{ legend }}
 </svg>
