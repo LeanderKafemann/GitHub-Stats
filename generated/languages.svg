@@ -69,9 +69,9 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 117.24 557.98 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 117.24 557.99 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
 <text x="414.8" y="492.9" class="slice-label">64.9%</text>
-<path d="M 290.0 430.0 L 117.24 557.98 A 215 215 0 0 1 75.11 423.11 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 117.24 557.99 A 215 215 0 0 1 75.11 423.11 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
 <text x="156.6" y="471.7" class="slice-label">10.7%</text>
 <path d="M 290.0 430.0 L 75.11 423.11 A 215 215 0 0 1 122.50 295.21 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
 <text x="159.0" y="381.4" class="slice-label">10.3%</text>
