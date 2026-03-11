@@ -69,16 +69,16 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 117.24 557.99 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 117.24 557.98 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
 <text x="414.8" y="492.9" class="slice-label">64.9%</text>
-<path d="M 290.0 430.0 L 117.24 557.99 A 215 215 0 0 1 75.11 423.11 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 117.24 557.98 A 215 215 0 0 1 75.11 423.13 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
 <text x="156.6" y="471.7" class="slice-label">10.7%</text>
-<path d="M 290.0 430.0 L 75.11 423.11 A 215 215 0 0 1 122.50 295.21 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 75.11 423.13 A 215 215 0 0 1 122.52 295.18 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
 <text x="159.0" y="381.4" class="slice-label">10.3%</text>
-<path d="M 290.0 430.0 L 122.50 295.21 A 215 215 0 0 1 155.18 262.52 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 155.18 262.52 A 215 215 0 0 1 188.23 240.61 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 188.23 240.61 A 215 215 0 0 1 223.28 225.62 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 223.28 225.62 A 215 215 0 0 1 255.48 217.79 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 122.52 295.18 A 215 215 0 0 1 155.20 262.51 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 155.20 262.51 A 215 215 0 0 1 188.24 240.61 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 188.24 240.61 A 215 215 0 0 1 223.29 225.61 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 223.29 225.61 A 215 215 0 0 1 255.48 217.79 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 255.48 217.79 A 215 215 0 0 1 272.44 215.72 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 272.44 215.72 A 215 215 0 0 1 279.15 215.27 Z" fill="#3178c6" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 279.15 215.27 A 215 215 0 0 1 285.30 215.05 Z" fill="#adb2cb" stroke="white" stroke-width="1.5"/>
@@ -99,7 +99,7 @@ svg {
 <g class="legend-item" style="animation-delay: 200ms;">
 <rect x="565" y="191" width="22" height="22" rx="3" fill="#f1e05a"/>
 <text x="597" y="205" class="lang-name">JavaScript</text>
-<text x="597" y="226" class="lang-pct">10.27%</text>
+<text x="597" y="226" class="lang-pct">10.28%</text>
 </g>
 <g class="legend-item" style="animation-delay: 300ms;">
 <rect x="565" y="239" width="22" height="22" rx="3" fill="#083fa1"/>
@@ -124,7 +124,7 @@ svg {
 <g class="legend-item" style="animation-delay: 700ms;">
 <rect x="565" y="431" width="22" height="22" rx="3" fill="#b07219"/>
 <text x="597" y="445" class="lang-name">Java</text>
-<text x="597" y="466" class="lang-pct">1.27%</text>
+<text x="597" y="466" class="lang-pct">1.26%</text>
 </g>
 <g class="legend-item" style="animation-delay: 800ms;">
 <rect x="565" y="479" width="22" height="22" rx="3" fill="#3178c6"/>
