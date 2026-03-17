@@ -41,12 +41,12 @@
 <rect x="512" y="356" width="6" height="103" rx="2" fill="#3fb950" opacity="0.9" class="ach-row" style="animation-delay:275ms;"/>
 <g class="ach-row" style="animation-delay:305ms;">
 <text x="534" y="384" class="ach-label">📈 Fastest Growing Language</text>
-<text x="534" y="410" class="ach-value">HTML (+8.5pp)</text>
+<text x="534" y="410" class="ach-value">HTML (+9.1pp)</text>
 </g>
 <rect x="12" y="479" width="6" height="103" rx="2" fill="#f85149" opacity="0.9" class="ach-row" style="animation-delay:330ms;"/>
 <g class="ach-row" style="animation-delay:360ms;">
 <text x="34" y="507" class="ach-label">📉 Most Reduced Language</text>
-<text x="34" y="533" class="ach-value">Python (-6.2pp)</text>
+<text x="34" y="533" class="ach-value">Python (-6.7pp)</text>
 </g>
 <rect x="512" y="479" width="6" height="103" rx="2" fill="#e3b341" opacity="0.9" class="ach-row" style="animation-delay:385ms;"/>
 <g class="ach-row" style="animation-delay:415ms;">
@@ -59,5 +59,5 @@
 <text x="34" y="656" class="ach-value">75 repos</text>
 </g>
 <line x1="8" y1="715" x2="992" y2="715" stroke="#21262d" stroke-width="1"/>
-<text x="990" y="748" text-anchor="end" class="ach-note">Updated 2026-03-16</text>
+<text x="990" y="748" text-anchor="end" class="ach-note">Updated 2026-03-17</text>
 </svg>
