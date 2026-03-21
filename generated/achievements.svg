@@ -31,7 +31,7 @@
 <rect x="512" y="233" width="6" height="103" rx="2" fill="#3fb950" opacity="0.9" class="ach-row" style="animation-delay:165ms;"/>
 <g class="ach-row" style="animation-delay:195ms;">
 <text x="534" y="261" class="ach-label">📝 Total Lines Written (all-time)</text>
-<text x="534" y="287" class="ach-value">+917,081 added / -569,576 deleted</text>
+<text x="534" y="287" class="ach-value">+919,896 added / -572,771 deleted</text>
 </g>
 <rect x="12" y="356" width="6" height="103" rx="2" fill="#58a6ff" opacity="0.9" class="ach-row" style="animation-delay:220ms;"/>
 <g class="ach-row" style="animation-delay:250ms;">
@@ -59,5 +59,5 @@
 <text x="34" y="656" class="ach-value">76 repos</text>
 </g>
 <line x1="8" y1="715" x2="992" y2="715" stroke="#21262d" stroke-width="1"/>
-<text x="990" y="748" text-anchor="end" class="ach-note">Updated 2026-03-20</text>
+<text x="990" y="748" text-anchor="end" class="ach-note">Updated 2026-03-21</text>
 </svg>
