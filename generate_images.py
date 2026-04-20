@@ -193,7 +193,17 @@ async def generate_overview(s: Stats) -> None:
     output = re.sub("{{ stars }}", f"{await s.stargazers:,}", output)
     output = re.sub("{{ forks }}", f"{await s.forks:,}", output)
     output = re.sub("{{ contributions }}", f"{await s.total_contributions:,}", output)
-    changed = (await s.lines_changed)[0] + (await s.lines_changed)[1]
+    lines_changed = await s.lines_changed
+    changed = lines_changed[0] + lines_changed[1]
+    if changed == 0:
+        # API returned no data (e.g. still computing) – fall back to last known value
+        history = load_history()
+        if history:
+            last = history[-1]
+            fallback = last.get("lines_added", 0) + last.get("lines_deleted", 0)
+            if fallback > 0:
+                print(f"  [overview] lines_changed=0; using history fallback ({fallback:,})")
+                changed = fallback
     output = re.sub("{{ lines_changed }}", f"{changed:,}", output)
     output = re.sub("{{ views }}", f"{await s.views:,}", output)
     output = re.sub("{{ repos }}", f"{len(await s.repos):,}", output)
