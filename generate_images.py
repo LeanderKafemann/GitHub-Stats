@@ -196,7 +196,10 @@ async def generate_overview(s: Stats) -> None:
     lines_changed = await s.lines_changed
     changed = lines_changed[0] + lines_changed[1]
     if changed == 0:
-        # API returned no data (e.g. still computing) – fall back to last known value
+        # API returned no data (e.g. stats still computing) – fall back to last known
+        # value from history. The `fallback > 0` guard ensures we do not override a
+        # genuinely-zero result: if the user truly has no lines changed, history will
+        # also report 0 and the fallback will not be used.
         history = load_history()
         if history:
             last = history[-1]
