@@ -69,18 +69,18 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 175.53 611.99 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 175.64 612.06 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
 <text x="424.3" y="468.7" class="slice-label">58.9%</text>
-<path d="M 290.0 430.0 L 175.53 611.99 A 215 215 0 0 1 89.79 351.65 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
-<text x="157.3" y="473.7" class="slice-label">22.0%</text>
-<path d="M 290.0 430.0 L 89.79 351.65 A 215 215 0 0 1 140.55 275.44 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
-<text x="173.7" y="352.5" class="slice-label">6.8%</text>
-<path d="M 290.0 430.0 L 140.55 275.44 A 215 215 0 0 1 197.37 235.98 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 175.64 612.06 A 215 215 0 0 1 89.72 351.82 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<text x="157.3" y="473.8" class="slice-label">22.0%</text>
+<path d="M 290.0 430.0 L 89.72 351.82 A 215 215 0 0 1 140.51 275.48 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<text x="173.6" y="352.6" class="slice-label">6.8%</text>
+<path d="M 290.0 430.0 L 140.51 275.48 A 215 215 0 0 1 197.31 236.01 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
 <text x="210.3" y="315.2" class="slice-label">5.1%</text>
-<path d="M 290.0 430.0 L 197.37 235.98 A 215 215 0 0 1 224.92 225.09 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 224.92 225.09 A 215 215 0 0 1 247.96 219.15 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 247.96 219.15 A 215 215 0 0 1 268.41 216.09 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 268.41 216.09 A 215 215 0 0 1 279.04 215.28 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 197.31 236.01 A 215 215 0 0 1 224.93 225.08 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 224.93 225.08 A 215 215 0 0 1 247.97 219.15 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 247.97 219.15 A 215 215 0 0 1 268.42 216.09 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 268.42 216.09 A 215 215 0 0 1 279.04 215.28 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 279.04 215.28 A 215 215 0 0 1 283.23 215.11 Z" fill="#3178c6" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 283.23 215.11 A 215 215 0 0 1 287.07 215.02 Z" fill="#adb2cb" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 287.07 215.02 A 215 215 0 0 1 288.68 215.00 Z" fill="#89e051" stroke="white" stroke-width="1.5"/>
@@ -90,7 +90,7 @@ svg {
 <g class="legend-item" style="animation-delay: 0ms;">
 <rect x="565" y="95" width="22" height="22" rx="3" fill="#e34c26"/>
 <text x="597" y="109" class="lang-name">HTML</text>
-<text x="597" y="130" class="lang-pct">58.94%</text>
+<text x="597" y="130" class="lang-pct">58.93%</text>
 </g>
 <g class="legend-item" style="animation-delay: 100ms;">
 <rect x="565" y="143" width="22" height="22" rx="3" fill="#f1e05a"/>
@@ -100,7 +100,7 @@ svg {
 <g class="legend-item" style="animation-delay: 200ms;">
 <rect x="565" y="191" width="22" height="22" rx="3" fill="#3572A5"/>
 <text x="597" y="205" class="lang-name">Python</text>
-<text x="597" y="226" class="lang-pct">6.83%</text>
+<text x="597" y="226" class="lang-pct">6.84%</text>
 </g>
 <g class="legend-item" style="animation-delay: 300ms;">
 <rect x="565" y="239" width="22" height="22" rx="3" fill="#663399"/>
@@ -110,7 +110,7 @@ svg {
 <g class="legend-item" style="animation-delay: 400ms;">
 <rect x="565" y="287" width="22" height="22" rx="3" fill="#083fa1"/>
 <text x="597" y="301" class="lang-name">Markdown</text>
-<text x="597" y="322" class="lang-pct">2.19%</text>
+<text x="597" y="322" class="lang-pct">2.20%</text>
 </g>
 <g class="legend-item" style="animation-delay: 500ms;">
 <rect x="565" y="335" width="22" height="22" rx="3" fill="#6E4C13"/>
