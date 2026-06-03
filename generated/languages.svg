@@ -71,9 +71,9 @@ svg {
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
 <path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 1 1 175.66 612.08 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
 <text x="424.3" y="468.7" class="slice-label">58.9%</text>
-<path d="M 290.0 430.0 L 175.66 612.08 A 215 215 0 0 1 89.71 351.85 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 175.66 612.08 A 215 215 0 0 1 89.70 351.85 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
 <text x="157.3" y="473.8" class="slice-label">22.0%</text>
-<path d="M 290.0 430.0 L 89.71 351.85 A 215 215 0 0 1 140.48 275.50 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 89.70 351.85 A 215 215 0 0 1 140.48 275.50 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
 <text x="173.6" y="352.6" class="slice-label">6.8%</text>
 <path d="M 290.0 430.0 L 140.48 275.50 A 215 215 0 0 1 197.27 236.02 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
 <text x="210.2" y="315.3" class="slice-label">5.1%</text>
