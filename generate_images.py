@@ -451,8 +451,8 @@ async def generate_history(s: Stats) -> None:
 
     # ── Forecast: dynamically determined horizon ──────────────────────────
     n_real = n  # number of actual historical data points
-    forecast_dates: List[str] = []
-    forecast_labels: List[str] = []
+    forecast_label_indices: List[int] = []
+    forecast_labels_by_index: Dict[int, str] = {}
     if dates:
         # ── Linear regression helpers (no external dependencies) ──────────
         def _linreg_slope(ys: List[float]) -> float:
@@ -522,8 +522,7 @@ async def generate_history(s: Stats) -> None:
         if candidate_steps:
             h1_steps = min(candidate_steps)
         else:
-            # No active trend detected; fall back to the minimum horizon so
-            # the chart still shows two forecast points (flat extrapolation).
+            # No active trend detected; fall back to the minimum horizon.
             h1_steps = MIN_FORECAST_DAYS / avg_step_days
 
         # Clamp horizon to [MIN_FORECAST_DAYS, MAX_FORECAST_DAYS]
@@ -531,39 +530,61 @@ async def generate_history(s: Stats) -> None:
         h1_days = min(h1_days, float(MAX_FORECAST_DAYS))
         h1_steps = h1_days / avg_step_days
         h2_steps = h1_steps * 2.0
+        h2_days = h1_days * 2.0
+
+        # Increase forecast width on the x-axis by adding more forecast points.
+        # Keep the amount bounded to avoid visual clutter on long histories.
+        MIN_FORECAST_POINTS = 4
+        MAX_FORECAST_POINTS = 16
+        TARGET_FORECAST_SHARE = 0.22
+        target_points = int(
+            round((TARGET_FORECAST_SHARE * max(n_real - 1, 1)) / (1.0 - TARGET_FORECAST_SHARE))
+        )
+        num_forecast_points = max(
+            MIN_FORECAST_POINTS, min(MAX_FORECAST_POINTS, target_points)
+        )
 
         try:
             last_date_obj = datetime.strptime(dates[n_real - 1], "%Y-%m-%d")
-            h1_date = last_date_obj + timedelta(days=int(h1_days))
-            h2_date = last_date_obj + timedelta(days=int(h1_days * 2))
-            forecast_dates = [h1_date.strftime("%Y-%m-%d"), h2_date.strftime("%Y-%m-%d")]
-            forecast_labels = [h1_date.strftime("%b %d, %Y"), h2_date.strftime("%b %d, %Y")]
+            label_points = {1, num_forecast_points}
+            if num_forecast_points >= 6:
+                label_points.add(num_forecast_points // 2)
+
+            for point_idx in range(1, num_forecast_points + 1):
+                frac = point_idx / num_forecast_points
+                mult = h2_steps * frac
+                forecast_date_obj = last_date_obj + timedelta(days=int(round(h2_days * frac)))
+                forecast_date_str = forecast_date_obj.strftime("%Y-%m-%d")
+
+                dates.append(forecast_date_str)
+                monthly_adds_series.append(max(0, int(base_adds + mult * avg_delta_adds)))
+                monthly_dels_series.append(max(0, int(base_dels + mult * avg_delta_dels)))
+                monthly_lines.append(monthly_adds_series[-1] + monthly_dels_series[-1])
+
+                # Language forecast: extrapolate trend from real data, then
+                # re-normalise so the proportions still sum to the same total as
+                # the last real snapshot.
+                raw: Dict[str, float] = {}
+                for lang in top_langs:
+                    base_val = lang_series[lang][n_real - 1] if lang_series[lang] else 0.0
+                    raw[lang] = max(0.0, base_val + mult * lang_trends[lang])
+                raw_total = sum(raw.values())
+                real_total = sum(lang_series[lang][n_real - 1] for lang in top_langs)
+                if raw_total > 0 and real_total > 0:
+                    scale = real_total / raw_total
+                    for lang in top_langs:
+                        raw[lang] *= scale
+                for lang in top_langs:
+                    lang_series[lang].append(raw.get(lang, 0.0))
+
+                stars_series.append(max(0, int(base_stars + mult * stars_slope)))
+
+                if point_idx in label_points:
+                    idx = len(dates) - 1
+                    forecast_label_indices.append(idx)
+                    forecast_labels_by_index[idx] = forecast_date_obj.strftime("%b %d, %Y")
         except ValueError:
             pass
-
-        for mult, forecast_date_str in zip([h1_steps, h2_steps], forecast_dates):
-            dates.append(forecast_date_str)
-            monthly_adds_series.append(max(0, int(base_adds + mult * avg_delta_adds)))
-            monthly_dels_series.append(max(0, int(base_dels + mult * avg_delta_dels)))
-            monthly_lines.append(monthly_adds_series[-1] + monthly_dels_series[-1])
-
-            # Language forecast: extrapolate trend from real data, then
-            # re-normalise so the proportions still sum to the same total as
-            # the last real snapshot.
-            raw: Dict[str, float] = {}
-            for lang in top_langs:
-                base_val = lang_series[lang][n_real - 1] if lang_series[lang] else 0.0
-                raw[lang] = max(0.0, base_val + mult * lang_trends[lang])
-            raw_total = sum(raw.values())
-            real_total = sum(lang_series[lang][n_real - 1] for lang in top_langs)
-            if raw_total > 0 and real_total > 0:
-                scale = real_total / raw_total
-                for lang in top_langs:
-                    raw[lang] *= scale
-            for lang in top_langs:
-                lang_series[lang].append(raw.get(lang, 0.0))
-
-            stars_series.append(max(0, int(base_stars + mult * stars_slope)))
         n = len(dates)
 
     # ── Chart dimensions ─────────────────────────────────────────────────
@@ -838,14 +859,15 @@ async def generate_history(s: Stats) -> None:
             f'opacity="0.35"/>'
         )
         last_fx = -999.0
-        for fi, flabel in enumerate(forecast_labels):
-            fx_label = margin_left + (n_real + fi) * step_x
+        for idx in forecast_label_indices:
+            fx_label = margin_left + idx * step_x
             if fx_label - last_fx < 70:
                 continue
             svg.append(
                 f'<text x="{fx_label:.1f}" '
                 f'y="{chart1_top + 12}" '
-                f'text-anchor="middle" class="axis-label" opacity="0.6">{flabel}</text>'
+                f'text-anchor="middle" class="axis-label" opacity="0.6">'
+                f'{forecast_labels_by_index.get(idx, dates[idx])}</text>'
             )
             last_fx = fx_label
 
@@ -864,8 +886,11 @@ async def generate_history(s: Stats) -> None:
     shown_indices = set(range(0, n_real, label_step))
     if n > n_real:
         shown_indices.add(n_real - 1)  # always show last real data point
-        for fi in range(n_real, n):
-            shown_indices.add(fi)  # always show forecast labels
+        if forecast_label_indices:
+            for idx in forecast_label_indices:
+                shown_indices.add(idx)  # always show selected forecast labels
+        else:
+            shown_indices.add(n - 1)
 
     last_rendered_x = -999.0
     last_rendered_label = ""
@@ -873,8 +898,9 @@ async def generate_history(s: Stats) -> None:
         x = margin_left + i * step_x
         label_y = chart2_top + chart_h_bottom + 18
         if i >= n_real:
-            fi = i - n_real
-            label_text = forecast_labels[fi] if fi < len(forecast_labels) else dates[i][:7]
+            label_text = forecast_labels_by_index.get(
+                i, dates[i][:7] if len(dates[i]) >= 7 else dates[i]
+            )
         elif use_full_date:
             label_text = dates[i]
         else:
