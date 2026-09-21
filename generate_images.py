@@ -370,6 +370,8 @@ async def generate_history(s: Stats) -> None:
     # language that was ever in the top 5 for an individual snapshot (so that
     # language shifts over time are fully captured in the chart).
     MAX_CHART_LANGS = 8
+    OTHER_LANG_KEY = "Others"
+    OTHER_LANG_COLOR = "#8b949e"
     lang_totals: Dict[str, int] = {}
     lang_color_map: Dict[str, str] = {}
     for snap in history:
@@ -430,15 +432,26 @@ async def generate_history(s: Stats) -> None:
         monthly_lines.append(total_a + total_d)
 
     # Language proportions per snapshot
-    lang_series: Dict[str, List[float]] = {lang: [] for lang in top_langs}
+    chart_langs = list(top_langs)
+    if chart_langs:
+        chart_langs.append(OTHER_LANG_KEY)
+        lang_color_map[OTHER_LANG_KEY] = OTHER_LANG_COLOR
+
+    lang_series: Dict[str, List[float]] = {lang: [] for lang in chart_langs}
     for snap in history:
         langs = snap.get("languages", {})
+        selected_total = 0.0
         for lang in top_langs:
-            lang_series[lang].append(langs.get(lang, {}).get("prop", 0.0))
+            prop = float(langs.get(lang, {}).get("prop", 0.0))
+            prop = max(0.0, prop)
+            lang_series[lang].append(prop)
+            selected_total += prop
+        if OTHER_LANG_KEY in lang_series:
+            lang_series[OTHER_LANG_KEY].append(max(0.0, 100.0 - selected_total))
 
     has_lang_data = any(
         any(vals) for vals in lang_series.values()
-    ) if top_langs else False
+    ) if chart_langs else False
 
     # Stars over time
     stars_series = [snap.get("stargazers", 0) for snap in history]
@@ -561,21 +574,23 @@ async def generate_history(s: Stats) -> None:
                 monthly_dels_series.append(max(0, int(base_dels + mult * avg_delta_dels)))
                 monthly_lines.append(monthly_adds_series[-1] + monthly_dels_series[-1])
 
-                # Language forecast: extrapolate trend from real data, then
-                # re-normalise so the proportions still sum to the same total as
-                # the last real snapshot.
+                # Language forecast: extrapolate trend from real data and
+                # cap tracked languages to at most 100%.
                 raw: Dict[str, float] = {}
                 for lang in top_langs:
                     base_val = lang_series[lang][n_real - 1] if lang_series[lang] else 0.0
                     raw[lang] = max(0.0, base_val + mult * lang_trends[lang])
                 raw_total = sum(raw.values())
-                real_total = sum(lang_series[lang][n_real - 1] for lang in top_langs)
-                if raw_total > 0 and real_total > 0:
-                    scale = real_total / raw_total
+                if raw_total > 100.0:
+                    scale = 100.0 / raw_total
                     for lang in top_langs:
                         raw[lang] *= scale
                 for lang in top_langs:
                     lang_series[lang].append(raw.get(lang, 0.0))
+                if OTHER_LANG_KEY in lang_series:
+                    lang_series[OTHER_LANG_KEY].append(
+                        max(0.0, 100.0 - sum(raw.get(lang, 0.0) for lang in top_langs))
+                    )
 
                 stars_series.append(max(0, int(base_stars + mult * stars_slope)))
 
@@ -807,12 +822,12 @@ async def generate_history(s: Stats) -> None:
         f'class="subtitle">Programming Language Development (%)</text>'
     )
     
-    if has_lang_data and top_langs:
+    if has_lang_data and chart_langs:
         draw_grid(chart2_top, chart_h_bottom, 100.0, "{:.0f}%")
 
         # Build stacked area chart showing language proportion changes over time
         stacked_bottoms = [0.0] * n
-        for lang_idx, lang in enumerate(top_langs):
+        for lang_idx, lang in enumerate(chart_langs):
             color = lang_color_map.get(lang, "#888888")
             area_pts_top: List[str] = []
             area_pts_bottom: List[str] = []
@@ -959,14 +974,14 @@ async def generate_history(s: Stats) -> None:
     )
 
     # Language legend for chart 2
-    if has_lang_data and top_langs:
+    if has_lang_data and chart_langs:
         lang_legend_y = legend_y + 90
         svg.append(
             f'<text x="{legend_x}" y="{lang_legend_y}" '
             f'class="subtitle">Languages</text>'
         )
         max_label_chars = 22  # max characters for legend label
-        for i, lang in enumerate(top_langs):
+        for i, lang in enumerate(chart_langs):
             ly = lang_legend_y + 22 + i * 22
             color = lang_color_map.get(lang, "#888888")
             current_prop = lang_series[lang][n_real - 1] if len(lang_series[lang]) >= n_real else (lang_series[lang][-1] if lang_series[lang] else 0.0)
@@ -986,7 +1001,7 @@ async def generate_history(s: Stats) -> None:
                 f'<text x="{legend_x + 18}" y="{ly + 1}" '
                 f'class="legend-text">{label}</text>'
             )
-        next_section_y = lang_legend_y + 22 + len(top_langs) * 22 + 14
+        next_section_y = lang_legend_y + 22 + len(chart_langs) * 22 + 14
     else:
         next_section_y = legend_y + 72
 
