@@ -365,11 +365,11 @@ async def generate_history(s: Stats) -> None:
             )
         return
 
-    # ── Determine top languages across all snapshots ─────────────────────
-    # Include up to 8 languages: global top-8 by cumulative size, plus any
-    # language that was ever in the top 5 for an individual snapshot (so that
-    # language shifts over time are fully captured in the chart).
+    # ── Determine chart languages dynamically from current share ──────────
+    # Prefer languages that currently have meaningful share; low-share
+    # languages are rolled into "Others".
     MAX_CHART_LANGS = 8
+    MIN_CURRENT_SHARE = 2.0
     OTHER_LANG_KEY = "Others"
     OTHER_LANG_COLOR = "#8b949e"
     lang_totals: Dict[str, int] = {}
@@ -380,28 +380,35 @@ async def generate_history(s: Stats) -> None:
             if data.get("color"):
                 lang_color_map[name] = data["color"]
 
-    # Collect languages that were ever in the per-snapshot top 5
-    ever_top5_langs: set = set()
-    for snap in history:
-        snap_langs = snap.get("languages", {})
-        if snap_langs:
-            snap_sorted = sorted(
-                snap_langs.keys(),
-                key=lambda n: snap_langs[n].get("size", 0),
-                reverse=True,
-            )
-            ever_top5_langs.update(snap_sorted[:5])
-
-    # Union of global top-8 and ever-top-5 languages, sorted by global total
-    global_top8 = set(
-        sorted(lang_totals.keys(), key=lambda n: lang_totals[n], reverse=True)[
-            :MAX_CHART_LANGS
-        ]
+    latest_languages = history[-1].get("languages", {})
+    latest_total_size = sum(
+        max(0, int(data.get("size", 0))) for data in latest_languages.values()
     )
-    candidate_langs = global_top8 | ever_top5_langs
-    top_langs = sorted(
-        candidate_langs, key=lambda n: lang_totals.get(n, 0), reverse=True
-    )[:MAX_CHART_LANGS]
+    latest_props: Dict[str, float] = {}
+    for name, data in latest_languages.items():
+        prop = float(data.get("prop", 0.0) or 0.0)
+        if prop <= 0.0 and latest_total_size > 0:
+            prop = 100.0 * max(0.0, float(data.get("size", 0))) / latest_total_size
+        latest_props[name] = max(0.0, prop)
+
+    latest_ranked_langs = sorted(
+        latest_languages.keys(),
+        key=lambda n: (
+            latest_props.get(n, 0.0),
+            latest_languages[n].get("size", 0),
+            lang_totals.get(n, 0),
+        ),
+        reverse=True,
+    )
+    top_langs = [
+        n for n in latest_ranked_langs if latest_props.get(n, 0.0) >= MIN_CURRENT_SHARE
+    ][:MAX_CHART_LANGS]
+    if not top_langs:
+        top_langs = latest_ranked_langs[:MAX_CHART_LANGS]
+    if not top_langs:
+        top_langs = sorted(
+            lang_totals.keys(), key=lambda n: lang_totals[n], reverse=True
+        )[:MAX_CHART_LANGS]
 
     # ── Prepare time series ──────────────────────────────────────────────
     dates = [snap.get("date", "") for snap in history]
