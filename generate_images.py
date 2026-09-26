@@ -1052,7 +1052,7 @@ async def generate_history(s: Stats) -> None:
 
     # Language share win/loss mini diagram (vs ~6 months ago)
     ref_period_label = "6 months ago"
-    share_delta_items: List[tuple[str, float, float]] = []
+    share_delta_items: List[tuple[str, float]] = []
     try:
         if top_langs and n_real > 0:
             real_dates = [datetime.strptime(d, "%Y-%m-%d") for d in dates[:n_real]]
@@ -1080,7 +1080,7 @@ async def generate_history(s: Stats) -> None:
                             / ref_total
                         )
                     curr_prop = latest_props.get(lang, 0.0)
-                    share_delta_items.append((lang, curr_prop - past_prop, curr_prop))
+                    share_delta_items.append((lang, curr_prop - past_prop))
                 share_delta_items.sort(key=lambda item: abs(item[1]), reverse=True)
     except ValueError:
         share_delta_items = []
@@ -1093,7 +1093,7 @@ async def generate_history(s: Stats) -> None:
             f'class="subtitle">Language win/loss vs {ref_period_label}</text>'
         )
         top_deltas = share_delta_items[:6]
-        max_abs_delta = max(abs(delta) for _, delta, _ in top_deltas) if top_deltas else 1.0
+        max_abs_delta = max(abs(delta) for _, delta in top_deltas) if top_deltas else 1.0
         if max_abs_delta <= 0:
             max_abs_delta = 1.0
         zero_x = legend_x + 98
@@ -1106,7 +1106,7 @@ async def generate_history(s: Stats) -> None:
             f'x2="{zero_x}" y2="{last_row_y + 6}" '
             f'stroke="{grid_color}" stroke-width="1"/>'
         )
-        for i, (lang, delta_prop, _curr_prop) in enumerate(top_deltas):
+        for i, (lang, delta_prop) in enumerate(top_deltas):
             row_y = first_row_y + i * row_h
             short_lang = lang if len(lang) <= 9 else (lang[:8] + "…")
             bar_w = (abs(delta_prop) / max_abs_delta) * bar_half_w
