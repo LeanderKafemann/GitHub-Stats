@@ -295,9 +295,9 @@ async def generate_languages(s: Stats) -> None:
         )
 
         if lang == "Other" and remaining and prop > 0:
-            mini_cx = leg_x + 300
-            mini_cy = leg_y + 12
-            mini_r = 22
+            mini_cx = leg_x + 321
+            mini_cy = leg_y + 11
+            mini_r = 42
             mini_start = -math.pi / 2
             mini_slices = ""
             for rem_lang, rem_data in remaining:
@@ -316,7 +316,7 @@ async def generate_languages(s: Stats) -> None:
                 mini_slices += (
                     f'<path d="M {mini_cx:.1f} {mini_cy:.1f} L {mx1:.2f} {my1:.2f} '
                     f'A {mini_r} {mini_r} 0 {rem_arc} 1 {mx2:.2f} {my2:.2f} Z" '
-                    f'fill="{rem_color}" stroke="white" stroke-width="0.8">'
+                    f'fill="{rem_color}" stroke="white" stroke-width="1.1">'
                     f'<title>{rem_lang}: {rem_prop:.2f}% of total '
                     f'({(rem_share * 100):.1f}% of Other {prop:.2f}%)</title></path>\n'
                 )
@@ -327,9 +327,9 @@ async def generate_languages(s: Stats) -> None:
                     f'<g class="legend-item" style="animation-delay: {i * 100 + 120}ms;">\n'
                     f'{mini_slices}'
                     f'<circle cx="{mini_cx}" cy="{mini_cy}" r="{mini_r}" '
-                    f'fill="none" stroke="white" stroke-width="0.6"/>\n'
+                    f'fill="none" stroke="white" stroke-width="1"/>\n'
                     f'<text x="{mini_cx}" y="{mini_cy + 4}" class="lang-pct" '
-                    f'text-anchor="middle" style="font-size:11px;">in Other</text>\n'
+                    f'text-anchor="middle" style="font-size:12.5px;font-weight:600;">in Other</text>\n'
                     f'</g>\n'
                 )
 
@@ -699,12 +699,12 @@ async def generate_history(s: Stats) -> None:
 </defs>
 <style>
   .title {{ font: bold 28px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .subtitle {{ font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.8; }}
-  .axis-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
-  .legend-text {{ font: 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
+  .subtitle {{ font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.92; }}
+  .axis-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.85; }}
+  .legend-text {{ font: 500 15px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.95; }}
   .value-text {{ font: bold 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
   .stat-value {{ font: bold 22px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; }}
-  .stat-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.7; }}
+  .stat-label {{ font: 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: {text_color}; opacity: 0.85; }}
   @keyframes fadeIn {{ from {{ opacity: 0; }} to {{ opacity: 1; }} }}
   .anim {{ animation: fadeIn 0.6s ease-in-out forwards; opacity: 0; }}
 </style>
