@@ -294,6 +294,45 @@ async def generate_languages(s: Stats) -> None:
             f'</g>\n'
         )
 
+        if lang == "Other" and remaining and prop > 0:
+            mini_cx = leg_x + 300
+            mini_cy = leg_y + 12
+            mini_r = 22
+            mini_start = -math.pi / 2
+            mini_slices = ""
+            for rem_lang, rem_data in remaining:
+                rem_prop = float(rem_data.get("prop", 0.0) or 0.0)
+                if rem_prop <= 0:
+                    continue
+                rem_share = rem_prop / prop
+                rem_angle = 2 * math.pi * rem_share
+                mini_end = mini_start + rem_angle
+                mx1 = mini_cx + mini_r * math.cos(mini_start)
+                my1 = mini_cy + mini_r * math.sin(mini_start)
+                mx2 = mini_cx + mini_r * math.cos(mini_end)
+                my2 = mini_cy + mini_r * math.sin(mini_end)
+                rem_arc = 1 if rem_angle > math.pi else 0
+                rem_color = rem_data.get("color") or "#888888"
+                mini_slices += (
+                    f'<path d="M {mini_cx:.1f} {mini_cy:.1f} L {mx1:.2f} {my1:.2f} '
+                    f'A {mini_r} {mini_r} 0 {rem_arc} 1 {mx2:.2f} {my2:.2f} Z" '
+                    f'fill="{rem_color}" stroke="white" stroke-width="0.8">'
+                    f'<title>{rem_lang}: {rem_prop:.2f}% of total '
+                    f'({(rem_share * 100):.1f}% of Other {prop:.2f}%)</title></path>\n'
+                )
+                mini_start = mini_end
+
+            if mini_slices:
+                legend += (
+                    f'<g class="legend-item" style="animation-delay: {i * 100 + 120}ms;">\n'
+                    f'{mini_slices}'
+                    f'<circle cx="{mini_cx}" cy="{mini_cy}" r="{mini_r}" '
+                    f'fill="none" stroke="white" stroke-width="0.6"/>\n'
+                    f'<text x="{mini_cx}" y="{mini_cy + 4}" class="lang-pct" '
+                    f'text-anchor="middle" style="font-size:11px;">in Other</text>\n'
+                    f'</g>\n'
+                )
+
     output = re.sub(r"\{\{ pie_slices \}\}", pie_slices, output)
     output = re.sub(r"\{\{ legend \}\}", legend, output)
 
@@ -987,18 +1026,17 @@ async def generate_history(s: Stats) -> None:
             f'<text x="{legend_x}" y="{lang_legend_y}" '
             f'class="subtitle">Languages</text>'
         )
-        max_label_chars = 22  # max characters for legend label
+        max_name_chars = 12
         for i, lang in enumerate(chart_langs):
             ly = lang_legend_y + 22 + i * 22
             color = lang_color_map.get(lang, "#888888")
             current_prop = lang_series[lang][n_real - 1] if len(lang_series[lang]) >= n_real else (lang_series[lang][-1] if lang_series[lang] else 0.0)
             forecast_prop = lang_series[lang][-1] if lang_series[lang] else 0.0
+            lang_name = lang if len(lang) <= max_name_chars else (lang[: max_name_chars - 1] + "…")
             if n > n_real and abs(forecast_prop - current_prop) >= 0.05:
-                label = f"{lang} ({current_prop:.0f}%→{forecast_prop:.0f}%)"
+                label = f"{lang_name} ({current_prop:.0f}%→{forecast_prop:.0f}%)"
             else:
-                label = f"{lang} ({current_prop:.0f}%)"
-            if len(label) > max_label_chars:
-                label = label[:max_label_chars - 1] + "…"
+                label = f"{lang_name} ({current_prop:.0f}%)"
             svg.append(
                 f'<rect x="{legend_x}" y="{ly - 10}" width="12" height="12" '
                 f'rx="2" fill="{color}" opacity="0.8" '
@@ -1012,8 +1050,82 @@ async def generate_history(s: Stats) -> None:
     else:
         next_section_y = legend_y + 72
 
-    # Contributions-by-year mini summary
+    # Language share win/loss mini diagram (vs ~6 months ago)
+    ref_period_label = "6 months ago"
+    share_delta_items: List[tuple[str, float, float]] = []
+    try:
+        if top_langs and n_real > 0:
+            real_dates = [datetime.strptime(d, "%Y-%m-%d") for d in dates[:n_real]]
+            target_date = real_dates[-1] - timedelta(days=182)
+            candidate_idx = [
+                i for i in range(n_real)
+                if i < len(history) and history[i].get("languages")
+            ]
+            if candidate_idx:
+                ref_idx = min(
+                    candidate_idx,
+                    key=lambda i: abs((real_dates[i] - target_date).days),
+                )
+                ref_period_label = real_dates[ref_idx].strftime("%b %Y")
+                ref_langs = history[ref_idx].get("languages", {})
+                ref_total = sum(
+                    max(0, int(data.get("size", 0))) for data in ref_langs.values()
+                )
+                for lang in top_langs:
+                    past_prop = float(ref_langs.get(lang, {}).get("prop", 0.0) or 0.0)
+                    if past_prop <= 0.0 and ref_total > 0 and lang in ref_langs:
+                        past_prop = (
+                            100.0
+                            * max(0.0, float(ref_langs[lang].get("size", 0)))
+                            / ref_total
+                        )
+                    curr_prop = latest_props.get(lang, 0.0)
+                    share_delta_items.append((lang, curr_prop - past_prop, curr_prop))
+                share_delta_items.sort(key=lambda item: abs(item[1]), reverse=True)
+    except ValueError:
+        share_delta_items = []
+
     max_sidebar_y = svg_height - 40  # leave room for summary footer
+    if share_delta_items and next_section_y < max_sidebar_y:
+        section_y = next_section_y
+        svg.append(
+            f'<text x="{legend_x}" y="{section_y}" '
+            f'class="subtitle">Language win/loss vs {ref_period_label}</text>'
+        )
+        top_deltas = share_delta_items[:6]
+        max_abs_delta = max(abs(delta) for _, delta, _ in top_deltas) if top_deltas else 1.0
+        if max_abs_delta <= 0:
+            max_abs_delta = 1.0
+        zero_x = legend_x + 98
+        bar_half_w = 56
+        row_h = 20
+        first_row_y = section_y + 20
+        last_row_y = first_row_y + (len(top_deltas) - 1) * row_h
+        svg.append(
+            f'<line x1="{zero_x}" y1="{first_row_y - 10}" '
+            f'x2="{zero_x}" y2="{last_row_y + 6}" '
+            f'stroke="{grid_color}" stroke-width="1"/>'
+        )
+        for i, (lang, delta_prop, _curr_prop) in enumerate(top_deltas):
+            row_y = first_row_y + i * row_h
+            short_lang = lang if len(lang) <= 9 else (lang[:8] + "…")
+            bar_w = (abs(delta_prop) / max_abs_delta) * bar_half_w
+            bar_color = add_color if delta_prop >= 0 else del_color
+            bar_x = zero_x if delta_prop >= 0 else (zero_x - bar_w)
+            svg.append(
+                f'<text x="{legend_x}" y="{row_y}" class="legend-text">{short_lang}</text>'
+            )
+            svg.append(
+                f'<rect x="{bar_x:.1f}" y="{row_y - 9}" width="{bar_w:.1f}" height="10" '
+                f'rx="2" fill="{bar_color}" opacity="0.85"/>'
+            )
+            svg.append(
+                f'<text x="{legend_x + 170}" y="{row_y}" text-anchor="end" class="legend-text">'
+                f'{delta_prop:+.1f}pp</text>'
+            )
+        next_section_y = last_row_y + 22
+
+    # Contributions-by-year mini summary
     contribs_by_year = current_snapshot.get("contributions_by_year", {})
     sorted_years = sorted(contribs_by_year.keys())
     if sorted_years and next_section_y < max_sidebar_y:
