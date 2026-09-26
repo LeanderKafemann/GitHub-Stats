@@ -41,12 +41,12 @@ svg {
 }
 
 .lang-pct {
-  font-size: 17px;
-  fill: rgb(88, 96, 105);
+  font-size: 18px;
+  fill: rgb(70, 76, 84);
 }
 
 @media (prefers-color-scheme: dark) {
-  .lang-pct { fill: #8b949e; }
+  .lang-pct { fill: #9da7b3; }
 }
 
 .slice-label {
