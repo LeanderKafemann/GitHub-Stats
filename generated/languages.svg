@@ -75,16 +75,16 @@ svg {
 <text x="250.2" y="564.0" class="slice-label">17.4%</text>
 <path d="M 290.0 430.0 L 130.54 574.21 A 215 215 0 0 1 75.81 448.61 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
 <text x="161.9" y="485.8" class="slice-label">10.3%</text>
-<path d="M 290.0 430.0 L 75.81 448.61 A 215 215 0 0 1 91.61 347.12 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 75.81 448.61 A 215 215 0 0 1 91.61 347.13 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
 <text x="151.9" y="408.5" class="slice-label">7.7%</text>
-<path d="M 290.0 430.0 L 91.61 347.12 A 215 215 0 0 1 140.89 275.11 Z" fill="#292929" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 91.61 347.13 A 215 215 0 0 1 140.88 275.12 Z" fill="#292929" stroke="white" stroke-width="1.5"/>
 <text x="174.7" y="351.1" class="slice-label">6.5%</text>
-<path d="M 290.0 430.0 L 140.89 275.11 A 215 215 0 0 1 188.62 240.40 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 140.88 275.12 A 215 215 0 0 1 188.62 240.40 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 188.62 240.40 A 215 215 0 0 1 214.66 228.63 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 214.66 228.63 A 215 215 0 0 1 236.95 221.65 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 236.95 221.65 A 215 215 0 0 1 255.08 217.85 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 255.08 217.85 A 215 215 0 0 1 263.29 216.67 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 263.29 216.67 A 215 215 0 0 1 269.79 215.95 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 236.95 221.65 A 215 215 0 0 1 255.08 217.86 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 255.08 217.86 A 215 215 0 0 1 263.28 216.67 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 263.28 216.67 A 215 215 0 0 1 269.79 215.95 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 269.79 215.95 A 215 215 0 0 1 274.32 215.57 Z" fill="#cb171e" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 274.32 215.57 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
 
