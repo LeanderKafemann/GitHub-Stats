@@ -16,5 +16,5 @@
 *.yaml linguist-detectable=true
 
 *.json linguist-language=JSON
-*.json linguist-detectable=true
+*.json linguist-detectable=false
 *.json linguist-documentation=false
