@@ -69,23 +69,23 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 0 1 303.94 644.55 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 0 1 303.95 644.55 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
 <text x="429.7" y="425.5" class="slice-label">49.0%</text>
-<path d="M 290.0 430.0 L 303.94 644.55 A 215 215 0 0 1 98.09 526.92 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 303.95 644.55 A 215 215 0 0 1 98.09 526.93 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
 <text x="220.7" y="551.3" class="slice-label">18.6%</text>
-<path d="M 290.0 430.0 L 98.09 526.92 A 215 215 0 0 1 80.39 382.17 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 98.09 526.93 A 215 215 0 0 1 80.38 382.18 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
 <text x="151.3" y="447.0" class="slice-label">11.0%</text>
-<path d="M 290.0 430.0 L 80.39 382.17 A 215 215 0 0 1 131.39 284.85 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 80.38 382.18 A 215 215 0 0 1 131.38 284.86 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
 <text x="166.2" y="365.1" class="slice-label">8.2%</text>
-<path d="M 290.0 430.0 L 131.39 284.85 A 215 215 0 0 1 180.23 245.13 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 180.23 245.13 A 215 215 0 0 1 207.48 231.46 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 207.48 231.46 A 215 215 0 0 1 231.04 223.24 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 231.04 223.24 A 215 215 0 0 1 250.27 218.70 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 250.27 218.70 A 215 215 0 0 1 259.00 217.25 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 259.00 217.25 A 215 215 0 0 1 265.74 216.37 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 131.38 284.86 A 215 215 0 0 1 180.22 245.14 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 180.22 245.14 A 215 215 0 0 1 207.47 231.47 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 207.47 231.47 A 215 215 0 0 1 231.02 223.25 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 231.02 223.25 A 215 215 0 0 1 250.25 218.71 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 250.25 218.71 A 215 215 0 0 1 258.98 217.25 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 258.98 217.25 A 215 215 0 0 1 265.74 216.37 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 265.74 216.37 A 215 215 0 0 1 270.56 215.88 Z" fill="#cb171e" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 270.56 215.88 A 215 215 0 0 1 274.02 215.59 Z" fill="#3178c6" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 274.02 215.59 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 270.56 215.88 A 215 215 0 0 1 274.03 215.59 Z" fill="#3178c6" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 274.03 215.59 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
 
 <g class="legend-item" style="animation-delay: 0ms;">
 <rect x="565" y="95" width="22" height="22" rx="3" fill="#e34c26"/>
