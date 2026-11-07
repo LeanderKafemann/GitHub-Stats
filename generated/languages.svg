@@ -69,23 +69,23 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 0 1 315.29 643.51 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
-<text x="429.5" y="421.8" class="slice-label">48.1%</text>
-<path d="M 290.0 430.0 L 315.29 643.51 A 215 215 0 0 1 105.69 540.69 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 0 1 315.38 643.50 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<text x="429.5" y="421.7" class="slice-label">48.1%</text>
+<path d="M 290.0 430.0 L 315.38 643.50 A 215 215 0 0 1 105.75 540.80 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
 <text x="228.5" y="555.5" class="slice-label">18.3%</text>
-<path d="M 290.0 430.0 L 105.69 540.69 A 215 215 0 0 1 77.08 400.16 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
-<text x="153.1" y="457.9" class="slice-label">10.8%</text>
-<path d="M 290.0 430.0 L 77.08 400.16 A 215 215 0 0 1 118.59 300.21 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
-<text x="160.9" y="376.4" class="slice-label">8.1%</text>
-<path d="M 290.0 430.0 L 118.59 300.21 A 215 215 0 0 1 162.66 256.77 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 162.66 256.77 A 215 215 0 0 1 187.98 240.75 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 187.98 240.75 A 215 215 0 0 1 210.41 230.28 Z" fill="#555555" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 210.41 230.28 A 215 215 0 0 1 233.66 222.51 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 233.66 222.51 A 215 215 0 0 1 252.61 218.28 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 252.61 218.28 A 215 215 0 0 1 261.21 216.94 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 261.21 216.94 A 215 215 0 0 1 268.37 216.09 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 268.37 216.09 A 215 215 0 0 1 273.11 215.66 Z" fill="#cb171e" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 273.11 215.66 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 105.75 540.80 A 215 215 0 0 1 77.06 400.30 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
+<text x="153.1" y="458.0" class="slice-label">10.8%</text>
+<path d="M 290.0 430.0 L 77.06 400.30 A 215 215 0 0 1 118.50 300.33 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<text x="160.9" y="376.5" class="slice-label">8.1%</text>
+<path d="M 290.0 430.0 L 118.50 300.33 A 215 215 0 0 1 162.53 256.86 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 162.53 256.86 A 215 215 0 0 1 187.83 240.83 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 187.83 240.83 A 215 215 0 0 1 210.37 230.29 Z" fill="#555555" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 210.37 230.29 A 215 215 0 0 1 233.62 222.52 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 233.62 222.52 A 215 215 0 0 1 252.57 218.28 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 252.57 218.28 A 215 215 0 0 1 261.16 216.94 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 261.16 216.94 A 215 215 0 0 1 268.34 216.09 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 268.34 216.09 A 215 215 0 0 1 273.08 215.67 Z" fill="#cb171e" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 273.08 215.67 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
 
 <g class="legend-item" style="animation-delay: 0ms;">
 <rect x="565" y="95" width="22" height="22" rx="3" fill="#e34c26"/>
@@ -120,7 +120,7 @@ svg {
 <g class="legend-item" style="animation-delay: 600ms;">
 <rect x="565" y="383" width="22" height="22" rx="3" fill="#555555"/>
 <text x="597" y="397" class="lang-name">C</text>
-<text x="597" y="418" class="lang-pct">1.83%</text>
+<text x="597" y="418" class="lang-pct">1.84%</text>
 </g>
 <g class="legend-item" style="animation-delay: 700ms;">
 <rect x="565" y="431" width="22" height="22" rx="3" fill="#083fa1"/>
@@ -140,7 +140,7 @@ svg {
 <g class="legend-item" style="animation-delay: 1000ms;">
 <rect x="565" y="575" width="22" height="22" rx="3" fill="#ff9900"/>
 <text x="597" y="589" class="lang-name">SVG</text>
-<text x="597" y="610" class="lang-pct">0.53%</text>
+<text x="597" y="610" class="lang-pct">0.54%</text>
 </g>
 <g class="legend-item" style="animation-delay: 1100ms;">
 <rect x="565" y="623" width="22" height="22" rx="3" fill="#cb171e"/>
@@ -153,20 +153,20 @@ svg {
 <text x="597" y="706" class="lang-pct">1.25%</text>
 </g>
 <g class="legend-item" style="animation-delay: 1320ms;">
-<path d="M 886.0 682.0 L 886.00 640.00 A 42 42 0 0 1 926.13 669.62 Z" fill="#3178c6" stroke="white" stroke-width="1.1"><title>TypeScript: 0.25% of total (20.2% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 926.13 669.62 A 42 42 0 0 1 913.24 713.97 Z" fill="#adb2cb" stroke="white" stroke-width="1.1"><title>VHDL: 0.23% of total (18.5% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 913.24 713.97 A 42 42 0 0 1 874.87 722.50 Z" fill="#292929" stroke="white" stroke-width="1.1"><title>JSON: 0.19% of total (15.5% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 874.87 722.50 A 42 42 0 0 1 847.79 699.43 Z" fill="#4F5D95" stroke="white" stroke-width="1.1"><title>PHP: 0.17% of total (13.9% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 847.79 699.43 A 42 42 0 0 1 844.09 679.31 Z" fill="#89e051" stroke="white" stroke-width="1.1"><title>Shell: 0.10% of total (7.8% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 844.09 679.31 A 42 42 0 0 1 849.25 661.66 Z" fill="#3D6117" stroke="white" stroke-width="1.1"><title>TeX: 0.09% of total (7.0% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 849.25 661.66 A 42 42 0 0 1 858.40 650.34 Z" fill="#888888" stroke="white" stroke-width="1.1"><title>Ninja: 0.07% of total (5.5% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 858.40 650.34 A 42 42 0 0 1 868.81 643.68 Z" fill="#04133b" stroke="white" stroke-width="1.1"><title>WebAssembly: 0.06% of total (4.7% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 868.81 643.68 A 42 42 0 0 1 875.95 641.22 Z" fill="#DA3434" stroke="white" stroke-width="1.1"><title>CMake: 0.04% of total (2.9% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 875.95 641.22 A 42 42 0 0 1 878.41 640.69 Z" fill="#8f14e9" stroke="white" stroke-width="1.1"><title>Metal: 0.01% of total (1.0% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 878.41 640.69 A 42 42 0 0 1 880.62 640.35 Z" fill="#945db7" stroke="white" stroke-width="1.1"><title>Visual Basic .NET: 0.01% of total (0.9% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 880.62 640.35 A 42 42 0 0 1 882.51 640.14 Z" fill="#7355dd" stroke="white" stroke-width="1.1"><title>C#: 0.01% of total (0.7% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 882.51 640.14 A 42 42 0 0 1 884.24 640.04 Z" fill="#9c4221" stroke="white" stroke-width="1.1"><title>TOML: 0.01% of total (0.7% of Other 1.25%)</title></path>
-<path d="M 886.0 682.0 L 884.24 640.04 A 42 42 0 0 1 884.95 640.01 Z" fill="#427819" stroke="white" stroke-width="1.1"><title>Makefile: 0.00% of total (0.3% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 886.00 640.00 A 42 42 0 0 1 926.10 669.52 Z" fill="#3178c6" stroke="white" stroke-width="1.1"><title>TypeScript: 0.25% of total (20.2% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 926.10 669.52 A 42 42 0 0 1 913.39 713.84 Z" fill="#adb2cb" stroke="white" stroke-width="1.1"><title>VHDL: 0.23% of total (18.5% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 913.39 713.84 A 42 42 0 0 1 875.13 722.57 Z" fill="#292929" stroke="white" stroke-width="1.1"><title>JSON: 0.19% of total (15.5% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 875.13 722.57 A 42 42 0 0 1 847.93 699.73 Z" fill="#4F5D95" stroke="white" stroke-width="1.1"><title>PHP: 0.17% of total (13.9% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 847.93 699.73 A 42 42 0 0 1 844.06 679.68 Z" fill="#89e051" stroke="white" stroke-width="1.1"><title>Shell: 0.10% of total (7.8% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 844.06 679.68 A 42 42 0 0 1 849.06 662.02 Z" fill="#3D6117" stroke="white" stroke-width="1.1"><title>TeX: 0.09% of total (7.0% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 849.06 662.02 A 42 42 0 0 1 858.08 650.63 Z" fill="#888888" stroke="white" stroke-width="1.1"><title>Ninja: 0.07% of total (5.5% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 858.08 650.63 A 42 42 0 0 1 868.40 643.87 Z" fill="#04133b" stroke="white" stroke-width="1.1"><title>WebAssembly: 0.06% of total (4.7% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 868.40 643.87 A 42 42 0 0 1 875.62 641.30 Z" fill="#DA3434" stroke="white" stroke-width="1.1"><title>CMake: 0.04% of total (2.9% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 875.62 641.30 A 42 42 0 0 1 878.07 640.76 Z" fill="#8f14e9" stroke="white" stroke-width="1.1"><title>Metal: 0.01% of total (1.0% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 878.07 640.76 A 42 42 0 0 1 880.28 640.39 Z" fill="#945db7" stroke="white" stroke-width="1.1"><title>Visual Basic .NET: 0.01% of total (0.8% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 880.28 640.39 A 42 42 0 0 1 882.16 640.18 Z" fill="#7355dd" stroke="white" stroke-width="1.1"><title>C#: 0.01% of total (0.7% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 882.16 640.18 A 42 42 0 0 1 883.88 640.05 Z" fill="#9c4221" stroke="white" stroke-width="1.1"><title>TOML: 0.01% of total (0.7% of Other 1.25%)</title></path>
+<path d="M 886.0 682.0 L 883.88 640.05 A 42 42 0 0 1 884.95 640.01 Z" fill="#427819" stroke="white" stroke-width="1.1"><title>Makefile: 0.01% of total (0.4% of Other 1.25%)</title></path>
 <path d="M 886.0 682.0 L 884.95 640.01 A 42 42 0 0 1 885.57 640.00 Z" fill="#b845fc" stroke="white" stroke-width="1.1"><title>F#: 0.00% of total (0.2% of Other 1.25%)</title></path>
 <path d="M 886.0 682.0 L 885.57 640.00 A 42 42 0 0 1 885.95 640.00 Z" fill="#C1F12E" stroke="white" stroke-width="1.1"><title>Batchfile: 0.00% of total (0.1% of Other 1.25%)</title></path>
 <path d="M 886.0 682.0 L 885.95 640.00 A 42 42 0 0 1 886.00 640.00 Z" fill="#e38c00" stroke="white" stroke-width="1.1"><title>SQL: 0.00% of total (0.0% of Other 1.25%)</title></path>
