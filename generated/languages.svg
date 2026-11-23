@@ -69,21 +69,21 @@ svg {
 </defs>
 <rect x="10" y="10" id="background"/>
 <text x="42" y="65" class="title">Languages Used (By File Size)</text>
-<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 0 1 315.60 643.47 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 290.00 215.00 A 215 215 0 0 1 315.61 643.47 Z" fill="#e34c26" stroke="white" stroke-width="1.5"/>
 <text x="429.5" y="421.7" class="slice-label">48.1%</text>
-<path d="M 290.0 430.0 L 315.60 643.47 A 215 215 0 0 1 105.91 541.06 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 315.61 643.47 A 215 215 0 0 1 105.91 541.07 Z" fill="#f1e05a" stroke="white" stroke-width="1.5"/>
 <text x="228.7" y="555.6" class="slice-label">18.3%</text>
-<path d="M 290.0 430.0 L 105.91 541.06 A 215 215 0 0 1 77.01 400.65 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 105.91 541.07 A 215 215 0 0 1 77.01 400.66 Z" fill="#DA5B0B" stroke="white" stroke-width="1.5"/>
 <text x="153.1" y="458.2" class="slice-label">10.8%</text>
-<path d="M 290.0 430.0 L 77.01 400.65 A 215 215 0 0 1 118.26 300.65 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 77.01 400.66 A 215 215 0 0 1 118.25 300.66 Z" fill="#3572A5" stroke="white" stroke-width="1.5"/>
 <text x="160.8" y="376.7" class="slice-label">8.1%</text>
-<path d="M 290.0 430.0 L 118.26 300.65 A 215 215 0 0 1 162.19 257.11 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 162.19 257.11 A 215 215 0 0 1 187.46 241.03 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 187.46 241.03 A 215 215 0 0 1 210.15 230.38 Z" fill="#555555" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 210.15 230.38 A 215 215 0 0 1 233.38 222.59 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 233.38 222.59 A 215 215 0 0 1 252.32 218.33 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 252.32 218.33 A 215 215 0 0 1 260.91 216.98 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
-<path d="M 290.0 430.0 L 260.91 216.98 A 215 215 0 0 1 268.34 216.09 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 118.25 300.66 A 215 215 0 0 1 162.18 257.12 Z" fill="#663399" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 162.18 257.12 A 215 215 0 0 1 187.44 241.04 Z" fill="#F05138" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 187.44 241.04 A 215 215 0 0 1 210.13 230.38 Z" fill="#555555" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 210.13 230.38 A 215 215 0 0 1 233.37 222.59 Z" fill="#083fa1" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 233.37 222.59 A 215 215 0 0 1 252.30 218.33 Z" fill="#6E4C13" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 252.30 218.33 A 215 215 0 0 1 260.89 216.98 Z" fill="#b07219" stroke="white" stroke-width="1.5"/>
+<path d="M 290.0 430.0 L 260.89 216.98 A 215 215 0 0 1 268.34 216.09 Z" fill="#ff9900" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 268.34 216.09 A 215 215 0 0 1 273.08 215.67 Z" fill="#cb171e" stroke="white" stroke-width="1.5"/>
 <path d="M 290.0 430.0 L 273.08 215.67 A 215 215 0 0 1 290.00 215.00 Z" fill="#888888" stroke="white" stroke-width="1.5"/>
 
@@ -140,7 +140,7 @@ svg {
 <g class="legend-item" style="animation-delay: 1000ms;">
 <rect x="565" y="575" width="22" height="22" rx="3" fill="#ff9900"/>
 <text x="597" y="589" class="lang-name">SVG</text>
-<text x="597" y="610" class="lang-pct">0.55%</text>
+<text x="597" y="610" class="lang-pct">0.56%</text>
 </g>
 <g class="legend-item" style="animation-delay: 1100ms;">
 <rect x="565" y="623" width="22" height="22" rx="3" fill="#cb171e"/>
